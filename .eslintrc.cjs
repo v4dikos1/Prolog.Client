@@ -1,16 +1,9 @@
 module.exports = {
 	settings: {
 		'import/resolver': {
-			node: {
-				paths: ['src'],
-				extensions: ['.js', '.jsx', '.ts', '.d.ts', '.tsx'],
-			},
-			typescript: {
-				project: './tsconfig.node.json',
-			},
 			alias: {
-				map: [['@', path.resolve(__dirname, './src')]],
-				extensions: ['.js', '.jsx', '.ts', '.d.ts', '.tsx'],
+				map: ['@', path.resolve(__dirname, './src')],
+				extensions: ['.ts', '.js', '.jsx', '.tsx', '.json'],
 			},
 		},
 	},
@@ -19,12 +12,13 @@ module.exports = {
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
-		'plugin:react-hooks/recommended, plugin:@typescript-eslint/recommended-requiring-type-checking',
+		'plugin:react-hooks/recommended',
+		'plugin:@typescript-eslint/recommended-requiring-type-checking',
 	],
 	ignorePatterns: ['dist', '.eslintrc.cjs'],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
-		project: './tsconfig.json',
+		project: './tsconfig.node.json',
 		tsConfigRootDir: './',
 	},
 	plugins: ['@typescript-eslint', 'import', 'react-refresh'],

@@ -7,8 +7,8 @@ export const Main = () => {
 	const [value, setValue] = useState('')
 
 	return (
-		<section id='main'>
-			<h1>Главная</h1>
+		<section id='main' className='p-5'>
+			<h1 className='text-3xl mb-4 mt-2'>Главная</h1>
 			<Tab active>Входящие (89)</Tab>
 			<Tab>Активные (78)</Tab>
 			<Tab>Выполненные (240)</Tab>

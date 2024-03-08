@@ -8,7 +8,7 @@ interface Props extends InputProps {
 export const InputWithIcon = ({ className, changeHandler, placeholder, value, Icon }: Props) => {
 	return (
 		<div className={cx(className, 'relative flex items-center')}>
-			<Input className='pl-[41px]' placeholder={placeholder} value={value} changeHandler={changeHandler} />
+			<Input className='pl-[41px] w-full' placeholder={placeholder} value={value} changeHandler={changeHandler} />
 			<Icon className='absolute left-[13px] stroke-gray-500 w-5 h-5' />
 		</div>
 	)

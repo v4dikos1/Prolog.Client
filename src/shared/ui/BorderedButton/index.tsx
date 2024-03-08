@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import React from 'react'
+import styles from './style.module.css'
 
 interface Props {
 	className?: string
@@ -12,12 +12,12 @@ export const BorderedButton = ({ children, className, Icon }: Props) => {
 		<button
 			className={cx(
 				className,
-				'flex justify-center items-center gap-2 py-[9px] px-[15px]',
-				'rounded-md border border-gray-300',
+				styles.borderedButton,
+				'borderedButton flex justify-center items-center gap-2',
+				'rounded-md border border-gray-300 bg-white',
 				'text-sm font-semibold text-gray-600',
-				'hover:bg-gray-100',
 			)}>
-			{Icon && <Icon className='w-5 h-5 stroke-gray-600' />}
+			{Icon && <Icon className='w-5 h-5' />}
 			{children}
 		</button>
 	)

@@ -5,6 +5,6 @@ interface Props {
 	className?: string
 }
 
-export const CreateOrderButton = ({ className }: Props) => {
+export const OrderCreateButton = ({ className }: Props) => {
 	return <BorderedButton className={className} Icon={ThinPlusIcon} />
 }

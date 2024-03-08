@@ -1,0 +1,16 @@
+.button {
+	padding: 9px 17px;
+	@apply flex justify-center items-center gap-2 text-sm font-semibold rounded-md;
+}
+
+.button-iconed {
+	padding-left: 15px;
+}
+
+.button-primary {
+	@apply text-white bg-indigo-600 hover:bg-indigo-700 focus:bg-indigo-600;
+}
+
+.button-secondary {
+	@apply text-gray-700 bg-gray-100  hover:bg-gray-200 focus:bg-gray-100;
+}

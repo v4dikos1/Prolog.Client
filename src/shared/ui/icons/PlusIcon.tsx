@@ -2,7 +2,7 @@ interface Props {
 	className?: string
 }
 
-export const SearchIcon = ({ className }: Props) => {
+export const PlusIcon = ({ className }: Props) => {
 	return (
 		<svg
 			className={className}
@@ -12,9 +12,9 @@ export const SearchIcon = ({ className }: Props) => {
 			fill='none'
 			xmlns='http://www.w3.org/2000/svg'>
 			<path
-				d='M17.5 17.5L12.5 12.5M14.1667 8.33333C14.1667 11.555 11.555 14.1667 8.33333 14.1667C5.11167 14.1667 2.5 11.555 2.5 8.33333C2.5 5.11167 5.11167 2.5 8.33333 2.5C11.555 2.5 14.1667 5.11167 14.1667 8.33333Z'
+				d='M10 5V10M10 10V15M10 10H15M10 10L5 10'
 				stroke='#6B7280'
-				strokeWidth='1.5'
+				strokeWidth='2'
 				strokeLinecap='round'
 				strokeLinejoin='round'
 			/>

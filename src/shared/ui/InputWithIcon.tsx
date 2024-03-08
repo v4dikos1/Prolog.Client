@@ -1,6 +1,5 @@
-import React from 'react'
 import cx from 'classnames'
-import { Input, Props as InputProps } from './Input'
+import { Input, Props as InputProps } from '@/shared/ui/Input'
 
 interface Props extends InputProps {
 	Icon: React.ElementType

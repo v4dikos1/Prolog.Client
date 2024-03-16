@@ -7,10 +7,10 @@
 	padding-left: 15px;
 }
 
-.button-primary {
+button.button-primary {
 	@apply text-white bg-indigo-600 hover:bg-indigo-700 focus:bg-indigo-600;
 }
 
-.button-secondary {
+button.button-secondary {
 	@apply text-gray-700 bg-gray-100  hover:bg-gray-200 focus:bg-gray-100;
 }

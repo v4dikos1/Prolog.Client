@@ -6,11 +6,13 @@ interface Props {
 	className?: string
 	category?: 'primary' | 'secondary'
 	Icon?: React.ElementType | null
+	type?: 'button' | 'submit'
 }
 
-export const Button = ({ className, category = 'primary', children = null, Icon = null }: Props) => {
+export const Button = ({ className, category = 'primary', children = null, Icon = null, type = 'button' }: Props) => {
 	return (
 		<button
+			type={type}
 			className={cx(className, styles.button, {
 				[styles['button-iconed']]: Icon !== null,
 				[styles['button-primary']]: category === 'primary',

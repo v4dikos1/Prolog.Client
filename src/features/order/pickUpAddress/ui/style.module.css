@@ -1,0 +1,19 @@
+.order-pick-up-address {
+	@apply text-xs text-gray-500 mt-1 flex gap-1 items-center transition;
+}
+
+.order-pick-up-address:hover {
+	@apply text-indigo-700;
+}
+
+.order-pick-up-address svg {
+	@apply transition;
+}
+
+.order-pick-up-address:hover svg {
+	@apply rotate-90;
+}
+
+.order-pick-up-address:hover path {
+	@apply fill-indigo-400;
+}

@@ -2,40 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+	.scrollable::-webkit-scrollbar {
+		width: 16px;
+	}
+	.scrollable::-webkit-scrollbar-track {
+		border-radius: 10px;
+		cursor: pointer;
+	}
+	.scrollable::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		border: 5px solid white;
+		background: #e5e5ea;
+		cursor: grab;
+	}
+	.scrollable:active::-webkit-scrollbar-thumb {
+		cursor: grabbing;
+		@apply bg-gray-300;
+	}
+}
+
+::selection {
+	@apply bg-indigo-600 text-white;
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
 
-  color-scheme: dark light;
-  color: #242424;
-  background-color: #FFFFFF;
+	color-scheme: dark light;
+	color: #242424;
+	background-color: #ffffff;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 a {
-  color: inherit;
+	color: inherit;
 }
 
 body {
-  width: 100%;
-  min-width: 320px;
-  min-height: 100vh;
-  margin: 0;
+	width: 100%;
+	min-width: 320px;
+	min-height: 100vh;
+	margin: 0;
 }
 
 button {
-  cursor: pointer;
+	cursor: pointer;
 }
 
-button, input {
-  font-family: inherit;
+button,
+input {
+	font-family: inherit;
 }
 
 @media (prefers-color-scheme: dark) {
-  /* Styles to  dark theme */
+	/* Styles to  dark theme */
 }

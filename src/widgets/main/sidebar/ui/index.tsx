@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import { OrderCreateButton, OrderSearchInput, OrderTabs } from '@/features/order'
+import cx from 'classnames'
+import { OrderList } from '@/widgets/order'
+import { OrderCreateButton, OrderSearchInput, OrderTabs, OrderRunButton } from '@/features/order'
 import { Tab as TabType } from '@/shared/types/order'
-import { OrderRunButton } from '@/features/order/runButton'
+import { fakeOrders } from '@/entities/order'
 
 interface Props {
 	className?: string
@@ -10,7 +12,7 @@ interface Props {
 export const Sidebar = ({ className }: Props) => {
 	const [activeTab, setActiveTab] = useState<TabType>('incoming')
 	return (
-		<section id='sidebar' className={className}>
+		<section id='sidebar' className={cx(className, 'h-screen overflow-hidden flex flex-col')}>
 			<header className='py-4 px-5 bg-gray-100 w-full border-b border-gray-300'>
 				<nav>
 					<OrderTabs
@@ -36,7 +38,9 @@ export const Sidebar = ({ className }: Props) => {
 					</li>
 				</menu>
 			</header>
-			<main></main>
+			<main className='scrollable py-4 px-5 flex flex-col gap-3 grow overflow-auto'>
+				<OrderList orders={fakeOrders} />
+			</main>
 		</section>
 	)
 }

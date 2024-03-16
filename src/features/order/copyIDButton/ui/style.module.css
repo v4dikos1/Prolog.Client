@@ -1,0 +1,16 @@
+.order-copy-id-button {
+	cursor: copy;
+	@apply flex gap-1 items-center text-xs font-medium text-indigo-700;
+}
+
+.order-copy-id-button path {
+	@apply w-5 h-5 stroke-indigo-700;
+}
+
+.order-copy-id-button:hover {
+	@apply text-indigo-500;
+}
+
+.order-copy-id-button:hover path {
+	@apply stroke-indigo-500;
+}

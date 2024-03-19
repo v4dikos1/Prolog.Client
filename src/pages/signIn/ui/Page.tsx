@@ -1,14 +1,17 @@
+import { useState } from 'react'
+import cx from 'classnames'
 import { Button } from '@/shared/ui/Button'
 import { Input } from '@/shared/ui/Input'
-import React from 'react'
 
 export const SignInPage = () => {
+	const [loading, setLoading] = useState(false)
 	const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		const formData = new FormData(e.currentTarget)
 		const username = formData.get('username') as string
 		const password = formData.get('password') as string
-
+		e.currentTarget.reset()
+		setLoading(true)
 		console.log(username, password)
 	}
 
@@ -19,7 +22,9 @@ export const SignInPage = () => {
 				<form className='w-full mt-6 flex flex-col gap-4' method='POST' onSubmit={submitHandler}>
 					<Input name='username' placeholder='Логин' />
 					<Input autocomplete='off' name='password' type='password' placeholder='Пароль' />
-					<Button type='submit'>Войти</Button>
+					<Button className={cx({ 'bg-slate-300': loading })} loading={loading} type='submit'>
+						Войти
+					</Button>
 				</form>
 			</div>
 		</section>

@@ -1,25 +1,36 @@
 import cx from 'classnames'
+import { SpinnerIcon } from '@/shared/ui/icons/SpinnerIcon'
 import styles from './style.module.css'
 
 interface Props {
-	children?: React.ReactNode
-	className?: string
+	loading?: boolean
 	category?: 'primary' | 'secondary'
-	Icon?: React.ElementType | null
 	type?: 'button' | 'submit'
+	children?: React.ReactNode
+	Icon?: React.ElementType | null
+	className?: string
 }
 
-export const Button = ({ className, category = 'primary', children = null, Icon = null, type = 'button' }: Props) => {
+export const Button = ({
+	loading = false,
+	category = 'primary',
+	type = 'button',
+	children = null,
+	Icon = null,
+	className,
+}: Props) => {
 	return (
 		<button
 			type={type}
+			disabled={loading}
 			className={cx(className, styles.button, {
 				[styles['button-iconed']]: Icon !== null,
 				[styles['button-primary']]: category === 'primary',
 				[styles['button-secondary']]: category === 'secondary',
+				[styles['button-disabled']]: loading,
 			})}>
 			{Icon && <Icon className='w-5 h-5' />}
-			{children}
+			{loading ? <SpinnerIcon /> : children}
 		</button>
 	)
 }

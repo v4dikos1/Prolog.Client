@@ -6,8 +6,8 @@ export const SignInPage = () => {
 	const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		const formData = new FormData(e.currentTarget)
-		const username = formData.get('username')
-		const password = formData.get('password')
+		const username = formData.get('username') as string
+		const password = formData.get('password') as string
 
 		console.log(username, password)
 	}

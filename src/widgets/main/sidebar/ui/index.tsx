@@ -1,16 +1,24 @@
 import { useState } from 'react'
+import { useAuth } from 'react-oidc-context'
 import cx from 'classnames'
+
+import { useGetIncomingOrdersQuery } from '@/app/store'
 import { OrderList } from '@/widgets/order'
+import { DateHeader } from '@/features/main'
 import { OrderCreateButton, OrderSearchInput, OrderTabs, OrderRunButton } from '@/features/order'
-import { Tab as TabType } from '@/shared/types/order'
-import { fakeOrders } from '@/entities/order'
+import { StatusEnum } from '@/entities/order'
 
 interface Props {
 	className?: string
 }
 
 export const Sidebar = ({ className }: Props) => {
-	const [activeTab, setActiveTab] = useState<TabType>('incoming')
+	const auth = useAuth()
+	const { data } = useGetIncomingOrdersQuery(auth.user?.access_token || '')
+
+	const [activeTab, setActiveTab] = useState<StatusEnum>(StatusEnum.incoming)
+	const [opened, setOpened] = useState(false)
+
 	return (
 		<section id='sidebar' className={cx(className, 'h-screen overflow-hidden flex flex-col')}>
 			<header className='py-4 px-5 bg-gray-100 w-full border-b border-gray-300'>
@@ -18,12 +26,12 @@ export const Sidebar = ({ className }: Props) => {
 					<OrderTabs
 						className='w-full'
 						activeTab={activeTab}
-						incomingCount={89}
+						incomingCount={data?.count || 0}
 						activeCount={78}
 						completedCount={240}
-						openIncoming={() => setActiveTab('incoming')}
-						openActive={() => setActiveTab('active')}
-						openCompleted={() => setActiveTab('completed')}
+						openIncoming={() => setActiveTab(StatusEnum.incoming)}
+						openActive={() => setActiveTab(StatusEnum.active)}
+						openCompleted={() => setActiveTab(StatusEnum.completed)}
 					/>
 				</nav>
 				<menu className='mt-3 flex gap-2'>
@@ -39,7 +47,25 @@ export const Sidebar = ({ className }: Props) => {
 				</menu>
 			</header>
 			<main className='scrollable py-4 px-5 flex flex-col gap-3 grow overflow-auto'>
-				<OrderList orders={fakeOrders} />
+				<DateHeader
+					date={data?.items[0].date || '2024/4/2'}
+					count={2}
+					opened={false}
+					open={() => {}}
+					close={() => {}}
+				/>
+				<DateHeader
+					date={data?.items[1].date || '2024/4/2'}
+					count={2}
+					opened={opened}
+					open={() => {
+						setOpened(true)
+					}}
+					close={() => {
+						setOpened(false)
+					}}
+				/>
+				<OrderList orders={data?.items[0].orders || []} />
 			</main>
 		</section>
 	)

@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { Tab as TabType } from '@/shared/types/order'
+import { StatusEnum } from '@/entities/order'
 import { Tab } from '@/shared/ui/Tab'
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 	incomingCount: number
 	activeCount: number
 	completedCount: number
-	activeTab: TabType
+	activeTab: StatusEnum
 	openIncoming: () => void
 	openActive: () => void
 	openCompleted: () => void
@@ -26,17 +26,17 @@ export const OrderTabs = ({
 	return (
 		<menu className={cx(className, 'flex gap-1 justify-between')}>
 			<li>
-				<Tab clickHandler={openIncoming} active={activeTab === 'incoming'}>
+				<Tab clickHandler={openIncoming} active={activeTab === StatusEnum.incoming}>
 					Входящие ({incomingCount})
 				</Tab>
 			</li>
 			<li>
-				<Tab clickHandler={openActive} active={activeTab === 'active'}>
+				<Tab clickHandler={openActive} active={activeTab === StatusEnum.active}>
 					Активные ({activeCount})
 				</Tab>
 			</li>
 			<li>
-				<Tab clickHandler={openCompleted} active={activeTab === 'completed'}>
+				<Tab clickHandler={openCompleted} active={activeTab === StatusEnum.completed}>
 					Выполненные ({completedCount})
 				</Tab>
 			</li>

@@ -11,23 +11,23 @@ type PropsBase = {
 
 type IncomingOrderProps = PropsBase & {
 	status: 0
-	pickUpStart: Date
-	pickUpEnd: Date
-	deliveryStart: Date
-	deliveryEnd: Date
+	pickUpStart: string
+	pickUpEnd: string
+	deliveryStart: string
+	deliveryEnd: string
 }
 
 type ActiveOrderProps = PropsBase & {
 	status: 1
-	deliveryStart: Date
-	deliveryEnd: Date
+	deliveryStart: string
+	deliveryEnd: string
 }
 
 type CompletedOrderProps = PropsBase & {
 	status: 2
-	pickedUp: Date
+	pickedUp: string
 	completed: boolean
-	end: Date
+	end: string
 }
 
 type Props = IncomingOrderProps | ActiveOrderProps | CompletedOrderProps

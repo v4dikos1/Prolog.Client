@@ -51,6 +51,7 @@ export const OrderCard = ({ className, order }: Props) => {
 				deliveryAddress={order.address}
 				pickUpAddress={order.storage.name}
 				orderID={order.visibleID}
+				driver={order.status === 2 ? order.driver : undefined}
 			/>
 			<main className='pt-3 px-5 pb-4'>{orderContent}</main>
 		</div>

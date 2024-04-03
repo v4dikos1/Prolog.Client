@@ -7,9 +7,13 @@ interface Props {
 	pickUpAddress: string
 	deliveryAddress: string
 	orderID: string
+	driver?: {
+		name: string
+		licensePlate: string
+	}
 }
 
-export const Header = ({ selected, pickUpAddress, deliveryAddress, orderID }: Props) => {
+export const Header = ({ selected, pickUpAddress, deliveryAddress, orderID, driver }: Props) => {
 	return (
 		<header className='pt-4 px-5 pb-3 border-b border-gray-200'>
 			<div className='flex justify-between'>
@@ -20,6 +24,11 @@ export const Header = ({ selected, pickUpAddress, deliveryAddress, orderID }: Pr
 				<OrderCopyIDButton id={orderID} />
 			</div>
 			<OrderPickUpAddress address={pickUpAddress} />
+			{driver ? (
+				<span className='text-xs text-gray-500 mt-1 flex gap-1 items-center'>
+					{driver.name}, {driver.licensePlate}
+				</span>
+			) : null}
 		</header>
 	)
 }

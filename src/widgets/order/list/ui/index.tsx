@@ -1,13 +1,16 @@
 import { OrderCard } from '@/widgets/order/card'
-import { OrderType } from '@/entities/order'
 import cx from 'classnames'
+import { Order } from '@/entities/order/model'
 
 interface Props {
 	className?: string
-	orders: OrderType[]
+	orders: Order[]
 }
 
 export const OrderList = ({ className, orders }: Props) => {
+	if (!orders) return
+	console.log(orders)
+
 	return (
 		<ul className={cx(className, 'flex flex-col gap-3')}>
 			{orders.map((order) => (

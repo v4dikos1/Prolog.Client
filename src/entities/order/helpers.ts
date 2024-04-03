@@ -26,7 +26,7 @@ export const transformIncomingOrdersFromAPI = (ordersFromAPI: IncomingOrdersFrom
 							weight: order.weight,
 							count: order.amount,
 						},
-						selected: false,
+						selected: true,
 						status: 0,
 						pickUpStart: order.pickUpStartDate,
 						pickUpEnd: order.pickUpEndDate,

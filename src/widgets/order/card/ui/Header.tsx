@@ -16,12 +16,12 @@ interface Props {
 export const Header = ({ selected, pickUpAddress, deliveryAddress, orderID, driver }: Props) => {
 	return (
 		<header className='pt-4 px-5 pb-3 border-b border-gray-200'>
-			<div className='flex justify-between'>
-				<div className='flex gap-2'>
-					<Checkbox checked={selected} />
-					<OrderDeliveryAddress address={deliveryAddress} />
+			<div className='flex justify-between items-start'>
+				<div className='flex gap-2 items-start'>
+					<Checkbox className='mt-1' checked={selected} />
+					<OrderDeliveryAddress className='text-left' address={deliveryAddress} />
 				</div>
-				<OrderCopyIDButton id={orderID} />
+				<OrderCopyIDButton className='mt-1' id={orderID} />
 			</div>
 			<OrderPickUpAddress address={pickUpAddress} />
 			{driver ? (

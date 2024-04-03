@@ -17,6 +17,7 @@ export const DateHeader = ({ className, date, open, close, count, opened }: Prop
 		if (opened) close()
 		else open()
 	}
+
 	return (
 		<button
 			className={cx(

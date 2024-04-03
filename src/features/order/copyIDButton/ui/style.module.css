@@ -1,6 +1,6 @@
 .order-copy-id-button {
 	cursor: copy;
-	@apply flex gap-1 items-center text-xs font-medium text-indigo-700;
+	@apply flex gap-1 items-center text-xs font-medium text-indigo-700 pl-1;
 }
 
 .order-copy-id-button path {

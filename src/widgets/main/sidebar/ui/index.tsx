@@ -3,8 +3,7 @@ import { useAuth } from 'react-oidc-context'
 import cx from 'classnames'
 
 import { useGetIncomingOrdersQuery } from '@/app/store'
-import { OrderList } from '@/widgets/order'
-import { DateHeader } from '@/features/main'
+import { OrderDateGroup } from '@/widgets/order'
 import { OrderCreateButton, OrderSearchInput, OrderTabs, OrderRunButton } from '@/features/order'
 import { StatusEnum } from '@/entities/order'
 
@@ -15,9 +14,7 @@ interface Props {
 export const Sidebar = ({ className }: Props) => {
 	const auth = useAuth()
 	const { data } = useGetIncomingOrdersQuery(auth.user?.access_token || '')
-
 	const [activeTab, setActiveTab] = useState<StatusEnum>(StatusEnum.incoming)
-	const [opened, setOpened] = useState(false)
 
 	return (
 		<section id='sidebar' className={cx(className, 'h-screen overflow-hidden flex flex-col')}>
@@ -46,26 +43,10 @@ export const Sidebar = ({ className }: Props) => {
 					</li>
 				</menu>
 			</header>
-			<main className='scrollable py-4 px-5 flex flex-col gap-3 grow overflow-auto'>
-				<DateHeader
-					date={data?.items[0].date || '2024/4/2'}
-					count={2}
-					opened={false}
-					open={() => {}}
-					close={() => {}}
-				/>
-				<DateHeader
-					date={data?.items[1].date || '2024/4/2'}
-					count={2}
-					opened={opened}
-					open={() => {
-						setOpened(true)
-					}}
-					close={() => {
-						setOpened(false)
-					}}
-				/>
-				<OrderList orders={data?.items[0].orders || []} />
+			<main className='scrollable py-4 px-5 flex flex-col grow overflow-auto'>
+				{data?.items.map((item) => (
+					<OrderDateGroup key={item.date} count={item.orders.length} date={item.date} orders={item.orders} />
+				))}
 			</main>
 		</section>
 	)

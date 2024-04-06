@@ -4,9 +4,10 @@ export type Driver = {
 	phone: string
 	licensePlate: string
 	transportID: string
-	start: Date
-	end: Date
+	start: string
+	end: string
 	ordersCount: number
 	completedOrdersCount: number
 	distance: number
+	color: string
 }

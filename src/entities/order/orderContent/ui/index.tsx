@@ -1,6 +1,7 @@
 import cx from 'classnames'
-import { formatPrice, getTime } from '../utils'
 import { ClientType, CargoType } from '@/entities/order'
+import { getTime } from '@/shared/utils/getTime'
+import { formatPrice } from '../utils'
 
 type PropsBase = {
 	client: ClientType

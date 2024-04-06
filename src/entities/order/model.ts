@@ -1,3 +1,5 @@
+import { Driver } from '@/entities/driver'
+
 export enum StatusEnum {
 	'incoming',
 	'active',
@@ -57,39 +59,7 @@ export type CompletedOrder = OrderBase & {
 	end: string
 }
 
-export type IncomingOrdersFromAPI = {
-	totalItems: number
-	itemsQuantity: number
-	itemsOffset: number
-	items: {
-		orderCount: number
-		orderDate: string
-		ordersGroupedByDriver: {
-			driver: null
-			orders: {
-				address: string
-				amount: number
-				clientId: string
-				clientName: string
-				clientPhone: string
-				dateDelivered: null
-				datePickedUp: null
-				deliveryEndDate: string
-				deliveryStartDate: string
-				id: number
-				pickUpEndDate: string
-				pickUpStartDate: string
-				price: number
-				status: null
-				storageId: string
-				storageName: string
-				visibleId: string
-				volume: number
-				weight: number
-			}[]
-		}[]
-	}[]
-}
+export type Order = IncomingOrder | ActiveOrder | CompletedOrder
 
 export type IncomingOrdersGroupByDate = {
 	date: string
@@ -101,4 +71,17 @@ export type IncomingOrders = {
 	items: IncomingOrdersGroupByDate[]
 }
 
-export type Order = IncomingOrder | ActiveOrder | CompletedOrder
+export type ActiveOrdersGroupByDriver = {
+	driver: Driver
+	orders: ActiveOrder[]
+}
+
+export type ActiveOrdersGroupByDate = {
+	date: string
+	orders: ActiveOrdersGroupByDriver[]
+}
+
+export type ActiveOrders = {
+	count: number
+	items: ActiveOrdersGroupByDate[]
+}

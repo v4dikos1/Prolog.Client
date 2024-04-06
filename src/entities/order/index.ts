@@ -11,9 +11,21 @@ import {
 	ActiveOrdersGroupByDriver,
 } from './model'
 import { IncomingOrdersFromAPI, ActiveOrdersFromAPI } from './apiModel'
-import { transformOrdersFromAPIToIncoming, transformOrdersFromAPIToActive } from './helpers'
+import {
+	transformOrdersFromAPIToIncoming,
+	transformOrdersFromAPIToActive,
+	toggleOrderInIncomingOrders,
+	toggleOrderInActiveOrders,
+} from './helpers'
 
-export { OrderContent, transformOrdersFromAPIToIncoming, transformOrdersFromAPIToActive, StatusEnum }
+export {
+	OrderContent,
+	transformOrdersFromAPIToIncoming,
+	transformOrdersFromAPIToActive,
+	toggleOrderInIncomingOrders,
+	toggleOrderInActiveOrders,
+	StatusEnum,
+}
 export type {
 	OrderType,
 	ClientType,

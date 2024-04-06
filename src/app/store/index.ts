@@ -8,6 +8,9 @@ import {
 	ActiveOrders,
 	transformOrdersFromAPIToIncoming,
 	transformOrdersFromAPIToActive,
+	toggleOrderInIncomingOrders,
+	toggleOrderInActiveOrders,
+	StatusEnum,
 } from '@/entities/order'
 import { apiBaseQuery } from './baseQuery'
 
@@ -38,24 +41,22 @@ export const apiSlice = createApi({
 				return transformOrdersFromAPIToActive(response)
 			},
 		}),
-		toggleOrder: builder.mutation<void, number>({
+		toggleOrder: builder.mutation<void, { status: StatusEnum; id: number }>({
 			queryFn: async () => {
 				return { data: undefined }
 			},
-			async onQueryStarted(id, { dispatch, queryFulfilled }) {
-				const patchResult = dispatch(
-					apiSlice.util.updateQueryData('getIncomingOrders', undefined, (incomingOrders) => {
-						for (let i = 0; i < incomingOrders.items.length; i++) {
-							const orders = incomingOrders.items[i].orders
-							for (let j = 0; j < orders.length; j++) {
-								const order = orders[j]
-								if (order.ID === id) {
-									order.selected = !order.selected
-								}
-							}
-						}
-					}),
-				)
+			async onQueryStarted({ status, id }, { dispatch, queryFulfilled }) {
+				let action
+				if (status == StatusEnum.incoming) {
+					action = apiSlice.util.updateQueryData('getIncomingOrders', undefined, (incomingOrders) =>
+						toggleOrderInIncomingOrders(id, incomingOrders),
+					)
+				} else {
+					action = apiSlice.util.updateQueryData('getActiveOrders', undefined, (activeOrders) =>
+						toggleOrderInActiveOrders(id, activeOrders),
+					)
+				}
+				const patchResult = dispatch(action)
 				try {
 					await queryFulfilled
 				} catch {

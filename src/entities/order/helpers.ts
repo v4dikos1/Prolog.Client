@@ -92,3 +92,30 @@ export const transformOrdersFromAPIToActive = (ordersFromAPI: ActiveOrdersFromAP
 
 	return activeOrders
 }
+
+export const toggleOrderInIncomingOrders = (id: number, incomingOrders: IncomingOrders) => {
+	for (let i = 0; i < incomingOrders.items.length; i++) {
+		const orders = incomingOrders.items[i].orders
+		for (let j = 0; j < orders.length; j++) {
+			const order = orders[j]
+			if (order.ID === id) {
+				order.selected = !order.selected
+			}
+		}
+	}
+}
+
+export const toggleOrderInActiveOrders = (id: number, activeOrders: ActiveOrders) => {
+	for (let i = 0; i < activeOrders.items.length; i++) {
+		const groupsByDriver = activeOrders.items[i].orders
+		for (let j = 0; j < groupsByDriver.length; j++) {
+			const groupByDriver = groupsByDriver[j]
+			for (let k = 0; k < groupByDriver.orders.length; k++) {
+				const order = groupByDriver.orders[k]
+				if (order.ID === id) {
+					order.selected = !order.selected
+				}
+			}
+		}
+	}
+}

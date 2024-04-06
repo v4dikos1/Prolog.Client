@@ -18,6 +18,10 @@
 	@apply border-gray-400;
 }
 
+.checkbox input:focus-visible + span {
+	@apply border-indigo-400;
+}
+
 .checkbox.checkbox-checked span {
 	@apply bg-indigo-600 border-indigo-600;
 }

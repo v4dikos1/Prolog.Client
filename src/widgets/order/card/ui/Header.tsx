@@ -10,14 +10,15 @@ interface Props {
 		name: string
 		licensePlate: string
 	}
+	toggleSelect: () => void
 }
 
-export const Header = ({ selected, pickUpAddress, deliveryAddress, orderID, driver }: Props) => {
+export const Header = ({ toggleSelect, selected, pickUpAddress, deliveryAddress, orderID, driver }: Props) => {
 	return (
 		<header className='pt-4 px-5 pb-3 border-b border-gray-200'>
 			<div className='flex justify-between items-start'>
 				<div className='flex gap-2 items-start'>
-					<Checkbox className='mt-1' checked={selected} />
+					<Checkbox changeHandler={toggleSelect} className='mt-1' checked={selected} />
 					<OrderDeliveryAddress className='text-left' address={deliveryAddress} />
 				</div>
 				<OrderCopyIDButton className='mt-1' id={orderID} />

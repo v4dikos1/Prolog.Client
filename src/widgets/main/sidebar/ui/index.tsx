@@ -23,7 +23,7 @@ export const Sidebar = ({ className }: Props) => {
 	}
 
 	return (
-		<section id='sidebar' className={cx(className, 'h-screen overflow-hidden flex flex-col')}>
+		<div id='sidebar' className={cx(className, 'h-screen overflow-hidden flex flex-col')}>
 			<header className='py-4 px-5 bg-gray-100 w-full border-b border-gray-300'>
 				<nav>
 					<OrderTabs
@@ -47,6 +47,6 @@ export const Sidebar = ({ className }: Props) => {
 				</menu>
 			</header>
 			<main className='scrollable py-4 px-5 flex flex-col grow overflow-auto'>{orders[activeTab]}</main>
-		</section>
+		</div>
 	)
 }

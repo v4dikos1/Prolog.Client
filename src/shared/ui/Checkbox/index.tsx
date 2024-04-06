@@ -12,7 +12,7 @@ interface Props {
 export const Checkbox = ({ children, className, checked = false, changeHandler }: Props) => {
 	return (
 		<label className={cx(className, styles.checkbox, { [styles['checkbox-checked']]: checked })}>
-			<input onChange={changeHandler} type='checkbox' readOnly checked={checked} />
+			<input onChange={changeHandler} type='checkbox' checked={checked} />
 			<span>
 				<CheckIcon />
 			</span>

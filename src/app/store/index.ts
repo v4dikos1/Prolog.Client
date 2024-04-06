@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { configureStore, createSelector } from '@reduxjs/toolkit'
-import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react'
-import { User } from 'oidc-client-ts'
-
+import { createApi } from '@reduxjs/toolkit/query/react'
 import {
 	IncomingOrdersFromAPI,
 	ActiveOrdersFromAPI,
@@ -11,56 +9,18 @@ import {
 	transformOrdersFromAPIToIncoming,
 	transformOrdersFromAPIToActive,
 } from '@/entities/order'
+import { apiBaseQuery } from './baseQuery'
 
-const BASE_URL = 'https://krsk-prolog.ru/api/admin/'
 const ROUTES = {
 	incomingOrders: 'orders?Status=0',
 	activeOrders: 'orders?Status=1',
 	completedOrders: 'orders?Status=2',
 }
 
-function getUser() {
-	const oidcStorage = localStorage.getItem(
-		`oidc.user:https://identity.krsk-prolog.ru/realms/prolog:Prolog.LocalWebClient`,
-	)
-
-	if (!oidcStorage) {
-		return null
-	}
-
-	return User.fromStorageString(oidcStorage)
-}
-
-const apiBaseQuery = (): BaseQueryFn<{ url: string }, unknown, unknown> => {
-	return async ({ url }) => {
-		const user = getUser()
-		const token = user?.access_token
-
-		try {
-			const response = await fetch(BASE_URL + url, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			})
-
-			const data = await response.json()
-
-			return {
-				data,
-			}
-		} catch (e) {
-			return {
-				error: {
-					reason: e,
-				},
-			}
-		}
-	}
-}
-
 export const apiSlice = createApi({
 	reducerPath: 'api',
 	baseQuery: apiBaseQuery(),
+	tagTypes: ['Orders'],
 	endpoints: (builder) => ({
 		getIncomingOrders: builder.query<IncomingOrders, void>({
 			query: () => ({
@@ -78,10 +38,35 @@ export const apiSlice = createApi({
 				return transformOrdersFromAPIToActive(response)
 			},
 		}),
+		toggleOrder: builder.mutation<void, number>({
+			queryFn: async () => {
+				return { data: undefined }
+			},
+			async onQueryStarted(id, { dispatch, queryFulfilled }) {
+				const patchResult = dispatch(
+					apiSlice.util.updateQueryData('getIncomingOrders', undefined, (incomingOrders) => {
+						for (let i = 0; i < incomingOrders.items.length; i++) {
+							const orders = incomingOrders.items[i].orders
+							for (let j = 0; j < orders.length; j++) {
+								const order = orders[j]
+								if (order.ID === id) {
+									order.selected = !order.selected
+								}
+							}
+						}
+					}),
+				)
+				try {
+					await queryFulfilled
+				} catch {
+					patchResult.undo()
+				}
+			},
+		}),
 	}),
 })
 
-export const { useGetIncomingOrdersQuery, useGetActiveOrdersQuery } = apiSlice
+export const { useGetIncomingOrdersQuery, useGetActiveOrdersQuery, useToggleOrderMutation } = apiSlice
 
 export const store = configureStore({
 	reducer: {

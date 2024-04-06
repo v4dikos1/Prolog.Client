@@ -8,6 +8,7 @@ import {
 	ActiveOrders,
 	ActiveOrdersGroupByDate,
 	IncomingOrdersGroupByDate,
+	ActiveOrdersGroupByDriver,
 } from './model'
 import { IncomingOrdersFromAPI, ActiveOrdersFromAPI } from './apiModel'
 import { transformOrdersFromAPIToIncoming, transformOrdersFromAPIToActive } from './helpers'
@@ -22,5 +23,6 @@ export type {
 	IncomingOrders,
 	ActiveOrders,
 	ActiveOrdersGroupByDate,
+	ActiveOrdersGroupByDriver,
 	IncomingOrdersGroupByDate,
 }

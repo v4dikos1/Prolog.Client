@@ -1,6 +1,6 @@
 import { useGetActiveOrdersQuery } from '@/app/store'
-import { OrderDateGroup } from '../../dateGroup'
 import { StatusEnum } from '@/entities/order'
+import { OrderDateGroup } from '../../dateGroup'
 
 export const OrderActiveList = () => {
 	const { data: activeOrders } = useGetActiveOrdersQuery()

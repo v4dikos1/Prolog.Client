@@ -1,6 +1,6 @@
 import { OrderList } from '@/widgets/order'
-import { ActiveOrdersGroupByDriver } from '@/entities/order/model'
 import { DriverCard } from '@/widgets/driver'
+import { ActiveOrdersGroupByDriver } from '@/entities/order'
 
 interface Props {
 	className?: string

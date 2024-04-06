@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import { OrderCard } from '@/widgets/order'
-import { OrderType } from '@/entities/order/'
+import { OrderType } from '@/entities/order'
 
 interface Props {
 	className?: string

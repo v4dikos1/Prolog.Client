@@ -1,5 +1,4 @@
-import { OrderCopyIDButton, OrderPickUpAddress } from '@/features/order'
-import { OrderDeliveryAddress } from '@/features/order/deliveryAddress'
+import { OrderCopyIDButton, OrderPickUpAddress, OrderDeliveryAddress } from '@/features/order'
 import { Checkbox } from '@/shared/ui/Checkbox'
 
 interface Props {

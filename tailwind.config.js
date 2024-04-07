@@ -6,7 +6,7 @@ export default {
 			animation: {
 				'spin-fast': 'spin 0.75s linear infinite',
 				'arrow': 'arrow 1s ease forwards',
-				'fadeIn': 'fadeIn 0.3s 0s ease forwards',
+				'fadeIn': 'fadeIn 0.3s ease forwards',
 				'fadeOut': 'fadeOut 0.3s ease forwards',
 			},
 			keyframes: {
@@ -15,12 +15,12 @@ export default {
 					'25%, 75%': { transform: 'translateX(5px)' },
 				},
 				fadeIn: {
-					'0%': { opacity: '0', transform: 'translateX(-100px)' },
-					'100%': { opacity: '1', transform: 'translateX(0)' },
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' },
 				},
 				fadeOut: {
-					'0%': { opacity: '1', transform: 'translateX(0px)' },
-					'100%': { opacity: '0', transform: 'translateX(100px)' },
+					'0%': { opacity: '1' },
+					'100%': { opacity: '0' },
 				},
 			},
 		},

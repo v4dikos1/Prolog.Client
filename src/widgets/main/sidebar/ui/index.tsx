@@ -43,20 +43,26 @@ export const Sidebar = ({ className }: Props) => {
 			<main className='scrollable py-4 px-5 flex flex-col grow overflow-auto relative'>
 				<OrderIncomingList
 					className={
-						'absolute ' +
-						(activeTab === StatusEnum.incoming ? 'animate-fadeIn opacity-0' : 'animate-fadeOut pointer-events-none')
+						'w-full ' +
+						(activeTab === StatusEnum.incoming
+							? 'animate-fadeIn opacity-0'
+							: 'animate-fadeOut pointer-events-none hidden ')
 					}
 				/>
 				<OrderActiveList
 					className={
-						'absolute ' +
-						(activeTab === StatusEnum.active ? 'animate-fadeIn opacity-0' : 'animate-fadeOut pointer-events-none')
+						'w-full ' +
+						(activeTab === StatusEnum.active
+							? 'animate-fadeIn opacity-0 '
+							: 'animate-fadeOut pointer-events-none hidden ')
 					}
 				/>
 				<OrderCompletedList
 					className={
-						'absolute ' +
-						(activeTab === StatusEnum.completed ? 'animate-fadeIn opacity-0' : 'animate-fadeOut pointer-events-none')
+						'w-full ' +
+						(activeTab === StatusEnum.completed
+							? 'animate-fadeIn opacity-0'
+							: 'animate-fadeOut pointer-events-none hidden ')
 					}
 				/>
 			</main>

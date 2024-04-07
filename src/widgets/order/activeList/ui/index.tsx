@@ -2,15 +2,21 @@ import { useGetActiveOrdersQuery } from '@/app/store'
 import { StatusEnum } from '@/entities/order'
 import { OrderDateGroup } from '../../dateGroup'
 
-export const OrderActiveList = () => {
+interface Props {
+	className?: string
+}
+
+export const OrderActiveList = ({ className }: Props) => {
 	const { data: activeOrders } = useGetActiveOrdersQuery()
 
 	if (!activeOrders) return null
 
 	return (
-		<ul>
+		<ul className={className}>
 			{activeOrders.items.map((item) => (
-				<OrderDateGroup key={item.date + '-' + StatusEnum.active} status={StatusEnum.active} groupByDate={item} />
+				<li key={item.date + '-' + StatusEnum.active}>
+					<OrderDateGroup status={StatusEnum.active} groupByDate={item} />
+				</li>
 			))}
 		</ul>
 	)

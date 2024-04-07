@@ -16,12 +16,6 @@ export const Sidebar = ({ className }: Props) => {
 	const openActive = () => setActiveTab(StatusEnum.active)
 	const openCompleted = () => setActiveTab(StatusEnum.completed)
 
-	const orders: Record<StatusEnum, React.ReactNode> = {
-		[StatusEnum.incoming]: <OrderIncomingList />,
-		[StatusEnum.active]: <OrderActiveList />,
-		[StatusEnum.completed]: <OrderCompletedList />,
-	}
-
 	return (
 		<div id='sidebar' className={cx(className, 'h-screen overflow-hidden flex flex-col')}>
 			<header className='py-4 px-5 bg-gray-100 w-full border-b border-gray-300'>
@@ -46,7 +40,26 @@ export const Sidebar = ({ className }: Props) => {
 					</li>
 				</menu>
 			</header>
-			<main className='scrollable py-4 px-5 flex flex-col grow overflow-auto'>{orders[activeTab]}</main>
+			<main className='scrollable py-4 px-5 flex flex-col grow overflow-auto relative'>
+				<OrderIncomingList
+					className={
+						'absolute ' +
+						(activeTab === StatusEnum.incoming ? 'animate-fadeIn opacity-0' : 'animate-fadeOut pointer-events-none')
+					}
+				/>
+				<OrderActiveList
+					className={
+						'absolute ' +
+						(activeTab === StatusEnum.active ? 'animate-fadeIn opacity-0' : 'animate-fadeOut pointer-events-none')
+					}
+				/>
+				<OrderCompletedList
+					className={
+						'absolute ' +
+						(activeTab === StatusEnum.completed ? 'animate-fadeIn opacity-0' : 'animate-fadeOut pointer-events-none')
+					}
+				/>
+			</main>
 		</div>
 	)
 }

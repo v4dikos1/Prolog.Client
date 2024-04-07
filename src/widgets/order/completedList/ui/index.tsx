@@ -2,15 +2,21 @@ import { useGetCompletedOrdersQuery } from '@/app/store'
 import { StatusEnum } from '@/entities/order'
 import { OrderDateGroup } from '../../dateGroup'
 
-export const OrderCompletedList = () => {
+interface Props {
+	className?: string
+}
+
+export const OrderCompletedList = ({ className }: Props) => {
 	const { data: completedOrders } = useGetCompletedOrdersQuery()
 
 	if (!completedOrders) return null
 
 	return (
-		<ul>
+		<ul className={className}>
 			{completedOrders.items.map((item) => (
-				<OrderDateGroup key={item.date + '-' + StatusEnum.completed} status={StatusEnum.completed} groupByDate={item} />
+				<li key={item.date + '-' + StatusEnum.completed}>
+					<OrderDateGroup status={StatusEnum.completed} groupByDate={item} />
+				</li>
 			))}
 		</ul>
 	)

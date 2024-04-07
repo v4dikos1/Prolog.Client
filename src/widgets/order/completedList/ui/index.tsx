@@ -10,7 +10,7 @@ export const OrderCompletedList = () => {
 	return (
 		<ul>
 			{completedOrders.items.map((item) => (
-				<OrderDateGroup key={item.date + '-' + StatusEnum} status={StatusEnum.completed} groupByDate={item} />
+				<OrderDateGroup key={item.date + '-' + StatusEnum.completed} status={StatusEnum.completed} groupByDate={item} />
 			))}
 		</ul>
 	)

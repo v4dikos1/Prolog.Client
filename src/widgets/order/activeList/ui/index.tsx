@@ -10,7 +10,7 @@ export const OrderActiveList = () => {
 	return (
 		<ul>
 			{activeOrders.items.map((item) => (
-				<OrderDateGroup key={item.date + '-' + StatusEnum} status={StatusEnum.active} groupByDate={item} />
+				<OrderDateGroup key={item.date + '-' + StatusEnum.active} status={StatusEnum.active} groupByDate={item} />
 			))}
 		</ul>
 	)

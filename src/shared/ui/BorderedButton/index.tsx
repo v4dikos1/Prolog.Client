@@ -5,11 +5,13 @@ interface Props {
 	className?: string
 	children?: React.ReactNode
 	Icon?: React.ElementType
+	disabled?: boolean
 }
 
-export const BorderedButton = ({ children, className, Icon }: Props) => {
+export const BorderedButton = ({ children, disabled, className, Icon }: Props) => {
 	return (
 		<button
+			disabled={disabled}
 			className={cx(
 				className,
 				styles.borderedButton,

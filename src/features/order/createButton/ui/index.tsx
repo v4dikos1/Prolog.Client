@@ -3,8 +3,9 @@ import { ThinPlusIcon } from '@/shared/ui/icons/ThinPlusIcon'
 
 interface Props {
 	className?: string
+	disabled?: boolean
 }
 
-export const OrderCreateButton = ({ className }: Props) => {
-	return <BorderedButton className={className} Icon={ThinPlusIcon} />
+export const OrderCreateButton = ({ className, disabled }: Props) => {
+	return <BorderedButton disabled={disabled} className={className} Icon={ThinPlusIcon} />
 }

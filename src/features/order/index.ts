@@ -5,6 +5,8 @@ import { OrderRunButton } from './runButton'
 import { OrderCopyIDButton } from './copyIDButton'
 import { OrderPickUpAddress } from './pickUpAddress'
 import { OrderDeliveryAddress } from './deliveryAddress'
+import { DeleteIncomingOrdersButton } from './deleteIncomingOrdersButton/'
+import { ChangeDeliveryDateButton } from './changeDeliveryDateButton'
 
 export {
 	OrderTabs,
@@ -14,4 +16,6 @@ export {
 	OrderCopyIDButton,
 	OrderPickUpAddress,
 	OrderDeliveryAddress,
+	DeleteIncomingOrdersButton,
+	ChangeDeliveryDateButton,
 }

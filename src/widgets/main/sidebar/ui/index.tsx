@@ -2,10 +2,11 @@ import { useSearchParams } from 'react-router-dom'
 import cx from 'classnames'
 
 import { isOrdersLoading, useAppSelector } from '@/app/store'
-import { OrderActiveList, OrderIncomingList, OrderCompletedList } from '@/widgets/order'
-import { OrderCreateButton, OrderSearchInput, OrderTabs, OrderRunButton } from '@/features/order'
+import { OrderTabs } from '@/features/order'
 import { StatusEnum } from '@/entities/order'
 import { SpinnerIcon } from '@/shared/ui/icons/SpinnerIcon'
+import { Main } from './Main'
+import { Menu } from './Menu'
 
 interface Props {
 	className?: string
@@ -42,44 +43,9 @@ export const Sidebar = ({ className }: Props) => {
 						openCompleted={openCompleted}
 					/>
 				</nav>
-				<menu className='mt-3 flex gap-2'>
-					<li className='grow'>
-						<OrderSearchInput className='w-full' />
-					</li>
-					<li>
-						<OrderCreateButton />
-					</li>
-					<li>
-						<OrderRunButton />
-					</li>
-				</menu>
+				<Menu className='mt-3' activeTab={activeTab} />
 			</header>
-			<main className='scrollable py-4 px-5 flex flex-col grow overflow-auto relative'>
-				<OrderIncomingList
-					className={
-						'w-full ' +
-						(activeTab === StatusEnum.incoming
-							? 'animate-fadeIn opacity-0'
-							: 'animate-fadeOut pointer-events-none hidden ')
-					}
-				/>
-				<OrderActiveList
-					className={
-						'w-full ' +
-						(activeTab === StatusEnum.active
-							? 'animate-fadeIn opacity-0 '
-							: 'animate-fadeOut pointer-events-none hidden ')
-					}
-				/>
-				<OrderCompletedList
-					className={
-						'w-full ' +
-						(activeTab === StatusEnum.completed
-							? 'animate-fadeIn opacity-0'
-							: 'animate-fadeOut pointer-events-none hidden ')
-					}
-				/>
-			</main>
+			<Main className='grow relative' activeTab={activeTab} />
 		</div>
 	)
 }

@@ -125,3 +125,18 @@ export const isOrdersLoading = createSelector(
 	],
 	(iO, aO, cO) => iO.isLoading || aO.isLoading || cO.isLoading,
 )
+
+export const isIncomingOrderSelected = createSelector(apiSlice.endpoints.getIncomingOrders.select(), (incomingOrders) =>
+	incomingOrders.data?.items.some((item) => item.orders.some((order) => order.selected)),
+)
+
+export const isActiveOrderSelected = createSelector(apiSlice.endpoints.getActiveOrders.select(), (activeOrders) =>
+	activeOrders.data?.items.some((item) =>
+		item.orders.some((groupByDriver) => groupByDriver.orders.some((order) => order.selected)),
+	),
+)
+
+export const isCompletedOrderSelected = createSelector(
+	apiSlice.endpoints.getCompletedOrders.select(),
+	(completedOrders) => completedOrders.data?.items.some((item) => item.orders.some((order) => order.selected)),
+)

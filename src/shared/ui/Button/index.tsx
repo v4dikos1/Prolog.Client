@@ -9,6 +9,7 @@ interface Props {
 	children?: React.ReactNode
 	Icon?: React.ElementType | null
 	className?: string
+	disabled?: boolean
 }
 
 export const Button = ({
@@ -18,11 +19,12 @@ export const Button = ({
 	children = null,
 	Icon = null,
 	className,
+	disabled,
 }: Props) => {
 	return (
 		<button
 			type={type}
-			disabled={loading}
+			disabled={loading || disabled}
 			className={cx(className, styles.button, {
 				[styles['button-iconed']]: Icon !== null,
 				[styles['button-primary']]: category === 'primary',

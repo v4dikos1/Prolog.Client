@@ -15,25 +15,30 @@ export const OrderTabs = ({ className, activeTab, openIncoming, openActive, open
 	const incomingCount = useAppSelector(getIncomingOrdersCount)
 	const activeCount = useAppSelector(getActiveOrdersCount)
 	const completedCount = useAppSelector(getCompletedOrdersCount)
-	const defaultValue = '0'
 
 	return (
 		<menu className={cx(className, 'flex gap-1 justify-between')}>
-			<li>
-				<Tab clickHandler={openIncoming} active={activeTab === StatusEnum.incoming}>
-					Входящие ({incomingCount || defaultValue})
-				</Tab>
-			</li>
-			<li>
-				<Tab clickHandler={openActive} active={activeTab === StatusEnum.active}>
-					Активные ({activeCount || defaultValue})
-				</Tab>
-			</li>
-			<li>
-				<Tab clickHandler={openCompleted} active={activeTab === StatusEnum.completed}>
-					Выполненные ({completedCount || defaultValue})
-				</Tab>
-			</li>
+			{incomingCount && incomingCount > 0 && (
+				<li className='animate-fadeIn'>
+					<Tab clickHandler={openIncoming} active={activeTab === StatusEnum.incoming}>
+						Входящие ({incomingCount})
+					</Tab>
+				</li>
+			)}
+			{activeCount && activeCount > 0 && (
+				<li className='animate-fadeIn'>
+					<Tab clickHandler={openActive} active={activeTab === StatusEnum.active}>
+						Активные ({activeCount})
+					</Tab>
+				</li>
+			)}
+			{completedCount && completedCount > 0 && (
+				<li className='animate-fadeIn'>
+					<Tab clickHandler={openCompleted} active={activeTab === StatusEnum.completed}>
+						Выполненные ({completedCount})
+					</Tab>
+				</li>
+			)}
 		</menu>
 	)
 }

@@ -116,3 +116,12 @@ export const getCompletedOrdersCount = createSelector(
 	apiSlice.endpoints.getCompletedOrders.select(),
 	(completedOrders) => completedOrders.data?.count,
 )
+
+export const isOrdersLoading = createSelector(
+	[
+		apiSlice.endpoints.getIncomingOrders.select(),
+		apiSlice.endpoints.getActiveOrders.select(),
+		apiSlice.endpoints.getCompletedOrders.select(),
+	],
+	(iO, aO, cO) => iO.isLoading || aO.isLoading || cO.isLoading,
+)

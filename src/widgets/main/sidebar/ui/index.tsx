@@ -1,20 +1,34 @@
-import React, { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import cx from 'classnames'
 
+import { isOrdersLoading, useAppSelector } from '@/app/store'
 import { OrderActiveList, OrderIncomingList, OrderCompletedList } from '@/widgets/order'
 import { OrderCreateButton, OrderSearchInput, OrderTabs, OrderRunButton } from '@/features/order'
 import { StatusEnum } from '@/entities/order'
+import { SpinnerIcon } from '@/shared/ui/icons/SpinnerIcon'
 
 interface Props {
 	className?: string
 }
 
 export const Sidebar = ({ className }: Props) => {
-	const [activeTab, setActiveTab] = useState<StatusEnum>(StatusEnum.incoming)
+	const [searchParams, setSearchParams] = useSearchParams()
+	const tabFromURL = Number(searchParams.get('tab'))
 
-	const openIncoming = () => setActiveTab(StatusEnum.incoming)
-	const openActive = () => setActiveTab(StatusEnum.active)
-	const openCompleted = () => setActiveTab(StatusEnum.completed)
+	let activeTab = StatusEnum.incoming
+
+	if (Object.values(StatusEnum).includes(tabFromURL)) {
+		activeTab = tabFromURL
+	} else {
+		setSearchParams({ tab: String(StatusEnum.incoming) })
+	}
+
+	const openIncoming = () => setSearchParams({ tab: String(StatusEnum.incoming) })
+	const openActive = () => setSearchParams({ tab: String(StatusEnum.active) })
+	const openCompleted = () => setSearchParams({ tab: String(StatusEnum.completed) })
+
+	const isLoading = useAppSelector(isOrdersLoading)
+	if (isLoading) return <SpinnerIcon className='mt-10 mx-auto' pathClassName='fill-indigo-700' />
 
 	return (
 		<div id='sidebar' className={cx(className, 'h-screen overflow-hidden flex flex-col')}>

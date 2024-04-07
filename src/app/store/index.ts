@@ -8,9 +8,13 @@ import {
 	ActiveOrders,
 	transformOrdersFromAPIToIncoming,
 	transformOrdersFromAPIToActive,
+	transformOrdersFromAPIToCompleted,
 	toggleOrderInIncomingOrders,
 	toggleOrderInActiveOrders,
+	toggleOrderInCompletedOrders,
 	StatusEnum,
+	CompletedOrders,
+	CompletedOrdersFromAPI,
 } from '@/entities/order'
 import { apiBaseQuery } from './baseQuery'
 
@@ -41,19 +45,31 @@ export const apiSlice = createApi({
 				return transformOrdersFromAPIToActive(response)
 			},
 		}),
+		getCompletedOrders: builder.query<CompletedOrders, void>({
+			query: () => ({
+				url: ROUTES.completedOrders,
+			}),
+			transformResponse: (response: CompletedOrdersFromAPI) => {
+				return transformOrdersFromAPIToCompleted(response)
+			},
+		}),
 		toggleOrder: builder.mutation<void, { status: StatusEnum; id: number }>({
 			queryFn: async () => {
 				return { data: undefined }
 			},
 			async onQueryStarted({ status, id }, { dispatch, queryFulfilled }) {
 				let action
-				if (status == StatusEnum.incoming) {
+				if (status === StatusEnum.incoming) {
 					action = apiSlice.util.updateQueryData('getIncomingOrders', undefined, (incomingOrders) =>
 						toggleOrderInIncomingOrders(id, incomingOrders),
 					)
-				} else {
+				} else if (status === StatusEnum.active) {
 					action = apiSlice.util.updateQueryData('getActiveOrders', undefined, (activeOrders) =>
 						toggleOrderInActiveOrders(id, activeOrders),
+					)
+				} else {
+					action = apiSlice.util.updateQueryData('getCompletedOrders', undefined, (completedOrders) =>
+						toggleOrderInCompletedOrders(id, completedOrders),
 					)
 				}
 				const patchResult = dispatch(action)
@@ -67,7 +83,12 @@ export const apiSlice = createApi({
 	}),
 })
 
-export const { useGetIncomingOrdersQuery, useGetActiveOrdersQuery, useToggleOrderMutation } = apiSlice
+export const {
+	useGetIncomingOrdersQuery,
+	useGetActiveOrdersQuery,
+	useGetCompletedOrdersQuery,
+	useToggleOrderMutation,
+} = apiSlice
 
 export const store = configureStore({
 	reducer: {
@@ -92,6 +113,6 @@ export const getActiveOrdersCount = createSelector(
 )
 
 export const getCompletedOrdersCount = createSelector(
-	apiSlice.endpoints.getIncomingOrders.select(),
+	apiSlice.endpoints.getCompletedOrders.select(),
 	(completedOrders) => completedOrders.data?.count,
 )

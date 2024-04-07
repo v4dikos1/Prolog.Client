@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
 
-import { OrderActiveList, OrderIncomingList } from '@/widgets/order'
+import { OrderActiveList, OrderIncomingList, OrderCompletedList } from '@/widgets/order'
 import { OrderCreateButton, OrderSearchInput, OrderTabs, OrderRunButton } from '@/features/order'
 import { StatusEnum } from '@/entities/order'
 
@@ -19,7 +19,7 @@ export const Sidebar = ({ className }: Props) => {
 	const orders: Record<StatusEnum, React.ReactNode> = {
 		[StatusEnum.incoming]: <OrderIncomingList />,
 		[StatusEnum.active]: <OrderActiveList />,
-		[StatusEnum.completed]: <OrderIncomingList />,
+		[StatusEnum.completed]: <OrderCompletedList />,
 	}
 
 	return (

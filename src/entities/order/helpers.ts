@@ -1,5 +1,5 @@
-import { IncomingOrders, ActiveOrders } from './model'
-import { ActiveOrdersFromAPI, IncomingOrdersFromAPI } from './apiModel'
+import { IncomingOrders, ActiveOrders, CompletedOrders } from './model'
+import { ActiveOrdersFromAPI, CompletedOrdersFromAPI, IncomingOrdersFromAPI } from './apiModel'
 import { getRandomColor } from '@/shared/utils/getRandomColor'
 
 export const transformOrdersFromAPIToIncoming = (ordersFromAPI: IncomingOrdersFromAPI): IncomingOrders => {
@@ -93,6 +93,50 @@ export const transformOrdersFromAPIToActive = (ordersFromAPI: ActiveOrdersFromAP
 	return activeOrders
 }
 
+export const transformOrdersFromAPIToCompleted = (ordersFromAPI: CompletedOrdersFromAPI): CompletedOrders => {
+	const completedOrders: CompletedOrders = {
+		count: ordersFromAPI.totalItems,
+		items: ordersFromAPI.items.map((item) => ({
+			date: item.orderDate,
+			orders: item.ordersGroupedByDriver
+				.map((groupByDriver) =>
+					groupByDriver.orders.map((order) => ({
+						ID: order.id,
+						visibleID: order.visibleId,
+						price: order.price,
+						address: order.address,
+						storage: {
+							ID: order.storageId,
+							name: order.storageName,
+						},
+						client: {
+							ID: order.clientId,
+							name: order.clientName,
+							phone: order.clientPhone,
+						},
+						cargo: {
+							volume: order.volume,
+							weight: order.weight,
+							count: order.amount,
+						},
+						selected: false,
+						status: 2,
+						driver: {
+							name: groupByDriver.driver.name,
+							licensePlate: groupByDriver.driver.licencePlate,
+						},
+						pickedUp: order.pickUpStartDate,
+						completed: Boolean(order.status),
+						end: order.deliveryEndDate,
+					})),
+				)
+				.flat(),
+		})),
+	}
+
+	return completedOrders
+}
+
 export const toggleOrderInIncomingOrders = (id: number, incomingOrders: IncomingOrders) => {
 	for (let i = 0; i < incomingOrders.items.length; i++) {
 		const orders = incomingOrders.items[i].orders
@@ -115,6 +159,18 @@ export const toggleOrderInActiveOrders = (id: number, activeOrders: ActiveOrders
 				if (order.ID === id) {
 					order.selected = !order.selected
 				}
+			}
+		}
+	}
+}
+
+export const toggleOrderInCompletedOrders = (id: number, completedOrders: CompletedOrders) => {
+	for (let i = 0; i < completedOrders.items.length; i++) {
+		const orders = completedOrders.items[i].orders
+		for (let j = 0; j < orders.length; j++) {
+			const order = orders[j]
+			if (order.ID === id) {
+				order.selected = !order.selected
 			}
 		}
 	}

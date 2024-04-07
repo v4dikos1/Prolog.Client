@@ -3,6 +3,7 @@ import { DateHeader } from '@/features/main'
 import { IncomingOrdersGroupByDate, ActiveOrdersGroupByDate, StatusEnum } from '@/entities/order/'
 import { OrderDriverGroup } from '../../driverGroup'
 import { OrderList } from '../../list'
+import { CompletedOrdersGroupByDate } from '@/entities/order/model'
 
 type PropsBase = {
 	className?: string
@@ -18,7 +19,12 @@ type ActiveProps = PropsBase & {
 	groupByDate: ActiveOrdersGroupByDate
 }
 
-type Props = IncomingProps | ActiveProps
+type CompletedProps = PropsBase & {
+	status: StatusEnum.completed
+	groupByDate: CompletedOrdersGroupByDate
+}
+
+type Props = IncomingProps | ActiveProps | CompletedProps
 
 export const OrderDateGroup = ({ className, status, groupByDate }: Props) => {
 	const [opened, setOpened] = useState(false)
@@ -29,7 +35,7 @@ export const OrderDateGroup = ({ className, status, groupByDate }: Props) => {
 		<div className={className}>
 			<DateHeader opened={opened} open={open} close={close} count={groupByDate.orders.length} date={groupByDate.date} />
 			<div className={'mt-[6px] pb-3 ' + (opened ? 'flex' : 'hidden')}>
-				{status === StatusEnum.incoming ? (
+				{status === StatusEnum.incoming || status === StatusEnum.completed ? (
 					<OrderList className='w-full' orders={groupByDate.orders} />
 				) : (
 					groupByDate.orders.map((activeOrdersGroupByDriver) => (

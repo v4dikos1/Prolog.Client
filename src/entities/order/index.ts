@@ -5,36 +5,44 @@ import {
 	Cargo as CargoType,
 	StatusEnum,
 	IncomingOrders,
+	IncomingOrdersGroupByDate,
 	ActiveOrders,
 	ActiveOrdersGroupByDate,
-	IncomingOrdersGroupByDate,
 	ActiveOrdersGroupByDriver,
+	CompletedOrders,
 } from './model'
-import { IncomingOrdersFromAPI, ActiveOrdersFromAPI } from './apiModel'
+import { IncomingOrdersFromAPI, ActiveOrdersFromAPI, CompletedOrdersFromAPI } from './apiModel'
 import {
 	transformOrdersFromAPIToIncoming,
 	transformOrdersFromAPIToActive,
+	transformOrdersFromAPIToCompleted,
 	toggleOrderInIncomingOrders,
 	toggleOrderInActiveOrders,
+	toggleOrderInCompletedOrders,
 } from './helpers'
 
 export {
 	OrderContent,
 	transformOrdersFromAPIToIncoming,
 	transformOrdersFromAPIToActive,
+	transformOrdersFromAPIToCompleted,
 	toggleOrderInIncomingOrders,
 	toggleOrderInActiveOrders,
+	toggleOrderInCompletedOrders,
 	StatusEnum,
 }
+
 export type {
 	OrderType,
 	ClientType,
 	CargoType,
 	IncomingOrdersFromAPI,
 	ActiveOrdersFromAPI,
+	CompletedOrdersFromAPI,
 	IncomingOrders,
+	IncomingOrdersGroupByDate,
+	CompletedOrders,
 	ActiveOrders,
 	ActiveOrdersGroupByDate,
 	ActiveOrdersGroupByDriver,
-	IncomingOrdersGroupByDate,
 }

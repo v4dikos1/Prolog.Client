@@ -71,6 +71,16 @@ export type IncomingOrders = {
 	items: IncomingOrdersGroupByDate[]
 }
 
+export type CompletedOrdersGroupByDate = {
+	date: string
+	orders: CompletedOrder[]
+}
+
+export type CompletedOrders = {
+	count: number
+	items: CompletedOrdersGroupByDate[]
+}
+
 export type ActiveOrdersGroupByDriver = {
 	driver: Driver
 	orders: ActiveOrder[]

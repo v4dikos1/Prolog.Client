@@ -60,3 +60,17 @@ export type ActiveOrdersFromAPI = {
 		}[]
 	}[]
 }
+
+export type CompletedOrdersFromAPI = {
+	totalItems: number
+	itemsQuantity: number
+	itemsOffset: number
+	items: {
+		orderCount: number
+		orderDate: string
+		ordersGroupedByDriver: {
+			driver: DriverFromAPI
+			orders: OrderFromAPI[]
+		}[]
+	}[]
+}

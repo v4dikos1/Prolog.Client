@@ -5,8 +5,12 @@ import { OrderRunButton } from './runButton'
 import { OrderCopyIDButton } from './copyIDButton'
 import { OrderPickUpAddress } from './pickUpAddress'
 import { OrderDeliveryAddress } from './deliveryAddress'
-import { DeleteIncomingOrdersButton } from './deleteIncomingOrdersButton/'
+import { DeleteIncomingOrdersButton } from './deleteIncomingOrdersButton'
 import { ChangeDeliveryDateButton } from './changeDeliveryDateButton'
+import { CancelActiveOrdersButton } from './cancelActiveOrdersButton'
+import { DeleteActiveOrdersButton } from './deleteActiveOrdersButton'
+import { DeleteCompletedOrdersButton } from './deleteCompletedOrdersButton'
+import { CreateDuplicateButton } from './createDuplicateButton'
 
 export {
 	OrderTabs,
@@ -17,5 +21,9 @@ export {
 	OrderPickUpAddress,
 	OrderDeliveryAddress,
 	DeleteIncomingOrdersButton,
+	DeleteActiveOrdersButton,
+	DeleteCompletedOrdersButton,
 	ChangeDeliveryDateButton,
+	CancelActiveOrdersButton,
+	CreateDuplicateButton,
 }

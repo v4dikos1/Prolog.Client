@@ -33,7 +33,7 @@ export const Sidebar = ({ className }: Props) => {
 
 	return (
 		<div id='sidebar' className={cx(className, 'h-screen overflow-hidden flex flex-col')}>
-			<header className='py-4 px-5 bg-gray-100 w-full border-b border-gray-300'>
+			<header className='pt-4 pb-2 px-5 bg-gray-100 w-full border-b border-gray-300'>
 				<nav>
 					<OrderTabs
 						className='w-full'
@@ -43,7 +43,7 @@ export const Sidebar = ({ className }: Props) => {
 						openCompleted={openCompleted}
 					/>
 				</nav>
-				<Menu className='mt-3' activeTab={activeTab} />
+				<Menu className='mt-1' activeTab={activeTab} />
 			</header>
 			<Main className='grow relative' activeTab={activeTab} />
 		</div>

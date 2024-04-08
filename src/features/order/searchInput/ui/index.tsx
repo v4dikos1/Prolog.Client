@@ -3,8 +3,9 @@ import { SearchIcon } from '@/shared/ui/icons/SearchIcon'
 
 interface Props {
 	className?: string
+	disabled: boolean
 }
 
-export const OrderSearchInput = ({ className }: Props) => {
-	return <InputWithIcon className={className} placeholder='Поиск' Icon={SearchIcon} />
+export const OrderSearchInput = ({ className, disabled }: Props) => {
+	return <InputWithIcon disabled={disabled} className={className} placeholder='Поиск' Icon={SearchIcon} />
 }

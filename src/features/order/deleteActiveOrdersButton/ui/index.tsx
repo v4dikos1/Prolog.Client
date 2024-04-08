@@ -4,6 +4,6 @@ interface Props {
 	disabled: boolean
 }
 
-export const DeleteIncomingOrdersButton = ({ disabled }: Props) => {
+export const DeleteActiveOrdersButton = ({ disabled }: Props) => {
 	return <ButtonWithTrashIcon disabled={disabled} />
 }

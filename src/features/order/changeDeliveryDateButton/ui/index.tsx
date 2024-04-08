@@ -3,11 +3,12 @@ import { ClockIcon } from '@/shared/ui/icons/ClockIcon'
 
 interface Props {
 	className?: string
+	disabled: boolean
 }
 
-export const ChangeDeliveryDateButton = ({ className }: Props) => {
+export const ChangeDeliveryDateButton = ({ className, disabled }: Props) => {
 	return (
-		<BorderedButton className={className} Icon={ClockIcon}>
+		<BorderedButton disabled={disabled} className={className} Icon={ClockIcon}>
 			Изменить дату доставки
 		</BorderedButton>
 	)

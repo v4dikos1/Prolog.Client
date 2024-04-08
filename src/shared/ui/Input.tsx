@@ -8,9 +8,19 @@ export interface Props {
 	name?: string
 	type?: React.HTMLInputTypeAttribute
 	autocomplete?: React.HTMLInputAutoCompleteAttribute
+	disabled: boolean
 }
 
-export const Input = ({ className, placeholder, value, changeHandler, name, type = 'text', autocomplete }: Props) => {
+export const Input = ({
+	className,
+	disabled,
+	placeholder,
+	value,
+	changeHandler,
+	name,
+	type = 'text',
+	autocomplete,
+}: Props) => {
 	return (
 		<input
 			placeholder={placeholder}
@@ -19,6 +29,7 @@ export const Input = ({ className, placeholder, value, changeHandler, name, type
 			name={name}
 			type={type}
 			autoComplete={autocomplete}
+			disabled={disabled}
 			className={cx(
 				className,
 				'input text-sm rounded-md py-[9px] px-[13px] bg-white border border-gray-300 text-gray-800 focus:border-gray-500 hover:border-gray-500 outline-none placeholder:text-gray-500',

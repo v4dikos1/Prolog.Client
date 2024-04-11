@@ -8,19 +8,29 @@ export default {
 				'arrow': 'arrow 1s ease forwards',
 				'fadeIn': 'fadeIn 0.3s ease forwards',
 				'fadeOut': 'fadeOut 0.3s ease forwards',
+				'hint': 'hint 0.2s ease forwards',
+				'hint-hide': 'hint-hide 0.2s ease forwards',
 			},
 			keyframes: {
-				arrow: {
+				'arrow': {
 					'0%, 50%, 100%': { transform: 'translateX(0px)' },
 					'25%, 75%': { transform: 'translateX(5px)' },
 				},
-				fadeIn: {
+				'fadeIn': {
 					'0%': { opacity: '0' },
 					'100%': { opacity: '1' },
 				},
-				fadeOut: {
+				'fadeOut': {
 					'0%': { opacity: '1' },
 					'100%': { opacity: '0' },
+				},
+				'hint': {
+					'0%': { opacity: 0, transform: 'scale(0)' },
+					'100%': { opacity: 1, transform: 'scale(1)' },
+				},
+				'hint-hide': {
+					'0%': { opacity: 1, transform: 'scale(1)' },
+					'100%': { opacity: 0, transform: 'scale(0)' },
 				},
 			},
 		},

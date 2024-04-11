@@ -81,7 +81,8 @@ export const NotSelectedItem = ({ className, activeTab, selected }: MenuNotSelec
 				'translate-y-[130%]': openedOrdersIsSelected,
 			})}>
 			<li
-				className={cx('z-10 absolute transition-all grow w-full', {
+				className={cx('z-10 absolute transition-all grow', {
+					'w-full': !incomingOpened || selected.incoming,
 					'w-[calc(100%_-_120px)]': incomingOpened && !selected.incoming,
 				})}>
 				<OrderSearchInput disabled={openedOrdersIsSelected} />

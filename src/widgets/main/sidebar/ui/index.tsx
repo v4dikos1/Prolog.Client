@@ -1,32 +1,35 @@
-import { useSearchParams } from 'react-router-dom'
+import { useState } from 'react'
 import cx from 'classnames'
 
 import { isOrdersLoading, useAppSelector } from '@/app/store'
 import { OrderTabs } from '@/features/order'
 import { StatusEnum } from '@/entities/order'
 import { SpinnerIcon } from '@/shared/ui/icons/SpinnerIcon'
+import { useUpdateSearchParams } from '@/shared/hooks/useSearchParams'
 import { Main } from './Main'
 import { Menu } from './Menu'
+import { useEffect } from 'react'
 
 interface Props {
 	className?: string
 }
 
 export const Sidebar = ({ className }: Props) => {
-	const [searchParams, setSearchParams] = useSearchParams()
-	const tabFromURL = Number(searchParams.get('tab'))
+	const [searchParams, updateParams] = useUpdateSearchParams('tab', String(StatusEnum.incoming))
+	const [activeTab, setActiveTab] = useState(StatusEnum.incoming)
 
-	let activeTab = StatusEnum.incoming
+	useEffect(() => {
+		const tabFromURL = Number(searchParams.get('tab'))
+		if (Object.values(StatusEnum).includes(tabFromURL)) {
+			setActiveTab(tabFromURL)
+		} else {
+			updateParams('tab', String(StatusEnum.incoming))
+		}
+	}, [setActiveTab, searchParams, updateParams])
 
-	if (Object.values(StatusEnum).includes(tabFromURL)) {
-		activeTab = tabFromURL
-	} else {
-		setSearchParams({ tab: String(StatusEnum.incoming) })
-	}
-
-	const openIncoming = () => setSearchParams({ tab: String(StatusEnum.incoming) })
-	const openActive = () => setSearchParams({ tab: String(StatusEnum.active) })
-	const openCompleted = () => setSearchParams({ tab: String(StatusEnum.completed) })
+	const openIncoming = () => updateParams('tab', String(StatusEnum.incoming))
+	const openActive = () => updateParams('tab', String(StatusEnum.active))
+	const openCompleted = () => updateParams('tab', String(StatusEnum.completed))
 
 	const isLoading = useAppSelector(isOrdersLoading)
 	if (isLoading) return <SpinnerIcon className='mt-10 mx-auto' pathClassName='fill-indigo-700' />

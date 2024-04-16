@@ -1,6 +1,7 @@
-import { IncomingOrders, ActiveOrders, CompletedOrders } from './model'
+import { IncomingOrders, ActiveOrders, CompletedOrders, ActiveOrdersGroupByDate } from './model'
 import { ActiveOrdersFromAPI, CompletedOrdersFromAPI, IncomingOrdersFromAPI } from './apiModel'
 import { getRandomColor } from '@/shared/utils/getRandomColor'
+import { Order } from './model'
 
 export const transformOrdersFromAPIToIncoming = (ordersFromAPI: IncomingOrdersFromAPI): IncomingOrders => {
 	const incomingOrders: IncomingOrders = {
@@ -174,4 +175,56 @@ export const toggleOrderInCompletedOrders = (id: number, completedOrders: Comple
 			}
 		}
 	}
+}
+
+export const filterOrder = (order: Order, searchStr = '') => {
+	if (searchStr === '') return true
+
+	const includesID = order.visibleID.toLowerCase().includes(searchStr)
+	const includesAddress = order.address.toLowerCase().includes(searchStr)
+	const includesStorage = order.storage.name.toLowerCase().includes(searchStr)
+	const includesClient = order.client.name.toLowerCase().includes(searchStr)
+
+	if (includesID || includesAddress || includesStorage || includesClient) return true
+
+	return false
+}
+
+export const filterActiveOrders = (activeOrders: ActiveOrders, searchStr = ''): ActiveOrders => {
+	return {
+		count: activeOrders.count,
+		items: activeOrders.items.map((activeOrdersGroupByDate) => ({
+			date: activeOrdersGroupByDate.date,
+			orders: activeOrdersGroupByDate.orders.map((activeOrdersGroupByDriver) => ({
+				driver: activeOrdersGroupByDriver.driver,
+				orders: activeOrdersGroupByDriver.orders.filter((activeOrder) => filterOrder(activeOrder, searchStr)),
+			})),
+		})),
+	}
+}
+
+export const filterIncomingOrders = (incomingOrders: IncomingOrders, searchStr = ''): IncomingOrders => {
+	return {
+		count: incomingOrders.count,
+		items: incomingOrders.items.map((incomingOrdersGroupByDate) => ({
+			date: incomingOrdersGroupByDate.date,
+			orders: incomingOrdersGroupByDate.orders.filter((incomingOrder) => filterOrder(incomingOrder, searchStr)),
+		})),
+	}
+}
+
+export const filterCompletedOrders = (completedOrders: CompletedOrders, searchStr = ''): CompletedOrders => {
+	return {
+		count: completedOrders.count,
+		items: completedOrders.items.map((completedOrdersGroupByDate) => ({
+			date: completedOrdersGroupByDate.date,
+			orders: completedOrdersGroupByDate.orders.filter((completedOrder) => filterOrder(completedOrder, searchStr)),
+		})),
+	}
+}
+
+export const activeOrdersGroupByDateIsEmpty = (activeOrdersGroupByDate: ActiveOrdersGroupByDate): boolean => {
+	return activeOrdersGroupByDate.orders.every(
+		(activeOrdersGroupByDriver) => activeOrdersGroupByDriver.orders.length === 0,
+	)
 }

@@ -1,4 +1,6 @@
+import { useSearchParams } from 'react-router-dom'
 import { useGetIncomingOrdersQuery } from '@/app/store'
+import { filterIncomingOrders } from '@/entities/order'
 import { StatusEnum } from '@/entities/order'
 import { OrderDateGroup } from '../../dateGroup'
 
@@ -8,12 +10,15 @@ interface Props {
 
 export const OrderIncomingList = ({ className }: Props) => {
 	const { data: incomingOrders } = useGetIncomingOrdersQuery()
+	const [searchParams] = useSearchParams()
+	const searchStr = (searchParams.get('q') || '').toLowerCase()
 
 	if (!incomingOrders) return null
+	const filteredIncomingOrders = filterIncomingOrders(incomingOrders, searchStr)
 
 	return (
 		<ul className={className}>
-			{incomingOrders.items.map((item) => (
+			{filteredIncomingOrders.items.map((item) => (
 				<li key={item.date + '-' + StatusEnum.incoming}>
 					<OrderDateGroup status={StatusEnum.incoming} groupByDate={item} />
 				</li>

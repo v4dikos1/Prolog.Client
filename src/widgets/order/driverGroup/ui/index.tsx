@@ -8,6 +8,8 @@ interface Props {
 }
 
 export const OrderDriverGroup = ({ className, activeOrdersGroupByDriver }: Props) => {
+	if (activeOrdersGroupByDriver.orders.length === 0) return null
+
 	return (
 		<div className={className + ' flex flex-col gap-3'}>
 			<DriverCard driver={activeOrdersGroupByDriver.driver} />

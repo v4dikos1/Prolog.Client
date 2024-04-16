@@ -1,4 +1,5 @@
 import { OrderContent } from './orderContent'
+import { IncomingOrdersFromAPI, ActiveOrdersFromAPI, CompletedOrdersFromAPI } from './apiModel'
 import {
 	Order as OrderType,
 	Client as ClientType,
@@ -10,8 +11,8 @@ import {
 	ActiveOrdersGroupByDate,
 	ActiveOrdersGroupByDriver,
 	CompletedOrders,
+	CompletedOrdersGroupByDate,
 } from './model'
-import { IncomingOrdersFromAPI, ActiveOrdersFromAPI, CompletedOrdersFromAPI } from './apiModel'
 import {
 	transformOrdersFromAPIToIncoming,
 	transformOrdersFromAPIToActive,
@@ -19,6 +20,10 @@ import {
 	toggleOrderInIncomingOrders,
 	toggleOrderInActiveOrders,
 	toggleOrderInCompletedOrders,
+	filterActiveOrders,
+	filterIncomingOrders,
+	filterCompletedOrders,
+	activeOrdersGroupByDateIsEmpty,
 } from './helpers'
 
 export {
@@ -29,6 +34,10 @@ export {
 	toggleOrderInIncomingOrders,
 	toggleOrderInActiveOrders,
 	toggleOrderInCompletedOrders,
+	filterActiveOrders,
+	filterIncomingOrders,
+	filterCompletedOrders,
+	activeOrdersGroupByDateIsEmpty,
 	StatusEnum,
 }
 
@@ -45,4 +54,5 @@ export type {
 	ActiveOrders,
 	ActiveOrdersGroupByDate,
 	ActiveOrdersGroupByDriver,
+	CompletedOrdersGroupByDate,
 }

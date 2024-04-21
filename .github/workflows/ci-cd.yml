@@ -43,7 +43,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /prolog-client
+            cd /prolog
             docker compose -p prolog-client pull
             docker compose -p prolog-client down
             docker compose -p prolog-client up -d

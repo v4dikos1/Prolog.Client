@@ -44,6 +44,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /prolog-client
-            docker compose -p prolog pull
-            docker compose -p prolog down
-            docker compose -p prolog up -d
+            docker compose -p prolog-client pull
+            docker compose -p prolog-client down
+            docker compose -p prolog-client up -d

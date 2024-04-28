@@ -10,6 +10,8 @@ export default {
 				'fadeOut': 'fadeOut 0.3s ease forwards',
 				'hint': 'hint 0.2s ease forwards',
 				'hint-hide': 'hint-hide 0.2s ease forwards',
+				'tooltip': 'tooltip 0.2s ease forwards',
+				'tooltip-close': 'tooltip-close 0.2s ease forwards',
 			},
 			keyframes: {
 				'arrow': {
@@ -31,6 +33,14 @@ export default {
 				'hint-hide': {
 					'0%': { opacity: 1, transform: 'scale(1)' },
 					'100%': { opacity: 0, transform: 'scale(0)' },
+				},
+				'tooltip': {
+					'0%': { opacity: 0, transform: 'scale(0.95) translateY(-3%)', boxShadow: 'none' },
+					'100%': { opacity: 1, transform: 'scale(1) translateY(0%)', boxShadow: '0 15px 42px 0px rgba(0,0,0,0.12)' },
+				},
+				'tooltip-close': {
+					'0%': { opacity: 1, transform: 'scale(1) translateY(0%)', boxShadow: '0 15px 42px 0px rgba(0,0,0,0.12)' },
+					'100%': { opacity: 0, transform: 'scale(0.95) translateY(-3%)', boxShadow: 'none' },
 				},
 			},
 		},

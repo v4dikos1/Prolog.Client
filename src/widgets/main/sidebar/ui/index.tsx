@@ -35,7 +35,7 @@ export const Sidebar = ({ className }: Props) => {
 	if (isLoading) return <SpinnerIcon className='mt-10 mx-auto' pathClassName='fill-indigo-700' />
 
 	return (
-		<div id='sidebar' className={cx(className, 'h-screen overflow-hidden flex flex-col')}>
+		<div id='sidebar' className={cx(className, 'w-full h-screen overflow-hidden flex flex-col')}>
 			<header className='pt-4 pb-2 px-5 bg-gray-100 w-full border-b border-gray-300'>
 				<nav>
 					<OrderTabs

@@ -97,6 +97,7 @@ export const {
 	useGetIncomingOrdersQuery,
 	useGetActiveOrdersQuery,
 	useGetCompletedOrdersQuery,
+	useGetProductsQuery,
 	useToggleOrderMutation,
 } = apiSlice
 

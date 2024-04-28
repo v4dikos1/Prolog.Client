@@ -1,2 +1,3 @@
 import { Driver } from './model'
-export type { Driver }
+import { DriverFromAPI } from './apiModel'
+export type { Driver, DriverFromAPI }

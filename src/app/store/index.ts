@@ -16,12 +16,14 @@ import {
 	CompletedOrders,
 	CompletedOrdersFromAPI,
 } from '@/entities/order'
+import { ProductsFromAPI, Product, transformProductsFromAPI } from '@/entities/product'
 import { apiBaseQuery } from './baseQuery'
 
 const ROUTES = {
 	incomingOrders: 'orders?Status=0',
 	activeOrders: 'orders?Status=1',
 	completedOrders: 'orders?Status=2',
+	products: 'products',
 }
 
 export const apiSlice = createApi({
@@ -78,6 +80,14 @@ export const apiSlice = createApi({
 				} catch {
 					patchResult.undo()
 				}
+			},
+		}),
+		getProducts: builder.query<Product[], void>({
+			query: () => ({
+				url: ROUTES.products,
+			}),
+			transformResponse: (response: ProductsFromAPI) => {
+				return transformProductsFromAPI(response)
 			},
 		}),
 	}),

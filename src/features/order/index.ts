@@ -1,6 +1,6 @@
 import { OrderTabs } from './tabs'
 import { OrderSearchInput } from './searchInput'
-import { OrderCreateButton } from './createButton'
+import { OpenOrderCreateModalButton } from './openOrderCreateModalButton'
 import { OrderRunButton } from './runButton'
 import { OrderCopyIDButton } from './copyIDButton'
 import { OrderPickUpAddress } from './pickUpAddress'
@@ -11,11 +11,12 @@ import { CancelActiveOrdersButton } from './cancelActiveOrdersButton'
 import { DeleteActiveOrdersButton } from './deleteActiveOrdersButton'
 import { DeleteCompletedOrdersButton } from './deleteCompletedOrdersButton'
 import { CreateDuplicateButton } from './createDuplicateButton'
+import { ImportOrdersButton } from './importButton'
 
 export {
 	OrderTabs,
 	OrderSearchInput,
-	OrderCreateButton,
+	OpenOrderCreateModalButton,
 	OrderRunButton,
 	OrderCopyIDButton,
 	OrderPickUpAddress,
@@ -26,4 +27,5 @@ export {
 	ChangeDeliveryDateButton,
 	CancelActiveOrdersButton,
 	CreateDuplicateButton,
+	ImportOrdersButton,
 }

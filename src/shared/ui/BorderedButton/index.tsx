@@ -1,3 +1,4 @@
+import { MouseEventHandler } from 'react'
 import cx from 'classnames'
 import styles from './style.module.css'
 
@@ -6,12 +7,14 @@ interface Props {
 	children?: React.ReactNode
 	Icon?: React.ElementType
 	disabled?: boolean
+	clickHandler?: MouseEventHandler
 }
 
-export const BorderedButton = ({ children, disabled, className, Icon }: Props) => {
+export const BorderedButton = ({ children, disabled, className, Icon, clickHandler }: Props) => {
 	return (
 		<button
 			disabled={disabled}
+			onClick={clickHandler}
 			className={cx(
 				className,
 				styles.borderedButton,

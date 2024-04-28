@@ -5,7 +5,7 @@ import {
 	CancelActiveOrdersButton,
 	ChangeDeliveryDateButton,
 	OrderSearchInput,
-	OrderCreateButton,
+	OpenOrderCreateModalButton,
 	OrderRunButton,
 	DeleteCompletedOrdersButton,
 	CreateDuplicateButton,
@@ -91,7 +91,7 @@ export const NotSelectedItem = ({ className, activeTab, selected }: MenuNotSelec
 				className={cx('right-[60px] absolute transition-opacity ', {
 					'opacity-0': !incomingOpened,
 				})}>
-				<OrderCreateButton disabled={!incomingOpened || openedOrdersIsSelected} />
+				<OpenOrderCreateModalButton disabled={!incomingOpened || openedOrdersIsSelected} />
 			</li>
 			<li
 				className={cx('right-0  absolute transition-opacity', {

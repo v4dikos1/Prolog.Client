@@ -1,0 +1,7 @@
+.select:focus + svg {
+	transform: rotate(180deg);
+}
+
+.select:focus + svg path {
+	@apply stroke-gray-600;
+}

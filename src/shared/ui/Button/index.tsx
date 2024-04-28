@@ -1,3 +1,4 @@
+import { MouseEventHandler } from 'react'
 import cx from 'classnames'
 import { SpinnerIcon } from '@/shared/ui/icons/SpinnerIcon'
 import styles from './style.module.css'
@@ -10,6 +11,7 @@ interface Props {
 	Icon?: React.ElementType | null
 	className?: string
 	disabled?: boolean
+	clickHandler?: MouseEventHandler
 }
 
 export const Button = ({
@@ -20,9 +22,11 @@ export const Button = ({
 	Icon = null,
 	className,
 	disabled,
+	clickHandler,
 }: Props) => {
 	return (
 		<button
+			onClick={clickHandler}
 			type={type}
 			disabled={loading || disabled}
 			className={cx(className, styles.button, {

@@ -15,12 +15,7 @@ export const Settings = ({ className }: Props) => {
 	return (
 		<div className={className}>
 			<Button clickHandler={toogleTooltip} />
-			<Tooltip
-				className='-bottom-10 relative right-0'
-				open={tooltipOpened}
-				id='settings-tooltip'
-				close={closeTooltip}
-			/>
+			<Tooltip className='-bottom-8 relative right-0' open={tooltipOpened} id='settings-tooltip' close={closeTooltip} />
 		</div>
 	)
 }

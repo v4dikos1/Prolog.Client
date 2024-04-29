@@ -1,14 +1,17 @@
+// import ReactMapboxGl from 'react-mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
 import cx from 'classnames'
-import mapImageSrc from '../assets/map.png'
 
 interface Props {
 	className?: string
 }
 
 export const Map = ({ className }: Props) => {
+	// const MapBox = ReactMapboxGl({ minZoom: 1 })
+
 	return (
 		<section id='map' className={cx(className, 'h-full')}>
-			<img src={mapImageSrc} className='w-full h-full object-cover' />
+			{/* <MapBox style='mapbox://styles/mapbox/streets-v8' /> */}
 		</section>
 	)
 }

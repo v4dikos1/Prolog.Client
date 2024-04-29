@@ -6,7 +6,7 @@ import {
 	ChangeDeliveryDateButton,
 	OrderSearchInput,
 	OpenOrderCreateModalButton,
-	OrderRunButton,
+	OpenRunPlanningModalButton,
 	DeleteCompletedOrdersButton,
 	CreateDuplicateButton,
 } from '@/features/order'
@@ -97,7 +97,7 @@ export const NotSelectedItem = ({ className, activeTab, selected }: MenuNotSelec
 				className={cx('right-0  absolute transition-opacity', {
 					'opacity-0': !incomingOpened,
 				})}>
-				<OrderRunButton disabled={!incomingOpened || openedOrdersIsSelected} />
+				<OpenRunPlanningModalButton disabled={!incomingOpened || openedOrdersIsSelected} />
 			</li>
 		</menu>
 	)

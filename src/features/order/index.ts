@@ -1,7 +1,7 @@
 import { OrderTabs } from './tabs'
 import { OrderSearchInput } from './searchInput'
 import { OpenOrderCreateModalButton } from './openOrderCreateModalButton'
-import { OrderRunButton } from './runButton'
+import { OpenRunPlanningModalButton } from './runPlanningButton'
 import { OrderCopyIDButton } from './copyIDButton'
 import { OrderPickUpAddress } from './pickUpAddress'
 import { OrderDeliveryAddress } from './deliveryAddress'
@@ -17,7 +17,7 @@ export {
 	OrderTabs,
 	OrderSearchInput,
 	OpenOrderCreateModalButton,
-	OrderRunButton,
+	OpenRunPlanningModalButton,
 	OrderCopyIDButton,
 	OrderPickUpAddress,
 	OrderDeliveryAddress,

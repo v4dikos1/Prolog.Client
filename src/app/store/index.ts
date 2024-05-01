@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { configureStore, createSelector } from '@reduxjs/toolkit'
 import { createApi } from '@reduxjs/toolkit/query/react'
+
 import {
 	IncomingOrdersFromAPI,
 	ActiveOrdersFromAPI,
@@ -17,6 +18,7 @@ import {
 	CompletedOrdersFromAPI,
 } from '@/entities/order'
 import { ProductsFromAPI, Product, transformProductsFromAPI } from '@/entities/product'
+import { Client, ClientsFromAPI, transformClientsFromAPI } from '@/entities/client'
 import { apiBaseQuery } from './baseQuery'
 
 const ROUTES = {
@@ -24,12 +26,13 @@ const ROUTES = {
 	activeOrders: 'orders?Status=1',
 	completedOrders: 'orders?Status=2',
 	products: 'products',
+	clients: 'customers',
 }
 
 export const apiSlice = createApi({
 	reducerPath: 'api',
 	baseQuery: apiBaseQuery(),
-	tagTypes: ['Orders'],
+	tagTypes: ['Orders', 'Clients'],
 	endpoints: (builder) => ({
 		getIncomingOrders: builder.query<IncomingOrders, void>({
 			query: () => ({
@@ -90,6 +93,53 @@ export const apiSlice = createApi({
 				return transformProductsFromAPI(response)
 			},
 		}),
+		getClients: builder.query<Client[], void>({
+			query: () => ({
+				url: ROUTES.clients,
+			}),
+			providesTags: (result) =>
+				result
+					? [...result.map(({ ID }) => ({ type: 'Clients', ID } as const)), { type: 'Clients', id: 'LIST' }]
+					: [{ type: 'Clients', id: 'LIST' }],
+			transformResponse: (response: ClientsFromAPI) => {
+				return transformClientsFromAPI(response)
+			},
+		}),
+		addClient: builder.mutation<void, { name: string; phone: string }>({
+			query: ({ name, phone }) => ({
+				url: ROUTES.clients,
+				method: 'POST',
+				body: {
+					name: name,
+					phoneNumber: phone,
+				},
+			}),
+			invalidatesTags: [{ type: 'Clients', id: 'LIST' }],
+		}),
+		changeClient: builder.mutation<void, { id: string; name: string; phone: string }>({
+			query: ({ id, name, phone }) => ({
+				url: `${ROUTES.clients}/${id}`,
+				method: 'PUT',
+				body: {
+					name,
+					phoneNumber: phone,
+				},
+			}),
+			invalidatesTags: (_, __, arg) => [
+				{ type: 'Clients', id: arg.id },
+				{ type: 'Clients', id: 'LIST' },
+			],
+		}),
+		deleteClient: builder.mutation<void, string[]>({
+			query: (ids) => {
+				const queryParams = ids.map((id) => 'CustomerIds=' + id).join('&')
+				return {
+					url: `${ROUTES.clients}?${queryParams}`,
+					method: 'DELETE',
+				}
+			},
+			invalidatesTags: [{ type: 'Clients', id: 'LIST' }],
+		}),
 	}),
 })
 
@@ -98,7 +148,11 @@ export const {
 	useGetActiveOrdersQuery,
 	useGetCompletedOrdersQuery,
 	useGetProductsQuery,
+	useGetClientsQuery,
 	useToggleOrderMutation,
+	useAddClientMutation,
+	useChangeClientMutation,
+	useDeleteClientMutation,
 } = apiSlice
 
 export const store = configureStore({
@@ -151,3 +205,8 @@ export const isCompletedOrderSelected = createSelector(
 	apiSlice.endpoints.getCompletedOrders.select(),
 	(completedOrders) => completedOrders.data?.items.some((item) => item.orders.some((order) => order.selected)),
 )
+
+export const getClientByID = createSelector([apiSlice.endpoints.getClients.select(), (_, id) => id], (clients, id) => {
+	if (!clients.data) return null
+	return clients.data.find((client) => client.ID === id)
+})

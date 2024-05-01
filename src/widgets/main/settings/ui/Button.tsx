@@ -1,6 +1,6 @@
+import { MouseEventHandler } from 'react'
 import cx from 'classnames'
 import { SettingsIcon } from '@/shared/ui/icons/SettingsIcon'
-import { MouseEventHandler } from 'react'
 
 interface Props {
 	className?: string

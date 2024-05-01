@@ -5,7 +5,8 @@ export default {
 		extend: {
 			animation: {
 				'spin-fast': 'spin 0.75s linear infinite',
-				'arrow': 'arrow 1s ease forwards',
+				'arrow-right': 'arrow-right 1s ease forwards',
+				'arrow-left': 'arrow-left 1s ease forwards',
 				'fadeIn': 'fadeIn 0.3s ease forwards',
 				'fadeOut': 'fadeOut 0.3s ease forwards',
 				'hint': 'hint 0.2s ease forwards',
@@ -14,9 +15,13 @@ export default {
 				'tooltip-close': 'tooltip-close 0.2s ease forwards',
 			},
 			keyframes: {
-				'arrow': {
+				'arrow-right': {
 					'0%, 50%, 100%': { transform: 'translateX(0px)' },
 					'25%, 75%': { transform: 'translateX(5px)' },
+				},
+				'arrow-left': {
+					'0%, 50%, 100%': { transform: 'translateX(0px)' },
+					'25%, 75%': { transform: 'translateX(-5px)' },
 				},
 				'fadeIn': {
 					'0%': { opacity: '0' },
@@ -35,12 +40,22 @@ export default {
 					'100%': { opacity: 0, transform: 'scale(0)' },
 				},
 				'tooltip': {
-					'0%': { opacity: 0, transform: 'scale(0.95) translateY(-3%)', boxShadow: 'none' },
-					'100%': { opacity: 1, transform: 'scale(1) translateY(0%)', boxShadow: '0 15px 42px 0px rgba(0,0,0,0.12)' },
+					'0%': { opacity: 0, transform: 'scale(0.95) translateY(-3%)', boxShadow: 'none', pointerEvents: 'none' },
+					'100%': {
+						opacity: 1,
+						transform: 'scale(1) translateY(0%)',
+						boxShadow: '0 15px 42px 0px rgba(0,0,0,0.12)',
+						pointerEvents: 'all',
+					},
 				},
 				'tooltip-close': {
-					'0%': { opacity: 1, transform: 'scale(1) translateY(0%)', boxShadow: '0 15px 42px 0px rgba(0,0,0,0.12)' },
-					'100%': { opacity: 0, transform: 'scale(0.95) translateY(-3%)', boxShadow: 'none' },
+					'0%': {
+						opacity: 1,
+						transform: 'scale(1) translateY(0%)',
+						boxShadow: '0 15px 42px 0px rgba(0,0,0,0.12)',
+						pointerEvents: 'all',
+					},
+					'100%': { opacity: 0, transform: 'scale(0.95) translateY(-3%)', boxShadow: 'none', pointerEvents: 'none' },
 				},
 			},
 		},

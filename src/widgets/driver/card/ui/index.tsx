@@ -36,7 +36,7 @@ export const DriverCard = ({ className, driver }: Props) => {
 				</h3>
 				<button className='group text-sm font-medium pl-1 text-indigo-700 uppercase flex items-center gap-1 hover:text-indigo-500'>
 					{driver.licensePlate}
-					<ArrowRightIcon className='group-hover:animate-arrow' pathClassName='group-hover:fill-indigo-500' />
+					<ArrowRightIcon className='group-hover:animate-arrow-right' pathClassName='group-hover:fill-indigo-500' />
 				</button>
 			</header>
 			<table>

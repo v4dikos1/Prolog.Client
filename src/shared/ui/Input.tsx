@@ -14,6 +14,7 @@ export interface Props {
 	autocomplete?: React.HTMLInputAutoCompleteAttribute
 	disabled?: boolean
 	readonly?: boolean
+	required?: boolean
 	id?: string
 }
 
@@ -30,6 +31,7 @@ export const Input = ({
 	name,
 	type = 'text',
 	autocomplete,
+	required = false,
 }: Props) => {
 	return (
 		<input
@@ -43,6 +45,7 @@ export const Input = ({
 			type={type}
 			autoComplete={autocomplete}
 			disabled={disabled}
+			required={required}
 			className={cx(
 				className,
 				'text-sm rounded-md py-[9px] px-[13px] bg-white border border-gray-300 text-gray-800 focus:border-gray-500 hover:border-gray-500 outline-none placeholder:text-gray-500',

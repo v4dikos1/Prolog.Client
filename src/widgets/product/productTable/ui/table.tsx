@@ -1,7 +1,7 @@
-import { Product } from '@/entities/product'
-import { Checkbox } from '@/shared/ui/Checkbox'
-import cx from 'classnames'
 import { useState } from 'react'
+import { Product } from '@/entities/product'
+import { Table as TableTemplate } from '@/shared/ui/Table'
+import { Checkbox } from '@/shared/ui/Checkbox'
 
 interface Props {
 	className?: string
@@ -13,43 +13,41 @@ export const Table = ({ className, products }: Props) => {
 	const toggleCheckbox = () => setCheckedAll((checkedAll) => !checkedAll)
 
 	return (
-		<div className={cx(className, 'w-full max-h-[360px] scrollable overflow-auto')}>
-			<table className='w-full'>
-				<thead className='bg-gray-50 h-12 border-t border-b border-gray-200'>
-					<tr className='py-5 uppercase text-xs text-gray-500'>
-						<th className='pl-8 font-medium cursor-pointer select-none w-[170px]' onClick={toggleCheckbox}>
-							<div className='flex items-center gap-3'>
-								<Checkbox checked={checkedAll} changeHandler={toggleCheckbox} />
-								Код
+		<TableTemplate className={className} maxHeight='360px'>
+			<thead>
+				<tr>
+					<th className='cursor-pointer select-none w-[170px]' onClick={toggleCheckbox}>
+						<div className='flex items-center gap-3'>
+							<Checkbox checked={checkedAll} changeHandler={toggleCheckbox} />
+							Код
+						</div>
+					</th>
+					<th className='w-[410px]'>Наименование</th>
+					<th>Вес, КГ</th>
+					<th>
+						Объём, м<sup>3</sup>
+					</th>
+					<th className='w-[140px]'>Цена, ₽</th>
+					<th className='w-[140px]'>Количество</th>
+				</tr>
+			</thead>
+			<tbody>
+				{products.map((product) => (
+					<tr key={product.id}>
+						<td className='font-medium' onClick={() => {}}>
+							<div className='flex gap-3'>
+								<Checkbox checked={product.selected} changeHandler={() => {}} />
+								{product.code}
 							</div>
-						</th>
-						<th className='pl-8 font-medium w-[410px] text-left'>Наименование</th>
-						<th className='px-8 font-medium text-left'>Вес, КГ</th>
-						<th className='px-8 font-medium text-left'>
-							Объём, м<sup>3</sup>
-						</th>
-						<th className='pl-8 font-medium text-left w-[140px]'>Цена, ₽</th>
-						<th className='pl-8 font-medium text-left w-[140px]'>Количество</th>
+						</td>
+						<td className='font-medium'>{product.name}</td>
+						<td className='text-gray-500'>{product.weight}</td>
+						<td className='text-gray-500'>{product.volume}</td>
+						<td className='text-gray-500'>{product.price}</td>
+						<td className='text-gray-400 underline'>Кол-во</td>
 					</tr>
-				</thead>
-				<tbody>
-					{products.map((product) => (
-						<tr key={product.id} className='h-12 text-sm text-gray-900 even:bg-gray-50'>
-							<td className='pl-8 font-medium' onClick={() => {}}>
-								<div className='flex gap-3'>
-									<Checkbox checked={product.selected} changeHandler={() => {}} />
-									{product.code}
-								</div>
-							</td>
-							<td className='pl-8 font-medium'>{product.name}</td>
-							<td className='pl-8 text-gray-500'>{product.weight}</td>
-							<td className='pl-8 text-gray-500'>{product.volume}</td>
-							<td className='pl-8 text-gray-500'>{product.price}</td>
-							<td className='pl-8 text-gray-400 underline'>Кол-во</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
-		</div>
+				))}
+			</tbody>
+		</TableTemplate>
 	)
 }

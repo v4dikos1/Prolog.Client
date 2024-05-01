@@ -5,7 +5,7 @@ import { CloseModalButton } from '../../CloseModalButton'
 
 interface Props {
 	titleContent: React.ReactNode
-	headerContent: React.ReactNode
+	headerContent?: React.ReactNode
 	content: React.ReactNode
 	className?: string
 	opened: boolean
@@ -80,7 +80,7 @@ export const ModalTemplate = ({ titleContent, headerContent, content, className,
 					<CloseModalButton className='absolute top-6 right-8' clickHandler={close} />
 					{headerContent}
 				</header>
-				<main className='pt-4 pb-8'>{content}</main>
+				<main className='pt-4 pb-8 flex flex-col gap-4'>{content}</main>
 			</div>
 		</Backdrop>
 	)

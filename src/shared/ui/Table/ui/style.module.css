@@ -1,0 +1,27 @@
+.table {
+	@apply w-full;
+}
+
+.table thead {
+	@apply border-y border-gray-200 bg-gray-50;
+}
+
+.table tr {
+	@apply h-12;
+}
+
+.table thead tr {
+	@apply py-5 text-xs uppercase text-gray-500;
+}
+
+.table thead th {
+	@apply pl-8 font-medium text-left;
+}
+
+.table tbody tr {
+	@apply text-sm text-gray-900 even:bg-gray-50;
+}
+
+.table td {
+	@apply pl-8;
+}

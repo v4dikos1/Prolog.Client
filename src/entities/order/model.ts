@@ -1,4 +1,5 @@
 import { Driver } from '@/entities/driver'
+import { Client } from '@/entities/client'
 
 export enum StatusEnum {
 	'incoming',
@@ -9,12 +10,6 @@ export enum StatusEnum {
 export type Storage = {
 	ID: string
 	name: string
-}
-
-export type Client = {
-	ID: string
-	name: string
-	phone: string
 }
 
 export type Cargo = {
@@ -29,7 +24,7 @@ export type OrderBase = {
 	price: number
 	address: string
 	storage: Storage
-	client: Client
+	client: Pick<Client, 'ID' | 'name'>
 	cargo: Cargo
 	selected: boolean
 }

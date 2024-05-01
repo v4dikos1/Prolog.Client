@@ -2,7 +2,6 @@ import { OrderContent } from './orderContent'
 import { IncomingOrdersFromAPI, ActiveOrdersFromAPI, CompletedOrdersFromAPI } from './apiModel'
 import {
 	Order as OrderType,
-	Client as ClientType,
 	Cargo as CargoType,
 	StatusEnum,
 	IncomingOrders,
@@ -43,7 +42,6 @@ export {
 
 export type {
 	OrderType,
-	ClientType,
 	CargoType,
 	IncomingOrdersFromAPI,
 	ActiveOrdersFromAPI,

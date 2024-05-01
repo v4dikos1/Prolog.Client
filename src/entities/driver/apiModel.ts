@@ -1,3 +1,5 @@
+import { API_Response } from '@/shared/types'
+
 export type DriverFromAPI = {
 	distance: number
 	driverId: string
@@ -10,3 +12,5 @@ export type DriverFromAPI = {
 	totalOrdersCount: number
 	transportId: string
 }
+
+export type DriversFromAPI = API_Response<DriverFromAPI>

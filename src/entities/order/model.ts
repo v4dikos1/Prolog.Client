@@ -7,11 +7,6 @@ export enum StatusEnum {
 	'completed',
 }
 
-export type Storage = {
-	ID: string
-	name: string
-}
-
 export type Cargo = {
 	volume: number
 	weight: number

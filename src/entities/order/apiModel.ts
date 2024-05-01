@@ -1,4 +1,5 @@
 import { DriverFromAPI } from '@/entities/driver/'
+import { API_Response } from '@/shared/types'
 
 type OrderFromAPI = {
 	address: string
@@ -22,44 +23,29 @@ type OrderFromAPI = {
 	weight: number
 }
 
-export type IncomingOrdersFromAPI = {
-	totalItems: number
-	itemsQuantity: number
-	itemsOffset: number
-	items: {
-		orderCount: number
-		orderDate: string
-		ordersGroupedByDriver: {
-			driver: null
-			orders: OrderFromAPI[]
-		}[]
+export type IncomingOrdersFromAPI = API_Response<{
+	orderCount: number
+	orderDate: string
+	ordersGroupedByDriver: {
+		driver: null
+		orders: OrderFromAPI[]
 	}[]
-}
+}>
 
-export type ActiveOrdersFromAPI = {
-	totalItems: number
-	itemsQuantity: number
-	itemsOffset: number
-	items: {
-		orderCount: number
-		orderDate: string
-		ordersGroupedByDriver: {
-			driver: DriverFromAPI
-			orders: OrderFromAPI[]
-		}[]
+export type ActiveOrdersFromAPI = API_Response<{
+	orderCount: number
+	orderDate: string
+	ordersGroupedByDriver: {
+		driver: DriverFromAPI
+		orders: OrderFromAPI[]
 	}[]
-}
+}>
 
-export type CompletedOrdersFromAPI = {
-	totalItems: number
-	itemsQuantity: number
-	itemsOffset: number
-	items: {
-		orderCount: number
-		orderDate: string
-		ordersGroupedByDriver: {
-			driver: DriverFromAPI
-			orders: OrderFromAPI[]
-		}[]
+export type CompletedOrdersFromAPI = API_Response<{
+	orderCount: number
+	orderDate: string
+	ordersGroupedByDriver: {
+		driver: DriverFromAPI
+		orders: OrderFromAPI[]
 	}[]
-}
+}>

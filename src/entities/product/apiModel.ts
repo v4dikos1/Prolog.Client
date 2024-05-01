@@ -1,3 +1,5 @@
+import { API_Response } from '@/shared/types'
+
 export type ProductFromAPI = {
 	id: string
 	code: string
@@ -7,9 +9,4 @@ export type ProductFromAPI = {
 	price: number
 }
 
-export type ProductsFromAPI = {
-	totalItems: number
-	itemsQuantity: number
-	itemsOffset: number
-	items: ProductFromAPI[]
-}
+export type ProductsFromAPI = API_Response<ProductFromAPI>

@@ -146,6 +146,10 @@ export const apiSlice = createApi({
 			query: () => ({
 				url: ROUTES.storages,
 			}),
+			providesTags: (result) =>
+				result
+					? [...result.map(({ ID }) => ({ type: 'Storages', ID } as const)), { type: 'Storages', id: 'LIST' }]
+					: [{ type: 'Storages', id: 'LIST' }],
 			transformResponse: (response: StoragesFromAPI) => {
 				return transformStoragesFromAPI(response)
 			},
@@ -177,7 +181,7 @@ export const apiSlice = createApi({
 		}),
 		deleteStorages: builder.mutation<void, string[]>({
 			query: (ids) => {
-				const queryParams = ids.map((id) => 'StoragesIds=' + id).join('&')
+				const queryParams = ids.map((id) => 'StorageIds=' + id).join('&')
 				return {
 					url: `${ROUTES.storages}?${queryParams}`,
 					method: 'DELETE',
@@ -255,7 +259,16 @@ export const isCompletedOrderSelected = createSelector(
 	(completedOrders) => completedOrders.data?.items.some((item) => item.orders.some((order) => order.selected)),
 )
 
-export const getClientByID = createSelector([apiSlice.endpoints.getClients.select(), (_, id) => id], (clients, id) => {
+const selectClients = apiSlice.endpoints.getClients.select
+
+export const getClientByID = createSelector([selectClients(), (_, id) => id], (clients, id) => {
 	if (!clients.data) return null
 	return clients.data.find((client) => client.ID === id)
+})
+
+const selectStorages = apiSlice.endpoints.getStorages.select
+
+export const getStorageByID = createSelector([selectStorages(), (_, id) => id], (storages, id) => {
+	if (!storages.data) return null
+	return storages.data.find((storage) => storage.ID === id)
 })

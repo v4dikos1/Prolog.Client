@@ -1,3 +1,3 @@
-import { ClientsModal } from './clientModal'
+import { ClientsModal } from './clientsModal'
 
 export { ClientsModal }

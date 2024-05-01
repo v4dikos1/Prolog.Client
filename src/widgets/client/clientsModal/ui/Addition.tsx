@@ -7,6 +7,8 @@ interface Props {
 	back: () => void
 }
 
+type Response = { data: void } | { error: unknown }
+
 export const Addition = ({ back }: Props) => {
 	const [name, setName] = useState('')
 	const [phone, setPhone] = useState('')
@@ -15,7 +17,7 @@ export const Addition = ({ back }: Props) => {
 
 	const submitHandler: FormEventHandler<HTMLFormElement> = (event) => {
 		event.preventDefault()
-		addClient({ name, phone }).then((response) => {
+		addClient({ name, phone }).then((response: Response) => {
 			if (!('error' in response)) {
 				back()
 			} else {

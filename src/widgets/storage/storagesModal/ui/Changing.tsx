@@ -1,5 +1,5 @@
 import { FormEventHandler, useState } from 'react'
-import { getClientByID, useChangeClientMutation, useDeleteClientsMutation, useAppSelector } from '@/app/store'
+import { getStorageByID, useChangeStorageMutation, useDeleteStoragesMutation, useAppSelector } from '@/app/store'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
 
@@ -11,18 +11,17 @@ interface Props {
 type Response = { data: void } | { error: unknown }
 
 export const Changing = ({ id, back }: Props) => {
-	const client = useAppSelector((state) => getClientByID(state, id))
-	const [changeClient, { isLoading: isChanging }] = useChangeClientMutation()
-	const [deleteClients, { isLoading: isDeleting }] = useDeleteClientsMutation()
+	const client = useAppSelector((state) => getStorageByID(state, id))
+	const [changeStorage, { isLoading: isChanging }] = useChangeStorageMutation()
+	const [deleteStorages, { isLoading: isDeleting }] = useDeleteStoragesMutation()
 
 	const [name, setName] = useState(client?.name || '')
-	const [phone, setPhone] = useState(client?.phone || '')
+	const [address, setAddress] = useState(client?.address || '')
 	const [errorVisible, setErrorVisible] = useState(false)
 
 	if (id === null || client === undefined) return
 
 	const handleResponse = (response: Response) => {
-		console.log('handleResponse:', response)
 		if ('error' in response) {
 			setErrorVisible(true)
 			return
@@ -33,11 +32,11 @@ export const Changing = ({ id, back }: Props) => {
 
 	const submitHandler: FormEventHandler<HTMLFormElement> = (event) => {
 		event.preventDefault()
-		changeClient({ id, name, phone }).then(handleResponse)
+		changeStorage({ id, name, address }).then(handleResponse)
 	}
 
 	const deleteHandler = () => {
-		deleteClients([id]).then(handleResponse)
+		deleteStorages([id]).then(handleResponse)
 	}
 
 	return (
@@ -50,16 +49,16 @@ export const Changing = ({ id, back }: Props) => {
 			<div className='flex gap-4'>
 				<Input
 					className='w-full'
-					placeholder='Название клиента'
+					placeholder='Название склада'
 					value={name}
 					changeHandler={(event) => setName(event.target.value)}
 					required={true}
 				/>
 				<Input
 					className='w-full'
-					placeholder='Номер телефона'
-					value={phone}
-					changeHandler={(event) => setPhone(event.target.value)}
+					placeholder='Адрес'
+					value={address}
+					changeHandler={(event) => setAddress(event.target.value)}
 					required={true}
 				/>
 			</div>

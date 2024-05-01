@@ -5,4 +5,5 @@ export type ClientFromAPI = {
 	name: string
 	phoneNumber: string
 }
+
 export type ClientsFromAPI = API_Response<ClientFromAPI>

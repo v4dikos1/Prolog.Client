@@ -1,9 +1,3 @@
-import { API_Response } from '@/shared/types'
-
-export type StorageFromAPI = {
-	ID: string
-	name: string
-	address: string
-}
-
-export type StoragesFromAPI = API_Response<StorageFromAPI>
+export type { StoragesFromAPI } from './apiModel'
+export type { Storage } from './model'
+export { transformStoragesFromAPI } from './helpers'

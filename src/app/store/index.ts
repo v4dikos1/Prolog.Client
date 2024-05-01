@@ -19,6 +19,7 @@ import {
 } from '@/entities/order'
 import { ProductsFromAPI, Product, transformProductsFromAPI } from '@/entities/product'
 import { Client, ClientsFromAPI, transformClientsFromAPI } from '@/entities/client'
+import { Storage, StoragesFromAPI, transformStoragesFromAPI } from '@/entities/storage'
 import { apiBaseQuery } from './baseQuery'
 
 const ROUTES = {
@@ -27,12 +28,13 @@ const ROUTES = {
 	completedOrders: 'orders?Status=2',
 	products: 'products',
 	clients: 'customers',
+	storages: 'storages',
 }
 
 export const apiSlice = createApi({
 	reducerPath: 'api',
 	baseQuery: apiBaseQuery(),
-	tagTypes: ['Orders', 'Clients'],
+	tagTypes: ['Orders', 'Clients', 'Storages'],
 	endpoints: (builder) => ({
 		getIncomingOrders: builder.query<IncomingOrders, void>({
 			query: () => ({
@@ -130,7 +132,7 @@ export const apiSlice = createApi({
 				{ type: 'Clients', id: 'LIST' },
 			],
 		}),
-		deleteClient: builder.mutation<void, string[]>({
+		deleteClients: builder.mutation<void, string[]>({
 			query: (ids) => {
 				const queryParams = ids.map((id) => 'CustomerIds=' + id).join('&')
 				return {
@@ -139,6 +141,49 @@ export const apiSlice = createApi({
 				}
 			},
 			invalidatesTags: [{ type: 'Clients', id: 'LIST' }],
+		}),
+		getStorages: builder.query<Storage[], void>({
+			query: () => ({
+				url: ROUTES.storages,
+			}),
+			transformResponse: (response: StoragesFromAPI) => {
+				return transformStoragesFromAPI(response)
+			},
+		}),
+		addStorage: builder.mutation<void, { name: string; address: string }>({
+			query: ({ name, address }) => ({
+				url: ROUTES.storages,
+				method: 'POST',
+				body: {
+					name,
+					address,
+				},
+			}),
+			invalidatesTags: [{ type: 'Storages', id: 'LIST' }],
+		}),
+		changeStorage: builder.mutation<void, { id: string; name: string; address: string }>({
+			query: ({ id, name, address }) => ({
+				url: `${ROUTES.storages}/${id}`,
+				method: 'PUT',
+				body: {
+					name,
+					address,
+				},
+			}),
+			invalidatesTags: (_, __, arg) => [
+				{ type: 'Storages', id: arg.id },
+				{ type: 'Storages', id: 'LIST' },
+			],
+		}),
+		deleteStorages: builder.mutation<void, string[]>({
+			query: (ids) => {
+				const queryParams = ids.map((id) => 'StoragesIds=' + id).join('&')
+				return {
+					url: `${ROUTES.storages}?${queryParams}`,
+					method: 'DELETE',
+				}
+			},
+			invalidatesTags: [{ type: 'Storages', id: 'LIST' }],
 		}),
 	}),
 })
@@ -149,10 +194,14 @@ export const {
 	useGetCompletedOrdersQuery,
 	useGetProductsQuery,
 	useGetClientsQuery,
+	useGetStoragesQuery,
 	useToggleOrderMutation,
 	useAddClientMutation,
 	useChangeClientMutation,
-	useDeleteClientMutation,
+	useDeleteClientsMutation,
+	useAddStorageMutation,
+	useChangeStorageMutation,
+	useDeleteStoragesMutation,
 } = apiSlice
 
 export const store = configureStore({

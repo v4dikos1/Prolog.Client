@@ -1,5 +1,5 @@
 import { FormEventHandler, useState } from 'react'
-import { getClientByID, useChangeClientMutation, useDeleteClientMutation, useAppSelector } from '@/app/store'
+import { getClientByID, useChangeClientMutation, useDeleteClientsMutation, useAppSelector } from '@/app/store'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
 
@@ -13,7 +13,7 @@ type Response = { data: void } | { error: unknown }
 export const Changing = ({ id, back }: Props) => {
 	const client = useAppSelector((state) => getClientByID(state, id))
 	const [changeClient, { isLoading: isChanging }] = useChangeClientMutation()
-	const [deleteClient, { isLoading: isDeleting }] = useDeleteClientMutation()
+	const [deleteClients, { isLoading: isDeleting }] = useDeleteClientsMutation()
 
 	const [name, setName] = useState(client?.name || '')
 	const [phone, setPhone] = useState(client?.phone || '')
@@ -37,7 +37,7 @@ export const Changing = ({ id, back }: Props) => {
 	}
 
 	const deleteHandler = () => {
-		deleteClient([id]).then(handleResponse)
+		deleteClients([id]).then(handleResponse)
 	}
 
 	return (

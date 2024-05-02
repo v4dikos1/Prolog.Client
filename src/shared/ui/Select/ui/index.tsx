@@ -23,7 +23,6 @@ export const Select = ({ className, changeHandler, options, defaultOption, value
 			<select
 				onChange={(event) => {
 					changeHandler(event)
-					console.log(event)
 				}}
 				value={value}
 				className={cx(

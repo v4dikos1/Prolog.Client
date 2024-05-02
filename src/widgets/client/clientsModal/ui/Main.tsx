@@ -17,7 +17,7 @@ export const Main = ({ openAddition, openChanging }: Props) => {
 		<>
 			{clients.length > 0 ? (
 				<>
-					<Table maxHeight='265px'>
+					<Table className='h-[265px]'>
 						<thead>
 							<tr>
 								<th className='w-1/2'>Название</th>

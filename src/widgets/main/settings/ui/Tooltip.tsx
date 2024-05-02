@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import cx from 'classnames'
+
 import { ClientsModal } from '@/widgets/client'
 import { StoragesModal } from '@/widgets/storage'
 import { ProductsModal } from '@/widgets/product'
+import { DriversModal } from '@/widgets/driver'
 import { TooltipCorner } from './TooltipCorner'
 import { TooltipItem } from './TooltipItem'
 
@@ -49,7 +51,7 @@ export const Tooltip = ({ className, open, id, close }: Props) => {
 					'animate-tooltip': open,
 				})}>
 				<ul className='w-full p-4 rounded-lg flex flex-col text-sm font-bold text-gray-900 bg-white'>
-					<TooltipItem additionalEffectOnClick={close} Modal={ClientsModal}>
+					<TooltipItem additionalEffectOnClick={close} Modal={DriversModal}>
 						Водители
 					</TooltipItem>
 					<TooltipItem additionalEffectOnClick={close} Modal={ClientsModal}>

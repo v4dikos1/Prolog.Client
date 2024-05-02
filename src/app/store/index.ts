@@ -20,6 +20,7 @@ import {
 import { ProductsFromAPI, Product, transformProductsFromAPI } from '@/entities/product'
 import { Client, ClientsFromAPI, transformClientsFromAPI } from '@/entities/client'
 import { Storage, StoragesFromAPI, transformStoragesFromAPI } from '@/entities/storage'
+import { Driver, DriversFromAPI, transformDriversFromAPI } from '@/entities/driver'
 import { apiBaseQuery } from './baseQuery'
 
 const ROUTES = {
@@ -29,12 +30,13 @@ const ROUTES = {
 	products: 'products',
 	clients: 'customers',
 	storages: 'storages',
+	drivers: 'drivers',
 }
 
 export const apiSlice = createApi({
 	reducerPath: 'api',
 	baseQuery: apiBaseQuery(),
-	tagTypes: ['Orders', 'Clients', 'Storages', 'Products'],
+	tagTypes: ['Orders', 'Clients', 'Storages', 'Products', 'Drivers'],
 	endpoints: (builder) => ({
 		getIncomingOrders: builder.query<IncomingOrders, void>({
 			query: () => ({
@@ -211,12 +213,12 @@ export const apiSlice = createApi({
 			invalidatesTags: [{ type: 'Storages', id: 'LIST' }],
 		}),
 		changeStorage: builder.mutation<void, Storage>({
-			query: ({ ID, name, address }) => ({
-				url: `${ROUTES.storages}/${ID}`,
+			query: (storage) => ({
+				url: `${ROUTES.storages}/${storage.ID}`,
 				method: 'PUT',
 				body: {
-					name,
-					address,
+					name: storage.name,
+					address: storage.address,
 				},
 			}),
 			invalidatesTags: (_, __, arg) => [
@@ -234,6 +236,61 @@ export const apiSlice = createApi({
 			},
 			invalidatesTags: [{ type: 'Storages', id: 'LIST' }],
 		}),
+		getDrivers: builder.query<Driver[], void>({
+			query: () => ({
+				url: ROUTES.drivers,
+			}),
+			providesTags: (result) =>
+				result
+					? [...result.map(({ ID }) => ({ type: 'Drivers', ID } as const)), { type: 'Drivers', id: 'LIST' }]
+					: [{ type: 'Drivers', id: 'LIST' }],
+			transformResponse: (response: DriversFromAPI) => {
+				return transformDriversFromAPI(response)
+			},
+		}),
+		addDriver: builder.mutation<void, Omit<Driver, 'ID'>>({
+			query: (driver) => ({
+				url: ROUTES.drivers,
+				method: 'POST',
+				body: {
+					name: driver.name,
+					surname: driver.surname,
+					patronymic: driver.patronymic,
+					phoneNumber: driver.phone,
+					telegram: driver.telegram,
+					salary: driver.salary,
+				},
+			}),
+			invalidatesTags: [{ type: 'Drivers', id: 'LIST' }],
+		}),
+		changeDriver: builder.mutation<void, Driver>({
+			query: (driver) => ({
+				url: `${ROUTES.drivers}/${driver.ID}`,
+				method: 'PUT',
+				body: {
+					name: driver.name,
+					surname: driver.surname,
+					patronymic: driver.patronymic,
+					phoneNumber: driver.phone,
+					telegram: driver.telegram,
+					salary: driver.salary,
+				},
+			}),
+			invalidatesTags: (_, __, arg) => [
+				{ type: 'Drivers', id: arg.ID },
+				{ type: 'Drivers', id: 'LIST' },
+			],
+		}),
+		deleteDrivers: builder.mutation<void, string[]>({
+			query: (ids) => {
+				const queryParams = ids.map((id) => 'DriverIds=' + id).join('&')
+				return {
+					url: `${ROUTES.drivers}?${queryParams}`,
+					method: 'DELETE',
+				}
+			},
+			invalidatesTags: [{ type: 'Drivers', id: 'LIST' }],
+		}),
 	}),
 })
 
@@ -244,6 +301,7 @@ export const {
 	useGetProductsQuery,
 	useGetClientsQuery,
 	useGetStoragesQuery,
+	useGetDriversQuery,
 	useToggleOrderMutation,
 	useAddClientMutation,
 	useChangeClientMutation,
@@ -254,6 +312,9 @@ export const {
 	useAddProductMutation,
 	useChangeProductMutation,
 	useDeleteProductsMutation,
+	useAddDriverMutation,
+	useChangeDriverMutation,
+	useDeleteDriversMutation,
 } = apiSlice
 
 export const store = configureStore({
@@ -326,4 +387,11 @@ const selectProducts = apiSlice.endpoints.getProducts.select
 export const getProductByID = createSelector([selectProducts(), (_, ID) => ID], (products, ID) => {
 	if (!products.data) return null
 	return products.data.find((product) => product.ID === ID)
+})
+
+const selectDrivers = apiSlice.endpoints.getDrivers.select
+
+export const getDriverByID = createSelector([selectDrivers(), (_, ID) => ID], (drivers, ID) => {
+	if (!drivers.data) return null
+	return drivers.data.find((driver) => driver.ID === ID)
 })

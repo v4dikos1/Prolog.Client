@@ -1,3 +1,6 @@
 import { Driver } from './model'
-import { DriverFromAPI } from './apiModel'
-export type { Driver, DriverFromAPI }
+import { DriversFromAPI } from './apiModel'
+import { transformDriversFromAPI } from './helpers'
+
+export type { Driver, DriversFromAPI }
+export { transformDriversFromAPI }

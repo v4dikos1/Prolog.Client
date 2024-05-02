@@ -17,7 +17,11 @@ const FOCUSALBE_SELECTOR = `a[href]:not([disabled]), button:not([disabled]), tex
 const ESCAPE = 'Escape'
 const TAB = 'Tab'
 
-const onTab = (e: KeyboardEvent, modal: HTMLDivElement | null, focusables: NodeListOf<HTMLElement> | null) => {
+const onTab = (e: KeyboardEvent, modal: HTMLDivElement | null) => {
+	if (!modal) return
+
+	const focusables = modal.querySelectorAll(FOCUSALBE_SELECTOR) as NodeListOf<HTMLElement>
+
 	if (modal && focusables && !modal.contains(document.activeElement)) {
 		focusables[0].focus()
 		e.preventDefault()
@@ -42,19 +46,14 @@ const onTab = (e: KeyboardEvent, modal: HTMLDivElement | null, focusables: NodeL
 
 export const ModalTemplate = ({ titleContent, headerContent, content, className, opened, close }: Props) => {
 	const modal = useRef<HTMLDivElement | null>(null)
-	const focusables = useRef<null | NodeListOf<HTMLElement>>(null)
 
 	const onKeyboard = useCallback(
 		(e: KeyboardEvent) => {
 			if (e.key === ESCAPE) close()
-			else if (e.key === TAB) onTab(e, modal.current, focusables.current)
+			else if (e.key === TAB) onTab(e, modal.current)
 		},
 		[close],
 	)
-
-	useEffect(() => {
-		if (modal.current !== null) focusables.current = modal.current.querySelectorAll(FOCUSALBE_SELECTOR)
-	}, [])
 
 	useEffect(() => {
 		if (opened) {

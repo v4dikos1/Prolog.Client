@@ -1,7 +1,7 @@
 import { FormEventHandler, useState } from 'react'
+import { useAddDriverMutation } from '@/app/store'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
-import { useAddClientMutation } from '@/app/store'
 
 interface Props {
 	back: () => void
@@ -10,9 +10,11 @@ interface Props {
 type Response = { data: void } | { error: unknown }
 
 export const Addition = ({ back }: Props) => {
-	const [name, setName] = useState('')
+	const [fullName, setFullName] = useState('')
 	const [phone, setPhone] = useState('')
-	const [addClient, { isLoading }] = useAddClientMutation()
+	const [salary, setSalary] = useState('')
+
+	const [addDriver, { isLoading }] = useAddDriverMutation()
 	const [errorVisible, setErrorVisible] = useState(false)
 
 	const handleResponse = (response: Response) => {
@@ -25,8 +27,13 @@ export const Addition = ({ back }: Props) => {
 	}
 
 	const submitHandler: FormEventHandler<HTMLFormElement> = (event) => {
+		const [surname, name, patronymic] = fullName.split(' ')
+		const salaryNumber = Number(salary)
+
 		event.preventDefault()
-		addClient({ name, phone }).then(handleResponse)
+		addDriver({ name, surname, patronymic, phone, telegram: '@drivers_prolog', salary: salaryNumber }).then(
+			handleResponse,
+		)
 	}
 
 	return (
@@ -38,22 +45,30 @@ export const Addition = ({ back }: Props) => {
 			{errorVisible && (
 				<p className='text-red-500'>
 					Ошибка: данные введены неверно <br />
-					либо клиент с таким телефоном уже существует.
+					либо водитель с таким телефоном уже существует.
 				</p>
 			)}
 			<div className='flex gap-4'>
 				<Input
 					className='w-full'
-					placeholder='Название клиента'
-					value={name}
-					changeHandler={(event) => setName(event.target.value)}
+					placeholder='ФИО Водителя'
+					value={fullName}
+					changeHandler={(event) => setFullName(event.target.value)}
 					required={true}
 				/>
 				<Input
 					className='w-full'
-					placeholder='Номер телефона'
+					placeholder='Контактный телефон'
 					value={phone}
 					changeHandler={(event) => setPhone(event.target.value)}
+					required={true}
+				/>
+				<Input
+					className='w-full'
+					placeholder='Ставка в час'
+					type='number'
+					value={salary}
+					changeHandler={(event) => setSalary(event.target.value)}
 					required={true}
 				/>
 			</div>

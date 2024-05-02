@@ -29,7 +29,7 @@ export const ClientsModal = ({ opened, close }: Props) => {
 	const content = {
 		main: <Main openAddition={openAddition} openChanging={openChanging} />,
 		addition: <Addition back={openMain} />,
-		changing: <Changing back={openMain} id={changingClientID} />,
+		changing: <Changing back={openMain} ID={changingClientID} />,
 	}
 
 	const closeAndReset = () => {

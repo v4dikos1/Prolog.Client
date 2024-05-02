@@ -9,27 +9,27 @@ interface Props {
 	close: () => void
 }
 
-export const StoragesModal = ({ opened, close }: Props) => {
+export const ProductsModal = ({ opened, close }: Props) => {
 	const [modalState, setModalState] = useState<'main' | 'addition' | 'changing'>('main')
-	const [changingStorageID, setChangingStorageID] = useState<null | string>(null)
+	const [changingProductID, setChangingProductID] = useState<null | string>(null)
 
 	const openMain = () => setModalState('main')
 	const openAddition = () => setModalState('addition')
 	const openChanging = (id: string) => {
-		setChangingStorageID(id)
+		setChangingProductID(id)
 		setModalState('changing')
 	}
 
 	const titleContent = {
-		main: 'Склады',
-		addition: <ModalTitleButton back={openMain} text='Добавить склад' />,
-		changing: <ModalTitleButton back={openMain} text='Изменить данные склада' />,
+		main: 'Товары',
+		addition: <ModalTitleButton back={openMain} text='Добавить товар' />,
+		changing: <ModalTitleButton back={openMain} text='Изменить товар' />,
 	}
 
 	const content = {
 		main: <Main openAddition={openAddition} openChanging={openChanging} />,
 		addition: <Addition back={openMain} />,
-		changing: <Changing back={openMain} ID={changingStorageID} />,
+		changing: <Changing back={openMain} ID={changingProductID} />,
 	}
 
 	const closeAndReset = () => {

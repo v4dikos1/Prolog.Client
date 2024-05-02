@@ -49,7 +49,7 @@ export const OrderCard = ({ className, order }: Props) => {
 	const orderContent = getOrderContent(order)
 	const [update] = useToggleOrderMutation()
 	const toggleSelect = () => {
-		update({ status: order.status, id: order.ID })
+		update({ status: order.status, ID: order.ID })
 	}
 
 	return (

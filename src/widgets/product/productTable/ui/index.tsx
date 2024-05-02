@@ -12,29 +12,6 @@ interface Props {
 	className?: string
 }
 
-const defaultProducts = [
-	{
-		id: '3f2h-23gs',
-		code: '4001 5379',
-		name: 'Смартфон Xiaomi Redmi 12 4/128GB Sky Blue',
-		weight: 0.189,
-		volume: 0.0534,
-		price: 13999,
-		selected: false,
-		count: 0,
-	},
-	{
-		id: '3a01-f1fe',
-		code: '2008 5365',
-		name: 'Сплит-система Rapid RAM-07HJ/N1_23Y',
-		weight: 1.2,
-		volume: 2.324,
-		price: 12100,
-		selected: true,
-		count: 2,
-	},
-]
-
 export const ProductTable = ({ className }: Props) => {
 	const { data: products, isLoading } = useGetProductsQuery()
 	return (
@@ -47,8 +24,8 @@ export const ProductTable = ({ className }: Props) => {
 			</div>
 			{isLoading ? (
 				<SpinnerIcon className='mt-10 mx-auto' pathClassName='fill-indigo-600' />
-			) : products ? (
-				<Table products={products.length > 0 ? products : defaultProducts} />
+			) : products && products.length > 0 ? (
+				<Table products={products} />
 			) : (
 				<p className='text-center my-5'>Продукты не найдены.</p>
 			)}

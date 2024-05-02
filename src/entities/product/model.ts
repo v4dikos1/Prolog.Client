@@ -1,6 +1,8 @@
-import { ProductFromAPI } from './apiModel'
-
-export type Product = ProductFromAPI & {
-	selected: boolean
-	count: number
+export type Product = {
+	ID: string
+	code: string
+	name: string
+	weight: number
+	volume: number
+	price: number
 }

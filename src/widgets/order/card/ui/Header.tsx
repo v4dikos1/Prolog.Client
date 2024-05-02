@@ -21,7 +21,7 @@ export const Header = ({ toggleSelect, selected, pickUpAddress, deliveryAddress,
 					<Checkbox changeHandler={toggleSelect} className='mt-1' checked={selected} />
 					<OrderDeliveryAddress className='text-left' address={deliveryAddress} />
 				</div>
-				<OrderCopyIDButton className='mt-1' id={orderID} />
+				<OrderCopyIDButton className='mt-1' ID={orderID} />
 			</div>
 			<OrderPickUpAddress address={pickUpAddress} />
 			{driver ? (

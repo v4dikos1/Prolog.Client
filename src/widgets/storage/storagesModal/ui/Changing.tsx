@@ -4,14 +4,14 @@ import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
 
 interface Props {
-	id: string | null
+	ID: string | null
 	back: () => void
 }
 
 type Response = { data: void } | { error: unknown }
 
-export const Changing = ({ id, back }: Props) => {
-	const client = useAppSelector((state) => getStorageByID(state, id))
+export const Changing = ({ ID, back }: Props) => {
+	const client = useAppSelector((state) => getStorageByID(state, ID))
 	const [changeStorage, { isLoading: isChanging }] = useChangeStorageMutation()
 	const [deleteStorages, { isLoading: isDeleting }] = useDeleteStoragesMutation()
 
@@ -19,7 +19,7 @@ export const Changing = ({ id, back }: Props) => {
 	const [address, setAddress] = useState(client?.address || '')
 	const [errorVisible, setErrorVisible] = useState(false)
 
-	if (id === null || client === undefined) return
+	if (ID === null || client === undefined) return
 
 	const handleResponse = (response: Response) => {
 		if ('error' in response) {
@@ -32,11 +32,11 @@ export const Changing = ({ id, back }: Props) => {
 
 	const submitHandler: FormEventHandler<HTMLFormElement> = (event) => {
 		event.preventDefault()
-		changeStorage({ id, name, address }).then(handleResponse)
+		changeStorage({ ID, name, address }).then(handleResponse)
 	}
 
 	const deleteHandler = () => {
-		deleteStorages([id]).then(handleResponse)
+		deleteStorages([ID]).then(handleResponse)
 	}
 
 	return (

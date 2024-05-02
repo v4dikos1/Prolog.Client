@@ -4,14 +4,14 @@ import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
 
 interface Props {
-	id: string | null
+	ID: string | null
 	back: () => void
 }
 
 type Response = { data: void } | { error: unknown }
 
-export const Changing = ({ id, back }: Props) => {
-	const client = useAppSelector((state) => getClientByID(state, id))
+export const Changing = ({ ID, back }: Props) => {
+	const client = useAppSelector((state) => getClientByID(state, ID))
 	const [changeClient, { isLoading: isChanging }] = useChangeClientMutation()
 	const [deleteClients, { isLoading: isDeleting }] = useDeleteClientsMutation()
 
@@ -19,7 +19,7 @@ export const Changing = ({ id, back }: Props) => {
 	const [phone, setPhone] = useState(client?.phone || '')
 	const [errorVisible, setErrorVisible] = useState(false)
 
-	if (id === null || client === undefined) return
+	if (ID === null || client === undefined) return
 
 	const handleResponse = (response: Response) => {
 		if ('error' in response) {
@@ -32,11 +32,11 @@ export const Changing = ({ id, back }: Props) => {
 
 	const submitHandler: FormEventHandler<HTMLFormElement> = (event) => {
 		event.preventDefault()
-		changeClient({ id, name, phone }).then(handleResponse)
+		changeClient({ ID, name, phone }).then(handleResponse)
 	}
 
 	const deleteHandler = () => {
-		deleteClients([id]).then(handleResponse)
+		deleteClients([ID]).then(handleResponse)
 	}
 
 	return (

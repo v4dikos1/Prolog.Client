@@ -1,6 +1,6 @@
+import { getRandomColor } from '@/shared/utils/getRandomColor'
 import { IncomingOrders, ActiveOrders, CompletedOrders, ActiveOrdersGroupByDate } from './model'
 import { ActiveOrdersFromAPI, CompletedOrdersFromAPI, IncomingOrdersFromAPI } from './apiModel'
-import { getRandomColor } from '@/shared/utils/getRandomColor'
 import { Order } from './model'
 
 export const transformOrdersFromAPIToIncoming = (ordersFromAPI: IncomingOrdersFromAPI): IncomingOrders => {
@@ -138,26 +138,26 @@ export const transformOrdersFromAPIToCompleted = (ordersFromAPI: CompletedOrders
 	return completedOrders
 }
 
-export const toggleOrderInIncomingOrders = (id: number, incomingOrders: IncomingOrders) => {
+export const toggleOrderInIncomingOrders = (ID: number, incomingOrders: IncomingOrders) => {
 	for (let i = 0; i < incomingOrders.items.length; i++) {
 		const orders = incomingOrders.items[i].orders
 		for (let j = 0; j < orders.length; j++) {
 			const order = orders[j]
-			if (order.ID === id) {
+			if (order.ID === ID) {
 				order.selected = !order.selected
 			}
 		}
 	}
 }
 
-export const toggleOrderInActiveOrders = (id: number, activeOrders: ActiveOrders) => {
+export const toggleOrderInActiveOrders = (ID: number, activeOrders: ActiveOrders) => {
 	for (let i = 0; i < activeOrders.items.length; i++) {
 		const groupsByDriver = activeOrders.items[i].orders
 		for (let j = 0; j < groupsByDriver.length; j++) {
 			const groupByDriver = groupsByDriver[j]
 			for (let k = 0; k < groupByDriver.orders.length; k++) {
 				const order = groupByDriver.orders[k]
-				if (order.ID === id) {
+				if (order.ID === ID) {
 					order.selected = !order.selected
 				}
 			}
@@ -165,12 +165,12 @@ export const toggleOrderInActiveOrders = (id: number, activeOrders: ActiveOrders
 	}
 }
 
-export const toggleOrderInCompletedOrders = (id: number, completedOrders: CompletedOrders) => {
+export const toggleOrderInCompletedOrders = (ID: number, completedOrders: CompletedOrders) => {
 	for (let i = 0; i < completedOrders.items.length; i++) {
 		const orders = completedOrders.items[i].orders
 		for (let j = 0; j < orders.length; j++) {
 			const order = orders[j]
-			if (order.ID === id) {
+			if (order.ID === ID) {
 				order.selected = !order.selected
 			}
 		}

@@ -34,7 +34,7 @@ const ROUTES = {
 export const apiSlice = createApi({
 	reducerPath: 'api',
 	baseQuery: apiBaseQuery(),
-	tagTypes: ['Orders', 'Clients', 'Storages'],
+	tagTypes: ['Orders', 'Clients', 'Storages', 'Products'],
 	endpoints: (builder) => ({
 		getIncomingOrders: builder.query<IncomingOrders, void>({
 			query: () => ({
@@ -60,23 +60,23 @@ export const apiSlice = createApi({
 				return transformOrdersFromAPIToCompleted(response)
 			},
 		}),
-		toggleOrder: builder.mutation<void, { status: StatusEnum; id: number }>({
+		toggleOrder: builder.mutation<void, { status: StatusEnum; ID: number }>({
 			queryFn: async () => {
 				return { data: undefined }
 			},
-			async onQueryStarted({ status, id }, { dispatch, queryFulfilled }) {
+			async onQueryStarted({ status, ID }, { dispatch, queryFulfilled }) {
 				let action
 				if (status === StatusEnum.incoming) {
 					action = apiSlice.util.updateQueryData('getIncomingOrders', undefined, (incomingOrders) =>
-						toggleOrderInIncomingOrders(id, incomingOrders),
+						toggleOrderInIncomingOrders(ID, incomingOrders),
 					)
 				} else if (status === StatusEnum.active) {
 					action = apiSlice.util.updateQueryData('getActiveOrders', undefined, (activeOrders) =>
-						toggleOrderInActiveOrders(id, activeOrders),
+						toggleOrderInActiveOrders(ID, activeOrders),
 					)
 				} else {
 					action = apiSlice.util.updateQueryData('getCompletedOrders', undefined, (completedOrders) =>
-						toggleOrderInCompletedOrders(id, completedOrders),
+						toggleOrderInCompletedOrders(ID, completedOrders),
 					)
 				}
 				const patchResult = dispatch(action)
@@ -91,9 +91,54 @@ export const apiSlice = createApi({
 			query: () => ({
 				url: ROUTES.products,
 			}),
+			providesTags: (result) =>
+				result
+					? [...result.map(({ ID }) => ({ type: 'Products', ID } as const)), { type: 'Products', id: 'LIST' }]
+					: [{ type: 'Products', id: 'LIST' }],
 			transformResponse: (response: ProductsFromAPI) => {
 				return transformProductsFromAPI(response)
 			},
+		}),
+		addProduct: builder.mutation<void, Omit<Product, 'ID'>>({
+			query: (client) => ({
+				url: ROUTES.products,
+				method: 'POST',
+				body: {
+					name: client.name,
+					code: client.code,
+					volume: client.volume,
+					weight: client.weight,
+					price: client.price,
+				},
+			}),
+			invalidatesTags: [{ type: 'Products', id: 'LIST' }],
+		}),
+		changeProduct: builder.mutation<void, Product>({
+			query: (product) => ({
+				url: `${ROUTES.products}/${product.ID}`,
+				method: 'PUT',
+				body: {
+					name: product.name,
+					code: product.code,
+					price: product.price,
+					weight: product.weight,
+					volume: product.volume,
+				},
+			}),
+			invalidatesTags: (_, __, arg) => [
+				{ type: 'Products', id: arg.ID },
+				{ type: 'Products', id: 'LIST' },
+			],
+		}),
+		deleteProducts: builder.mutation<void, string[]>({
+			query: (ids) => {
+				const queryParams = ids.map((id) => 'ProductIds=' + id).join('&')
+				return {
+					url: `${ROUTES.products}?${queryParams}`,
+					method: 'DELETE',
+				}
+			},
+			invalidatesTags: [{ type: 'Products', id: 'LIST' }],
 		}),
 		getClients: builder.query<Client[], void>({
 			query: () => ({
@@ -107,7 +152,7 @@ export const apiSlice = createApi({
 				return transformClientsFromAPI(response)
 			},
 		}),
-		addClient: builder.mutation<void, { name: string; phone: string }>({
+		addClient: builder.mutation<void, Omit<Client, 'ID'>>({
 			query: ({ name, phone }) => ({
 				url: ROUTES.clients,
 				method: 'POST',
@@ -118,9 +163,9 @@ export const apiSlice = createApi({
 			}),
 			invalidatesTags: [{ type: 'Clients', id: 'LIST' }],
 		}),
-		changeClient: builder.mutation<void, { id: string; name: string; phone: string }>({
-			query: ({ id, name, phone }) => ({
-				url: `${ROUTES.clients}/${id}`,
+		changeClient: builder.mutation<void, Client>({
+			query: ({ ID, name, phone }) => ({
+				url: `${ROUTES.clients}/${ID}`,
 				method: 'PUT',
 				body: {
 					name,
@@ -128,7 +173,7 @@ export const apiSlice = createApi({
 				},
 			}),
 			invalidatesTags: (_, __, arg) => [
-				{ type: 'Clients', id: arg.id },
+				{ type: 'Clients', id: arg.ID },
 				{ type: 'Clients', id: 'LIST' },
 			],
 		}),
@@ -154,7 +199,7 @@ export const apiSlice = createApi({
 				return transformStoragesFromAPI(response)
 			},
 		}),
-		addStorage: builder.mutation<void, { name: string; address: string }>({
+		addStorage: builder.mutation<void, Omit<Storage, 'ID'>>({
 			query: ({ name, address }) => ({
 				url: ROUTES.storages,
 				method: 'POST',
@@ -165,9 +210,9 @@ export const apiSlice = createApi({
 			}),
 			invalidatesTags: [{ type: 'Storages', id: 'LIST' }],
 		}),
-		changeStorage: builder.mutation<void, { id: string; name: string; address: string }>({
-			query: ({ id, name, address }) => ({
-				url: `${ROUTES.storages}/${id}`,
+		changeStorage: builder.mutation<void, Storage>({
+			query: ({ ID, name, address }) => ({
+				url: `${ROUTES.storages}/${ID}`,
 				method: 'PUT',
 				body: {
 					name,
@@ -175,7 +220,7 @@ export const apiSlice = createApi({
 				},
 			}),
 			invalidatesTags: (_, __, arg) => [
-				{ type: 'Storages', id: arg.id },
+				{ type: 'Storages', id: arg.ID },
 				{ type: 'Storages', id: 'LIST' },
 			],
 		}),
@@ -206,6 +251,9 @@ export const {
 	useAddStorageMutation,
 	useChangeStorageMutation,
 	useDeleteStoragesMutation,
+	useAddProductMutation,
+	useChangeProductMutation,
+	useDeleteProductsMutation,
 } = apiSlice
 
 export const store = configureStore({
@@ -261,14 +309,21 @@ export const isCompletedOrderSelected = createSelector(
 
 const selectClients = apiSlice.endpoints.getClients.select
 
-export const getClientByID = createSelector([selectClients(), (_, id) => id], (clients, id) => {
+export const getClientByID = createSelector([selectClients(), (_, ID) => ID], (clients, ID) => {
 	if (!clients.data) return null
-	return clients.data.find((client) => client.ID === id)
+	return clients.data.find((client) => client.ID === ID)
 })
 
 const selectStorages = apiSlice.endpoints.getStorages.select
 
-export const getStorageByID = createSelector([selectStorages(), (_, id) => id], (storages, id) => {
+export const getStorageByID = createSelector([selectStorages(), (_, ID) => ID], (storages, ID) => {
 	if (!storages.data) return null
-	return storages.data.find((storage) => storage.ID === id)
+	return storages.data.find((storage) => storage.ID === ID)
+})
+
+const selectProducts = apiSlice.endpoints.getProducts.select
+
+export const getProductByID = createSelector([selectProducts(), (_, ID) => ID], (products, ID) => {
+	if (!products.data) return null
+	return products.data.find((product) => product.ID === ID)
 })

@@ -6,15 +6,15 @@ import { copyIDtoClipboard } from '../utils'
 import styles from './style.module.css'
 
 interface Props {
-	id: string
+	ID: string
 	className?: string
 }
 
-export const OrderCopyIDButton = ({ className, id }: Props) => {
+export const OrderCopyIDButton = ({ className, ID }: Props) => {
 	const [hintHidden, setHintHidden] = useState(0)
 
 	const clickHandler = () => {
-		copyIDtoClipboard(id)
+		copyIDtoClipboard(ID)
 		setHintHidden(2)
 
 		setTimeout(() => {
@@ -36,7 +36,7 @@ export const OrderCopyIDButton = ({ className, id }: Props) => {
 				<CheckIcon className='w-3 h-3' pathClassName='fill-indigo-600' />
 			</span>
 			<button onClick={clickHandler} className={cx(className, styles['order-copy-id-button'])}>
-				{id}
+				{ID}
 				<CopyRightIcon
 					className={cx({
 						'animate-hint-hide': hintHidden === 2,

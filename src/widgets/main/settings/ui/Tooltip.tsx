@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import cx from 'classnames'
 import { ClientsModal } from '@/widgets/client'
 import { StoragesModal } from '@/widgets/storage'
+import { ProductsModal } from '@/widgets/product'
 import { TooltipCorner } from './TooltipCorner'
 import { TooltipItem } from './TooltipItem'
 
@@ -57,7 +58,7 @@ export const Tooltip = ({ className, open, id, close }: Props) => {
 					<TooltipItem additionalEffectOnClick={close} Modal={ClientsModal}>
 						Клиенты
 					</TooltipItem>
-					<TooltipItem additionalEffectOnClick={close} Modal={ClientsModal}>
+					<TooltipItem additionalEffectOnClick={close} Modal={ProductsModal}>
 						Товары
 					</TooltipItem>
 					<TooltipItem additionalEffectOnClick={close} Modal={StoragesModal}>

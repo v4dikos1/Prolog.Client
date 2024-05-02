@@ -12,6 +12,8 @@ export const Table = ({ className, products }: Props) => {
 	const [checkedAll, setCheckedAll] = useState(false)
 	const toggleCheckbox = () => setCheckedAll((checkedAll) => !checkedAll)
 
+	const productsInView = products.map((product) => ({ ...product, selected: false, count: 0 }))
+
 	return (
 		<TableTemplate className={className} maxHeight='360px'>
 			<thead>
@@ -32,8 +34,8 @@ export const Table = ({ className, products }: Props) => {
 				</tr>
 			</thead>
 			<tbody>
-				{products.map((product) => (
-					<tr key={product.id}>
+				{productsInView.map((product) => (
+					<tr key={product.ID}>
 						<td className='font-medium' onClick={() => {}}>
 							<div className='flex gap-3'>
 								<Checkbox checked={product.selected} changeHandler={() => {}} />

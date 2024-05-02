@@ -21,6 +21,7 @@ import { ProductsFromAPI, Product, transformProductsFromAPI } from '@/entities/p
 import { Client, ClientsFromAPI, transformClientsFromAPI } from '@/entities/client'
 import { Storage, StoragesFromAPI, transformStoragesFromAPI } from '@/entities/storage'
 import { Driver, DriversFromAPI, transformDriversFromAPI } from '@/entities/driver'
+import { Vehicle, VehiclesFromAPI, transformVehiclesFromAPI } from '@/entities/vehicle'
 import { apiBaseQuery } from './baseQuery'
 
 const ROUTES = {
@@ -31,12 +32,13 @@ const ROUTES = {
 	clients: 'customers',
 	storages: 'storages',
 	drivers: 'drivers',
+	vehicles: 'transports',
 }
 
 export const apiSlice = createApi({
 	reducerPath: 'api',
 	baseQuery: apiBaseQuery(),
-	tagTypes: ['Orders', 'Clients', 'Storages', 'Products', 'Drivers'],
+	tagTypes: ['Orders', 'Clients', 'Storages', 'Products', 'Drivers', 'Vehicles'],
 	endpoints: (builder) => ({
 		getIncomingOrders: builder.query<IncomingOrders, void>({
 			query: () => ({
@@ -291,6 +293,59 @@ export const apiSlice = createApi({
 			},
 			invalidatesTags: [{ type: 'Drivers', id: 'LIST' }],
 		}),
+		getVehicles: builder.query<Vehicle[], void>({
+			query: () => ({
+				url: ROUTES.vehicles,
+			}),
+			providesTags: (result) =>
+				result
+					? [...result.map(({ ID }) => ({ type: 'Vehicles', ID } as const)), { type: 'Vehicles', id: 'LIST' }]
+					: [{ type: 'Vehicles', id: 'LIST' }],
+			transformResponse: (response: VehiclesFromAPI) => {
+				return transformVehiclesFromAPI(response)
+			},
+		}),
+		addVehicle: builder.mutation<void, Omit<Vehicle, 'ID'>>({
+			query: (vehicle) => ({
+				url: ROUTES.vehicles,
+				method: 'POST',
+				body: {
+					brand: vehicle.brand,
+					volume: vehicle.volume,
+					capacity: vehicle.capacity,
+					fuelConsumption: vehicle.fuelConsumption,
+					licencePlate: vehicle.licensePlate,
+				},
+			}),
+			invalidatesTags: [{ type: 'Vehicles', id: 'LIST' }],
+		}),
+		changeVehicle: builder.mutation<void, Vehicle>({
+			query: (vehicle) => ({
+				url: `${ROUTES.vehicles}/${vehicle.ID}`,
+				method: 'PUT',
+				body: {
+					brand: vehicle.brand,
+					volume: vehicle.volume,
+					capacity: vehicle.capacity,
+					fuelConsumption: vehicle.fuelConsumption,
+					licencePlate: vehicle.licensePlate,
+				},
+			}),
+			invalidatesTags: (_, __, arg) => [
+				{ type: 'Vehicles', id: arg.ID },
+				{ type: 'Vehicles', id: 'LIST' },
+			],
+		}),
+		deleteVehicles: builder.mutation<void, string[]>({
+			query: (ids) => {
+				const queryParams = ids.map((id) => 'TransportIds=' + id).join('&')
+				return {
+					url: `${ROUTES.vehicles}?${queryParams}`,
+					method: 'DELETE',
+				}
+			},
+			invalidatesTags: [{ type: 'Vehicles', id: 'LIST' }],
+		}),
 	}),
 })
 
@@ -302,6 +357,7 @@ export const {
 	useGetClientsQuery,
 	useGetStoragesQuery,
 	useGetDriversQuery,
+	useGetVehiclesQuery,
 	useToggleOrderMutation,
 	useAddClientMutation,
 	useChangeClientMutation,
@@ -315,6 +371,9 @@ export const {
 	useAddDriverMutation,
 	useChangeDriverMutation,
 	useDeleteDriversMutation,
+	useAddVehicleMutation,
+	useChangeVehicleMutation,
+	useDeleteVehiclesMutation,
 } = apiSlice
 
 export const store = configureStore({
@@ -394,4 +453,11 @@ const selectDrivers = apiSlice.endpoints.getDrivers.select
 export const getDriverByID = createSelector([selectDrivers(), (_, ID) => ID], (drivers, ID) => {
 	if (!drivers.data) return null
 	return drivers.data.find((driver) => driver.ID === ID)
+})
+
+const selectVehicles = apiSlice.endpoints.getVehicles.select
+
+export const getVehicleByID = createSelector([selectVehicles(), (_, ID) => ID], (vehicles, ID) => {
+	if (!vehicles.data) return null
+	return vehicles.data.find((vehicle) => vehicle.ID === ID)
 })

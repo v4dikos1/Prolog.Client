@@ -5,6 +5,7 @@ import { ClientsModal } from '@/widgets/client'
 import { StoragesModal } from '@/widgets/storage'
 import { ProductsModal } from '@/widgets/product'
 import { DriversModal } from '@/widgets/driver'
+import { VehiclesModal } from '@/widgets/vehicle/'
 import { TooltipCorner } from './TooltipCorner'
 import { TooltipItem } from './TooltipItem'
 
@@ -54,7 +55,7 @@ export const Tooltip = ({ className, open, id, close }: Props) => {
 					<TooltipItem additionalEffectOnClick={close} Modal={DriversModal}>
 						Водители
 					</TooltipItem>
-					<TooltipItem additionalEffectOnClick={close} Modal={ClientsModal}>
+					<TooltipItem additionalEffectOnClick={close} Modal={VehiclesModal}>
 						Транспорт
 					</TooltipItem>
 					<TooltipItem additionalEffectOnClick={close} Modal={ClientsModal}>

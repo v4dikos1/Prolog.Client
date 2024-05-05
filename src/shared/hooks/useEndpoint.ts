@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@/app/store/index'
+import { useAppDispatch, useAppSelector } from '@/shared/store'
 import { ApiEndpointQuery, BaseQueryFn, EndpointDefinitions, QueryDefinition } from '@reduxjs/toolkit/query'
 
 type Props<QueryArg, ResultType> = {

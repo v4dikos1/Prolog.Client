@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useGetProductsQuery } from '@/app/store'
 import { ImportOrdersButton } from '@/features/order'
+import { useGetProductsQuery } from '@/entities/product'
 import { SpinnerIcon } from '@/shared/ui/icons/SpinnerIcon'
 import { Button } from '@/shared/ui/Button'
 import { Table } from '@/shared/ui/Table'

@@ -1,6 +1,11 @@
-import { Vehicle } from './model'
-import { VehiclesFromAPI } from './apiModel'
-import { transformVehiclesFromAPI } from './helpers'
-
-export type { Vehicle, VehiclesFromAPI }
-export { transformVehiclesFromAPI }
+export type { Vehicle } from './model'
+export type { VehiclesFromAPI } from './apiModel'
+export { transformVehiclesFromAPI } from './helpers'
+export {
+	useGetVehiclesQuery,
+	useAddVehicleMutation,
+	useChangeVehicleMutation,
+	useDeleteVehiclesMutation,
+	getVehicleByID,
+	getVehiclesAsSelectOptions,
+} from './slice'

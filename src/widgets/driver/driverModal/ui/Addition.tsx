@@ -1,5 +1,5 @@
 import { FormEventHandler, useState } from 'react'
-import { useAddDriverMutation } from '@/app/store'
+import { useAddDriverMutation } from '@/entities/driver'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
 
@@ -31,7 +31,7 @@ export const Addition = ({ back }: Props) => {
 		const salaryNumber = Number(salary)
 
 		event.preventDefault()
-		addDriver({ name, surname, patronymic, phone, telegram: '@drivers_prolog', salary: salaryNumber }).then(
+		addDriver({ name, surname, patronymic, phone, telegram: 'drivers_prolog', salary: salaryNumber }).then(
 			handleResponse,
 		)
 	}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Product } from '@/entities/product'
 import { Table as TableTemplate } from '@/shared/ui/Table'
 import { Checkbox } from '@/shared/ui/Checkbox'
@@ -6,11 +6,37 @@ import { Checkbox } from '@/shared/ui/Checkbox'
 interface Props {
 	className?: string
 	products: Product[]
+	selectedProducts: Set<string>
+	setSelectedProducts: (arg: Set<string>) => void
 }
 
-export const Table = ({ className, products }: Props) => {
+export const Table = ({ className, products, selectedProducts, setSelectedProducts }: Props) => {
 	const [checkedAll, setCheckedAll] = useState(false)
-	const toggleCheckbox = () => setCheckedAll((checkedAll) => !checkedAll)
+
+	const clearSelectedProducts = () => setSelectedProducts(new Set())
+	const selectAll = () => setSelectedProducts(new Set(products.map((product) => product.ID)))
+
+	const toggleCheckbox = () => {
+		if (checkedAll) {
+			clearSelectedProducts()
+			setCheckedAll(false)
+		} else {
+			selectAll()
+			setCheckedAll(true)
+		}
+	}
+
+	const checkProduct = (ID: string) => {
+		console.log('Check Product')
+		if (selectedProducts.has(ID)) {
+			const newSet = new Set(selectedProducts)
+			newSet.delete(ID)
+			setSelectedProducts(newSet)
+		} else {
+			const newSet = new Set(selectedProducts).add(ID)
+			setSelectedProducts(newSet)
+		}
+	}
 
 	const productsInView = products.map((product) => ({ ...product, selected: false, count: 0 }))
 
@@ -36,9 +62,13 @@ export const Table = ({ className, products }: Props) => {
 			<tbody>
 				{productsInView.map((product) => (
 					<tr key={product.ID}>
-						<td className='font-medium' onClick={() => {}}>
+						<td
+							className='font-medium'
+							onClick={() => {
+								checkProduct(product.ID)
+							}}>
 							<div className='flex gap-3'>
-								<Checkbox checked={product.selected} changeHandler={() => {}} />
+								<Checkbox checked={selectedProducts.has(product.ID)} changeHandler={() => checkProduct(product.ID)} />
 								{product.code}
 							</div>
 						</td>

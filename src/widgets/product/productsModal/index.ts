@@ -1,3 +1,2 @@
-import { ProductsModal } from './ui'
-
-export { ProductsModal }
+export { ProductsModal } from './ui'
+export { Addition } from './ui/Addition'

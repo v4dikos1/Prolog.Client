@@ -1,6 +1,11 @@
-import { Driver } from './model'
-import { DriversFromAPI } from './apiModel'
-import { transformDriversFromAPI } from './helpers'
-
-export type { Driver, DriversFromAPI }
-export { transformDriversFromAPI }
+export type { Driver } from './model'
+export type { DriversFromAPI } from './apiModel'
+export { transformDriversFromAPI } from './helpers'
+export {
+	useGetDriversQuery,
+	useAddDriverMutation,
+	useChangeDriverMutation,
+	useDeleteDriversMutation,
+	getDriversAsSelectOptions,
+	getDriverByID,
+} from './slice'

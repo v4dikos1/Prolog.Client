@@ -1,4 +1,4 @@
-import { useGetStoragesQuery } from '@/app/store'
+import { useGetStoragesQuery } from '@/entities/storage'
 import { SpinnerIcon } from '@/shared/ui/icons/SpinnerIcon'
 import { Button } from '@/shared/ui/Button'
 import { Table } from '@/shared/ui/Table'

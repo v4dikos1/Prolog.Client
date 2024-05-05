@@ -1,5 +1,6 @@
 import { FormEventHandler, useState } from 'react'
-import { getStorageByID, useChangeStorageMutation, useDeleteStoragesMutation, useAppSelector } from '@/app/store'
+import { useAppSelector } from '@/shared/store'
+import { getStorageByID, useChangeStorageMutation, useDeleteStoragesMutation } from '@/entities/storage'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
 

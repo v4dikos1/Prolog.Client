@@ -1,6 +1,6 @@
 import { Driver } from '@/entities/driver'
 import { ArrowRightIcon } from '@/shared/ui/icons/ArrowRightIcon'
-import { getTime } from '@/shared/utils/getTime'
+import { getTime } from '@/shared/helpers/getTime'
 
 interface Props {
 	className?: string

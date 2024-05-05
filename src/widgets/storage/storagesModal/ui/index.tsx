@@ -33,6 +33,9 @@ export const StoragesModal = ({ opened, close }: Props) => {
 	}
 
 	const closeAndReset = () => {
+		setTimeout(() => {
+			setModalState('main')
+		}, 500)
 		close()
 	}
 

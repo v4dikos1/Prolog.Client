@@ -1,4 +1,4 @@
-import { useGetDriversQuery } from '@/app/store'
+import { useGetDriversQuery } from '@/entities/driver'
 import { SpinnerIcon } from '@/shared/ui/icons/SpinnerIcon'
 import { Button } from '@/shared/ui/Button'
 import { Table } from '@/shared/ui/Table'

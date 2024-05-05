@@ -1,14 +1,13 @@
 import cx from 'classnames'
-import { useToggleOrderMutation } from '@/app/store'
-import { OrderContent, OrderType, StatusEnum } from '@/entities/order'
+import { OrderContent, useToggleOrderMutation, Order, StatusEnum } from '@/entities/order'
 import { Header } from './Header'
 
 interface Props {
 	className?: string
-	order: OrderType
+	order: Order
 }
 
-const getOrderContent = (order: OrderType) => {
+const getOrderContent = (order: Order) => {
 	return order.status === 0 ? (
 		<OrderContent
 			className='w-full'

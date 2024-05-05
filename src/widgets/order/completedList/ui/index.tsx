@@ -1,6 +1,5 @@
 import { useSearchParams } from 'react-router-dom'
-import { useGetCompletedOrdersQuery } from '@/app/store'
-import { StatusEnum, filterCompletedOrders } from '@/entities/order'
+import { StatusEnum, filterCompletedOrders, useGetCompletedOrdersQuery } from '@/entities/order'
 import { OrderDateGroup } from '../../dateGroup'
 
 interface Props {
@@ -9,6 +8,7 @@ interface Props {
 
 export const OrderCompletedList = ({ className }: Props) => {
 	const { data: completedOrders } = useGetCompletedOrdersQuery()
+
 	const [searchParams] = useSearchParams()
 	const searchStr = (searchParams.get('q') || '').toLowerCase()
 

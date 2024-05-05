@@ -3,7 +3,7 @@ import cx from 'classnames'
 import { ChevronDownIcon } from '@/shared/ui/icons/ChevronDownIcon'
 import styles from './style.module.css'
 
-interface Option {
+export interface Option {
 	value: string
 	title: string
 }
@@ -33,7 +33,9 @@ export const Select = ({ className, changeHandler, options, defaultOption, value
 						'text-gray-800': !empty,
 					},
 				)}>
-				<option value={defaultOption.value}>{defaultOption.title}</option>
+				<option disabled value={defaultOption.value}>
+					{defaultOption.title}
+				</option>
 				{options.map((option) => (
 					<option key={option.value} value={option.value}>
 						{option.title}

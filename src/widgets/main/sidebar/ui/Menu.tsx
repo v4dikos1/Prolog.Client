@@ -1,6 +1,7 @@
 import cx from 'classnames'
-import { useAppSelector, isIncomingOrderSelected, isActiveOrderSelected, isCompletedOrderSelected } from '@/app/store'
-import { StatusEnum } from '@/entities/order'
+import { useAppSelector } from '@/shared/store'
+
+import { StatusEnum, isIncomingOrderSelected, isActiveOrderSelected, isCompletedOrderSelected } from '@/entities/order'
 import {
 	IncomingOrdersAndSelectedItem,
 	ActiveOrdersAndSelectedItem,

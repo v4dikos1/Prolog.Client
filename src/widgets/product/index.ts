@@ -1,4 +1,2 @@
-import { ProductTable } from './productTable'
-import { ProductsModal } from './productsModal'
-
-export { ProductTable, ProductsModal }
+export { ProductTable } from './productTable'
+export { ProductsModal, Addition } from './productsModal'

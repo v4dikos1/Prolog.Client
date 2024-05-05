@@ -1,7 +1,7 @@
 import cx from 'classnames'
-import { StatusEnum } from '@/entities/order'
+import { useAppSelector } from '@/shared/store'
+import { StatusEnum, getIncomingOrdersCount, getActiveOrdersCount, getCompletedOrdersCount } from '@/entities/order'
 import { Tab } from '@/shared/ui/Tab'
-import { useAppSelector, getIncomingOrdersCount, getActiveOrdersCount, getCompletedOrdersCount } from '@/app/store'
 
 interface Props {
 	className?: string

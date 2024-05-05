@@ -20,7 +20,7 @@ export type OrderBase = {
 	price: number
 	address: string
 	storage: Pick<Storage, 'ID' | 'name'>
-	client: Pick<Client, 'ID' | 'name'>
+	client: Client
 	cargo: Cargo
 	selected: boolean
 }

@@ -7,10 +7,11 @@ import { Changing } from './Changing'
 interface Props {
 	opened: boolean
 	close: () => void
+	state?: 'main' | 'addition' | 'changing'
 }
 
-export const ProductsModal = ({ opened, close }: Props) => {
-	const [modalState, setModalState] = useState<'main' | 'addition' | 'changing'>('main')
+export const ProductsModal = ({ opened, close, state = 'main' }: Props) => {
+	const [modalState, setModalState] = useState<'main' | 'addition' | 'changing'>(state)
 	const [changingProductID, setChangingProductID] = useState<null | string>(null)
 
 	const openMain = () => setModalState('main')
@@ -33,6 +34,9 @@ export const ProductsModal = ({ opened, close }: Props) => {
 	}
 
 	const closeAndReset = () => {
+		setTimeout(() => {
+			setModalState('main')
+		}, 500)
 		close()
 	}
 

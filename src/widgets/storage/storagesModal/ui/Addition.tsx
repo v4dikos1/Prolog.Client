@@ -1,7 +1,7 @@
 import { FormEventHandler, useState } from 'react'
+import { useAddStorageMutation } from '@/entities/storage'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
-import { useAddStorageMutation } from '@/app/store'
 
 interface Props {
 	back: () => void

@@ -1,7 +1,5 @@
 import { useSearchParams } from 'react-router-dom'
-import { useGetIncomingOrdersQuery } from '@/app/store'
-import { filterIncomingOrders } from '@/entities/order'
-import { StatusEnum } from '@/entities/order'
+import { filterIncomingOrders, useGetIncomingOrdersQuery, StatusEnum } from '@/entities/order'
 import { OrderDateGroup } from '../../dateGroup'
 
 interface Props {
@@ -10,6 +8,7 @@ interface Props {
 
 export const OrderIncomingList = ({ className }: Props) => {
 	const { data: incomingOrders } = useGetIncomingOrdersQuery()
+
 	const [searchParams] = useSearchParams()
 	const searchStr = (searchParams.get('q') || '').toLowerCase()
 

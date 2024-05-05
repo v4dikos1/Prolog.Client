@@ -1,5 +1,6 @@
 import { FormEventHandler, useState } from 'react'
-import { getDriverByID, useChangeDriverMutation, useDeleteDriversMutation, useAppSelector } from '@/app/store'
+import { useAppSelector } from '@/shared/store'
+import { getDriverByID, useChangeDriverMutation, useDeleteDriversMutation } from '@/entities/driver'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
 

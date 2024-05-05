@@ -1,14 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import cx from 'classnames'
 
-import { isOrdersLoading, useAppSelector } from '@/app/store'
+import { useAppSelector } from '@/shared/store'
 import { OrderTabs } from '@/features/order'
-import { StatusEnum } from '@/entities/order'
+import {
+	StatusEnum,
+	isOrdersLoading,
+	useGetActiveOrdersQuery,
+	useGetCompletedOrdersQuery,
+	useGetIncomingOrdersQuery,
+} from '@/entities/order'
 import { SpinnerIcon } from '@/shared/ui/icons/SpinnerIcon'
 import { useUpdateSearchParams } from '@/shared/hooks/useSearchParams'
 import { Main } from './Main'
 import { Menu } from './Menu'
-import { useEffect } from 'react'
 
 interface Props {
 	className?: string
@@ -25,14 +30,20 @@ export const Sidebar = ({ className }: Props) => {
 		} else {
 			updateParams('tab', String(StatusEnum.incoming))
 		}
-	}, [setActiveTab, searchParams, updateParams])
+	}, [searchParams, updateParams])
 
 	const openIncoming = () => updateParams('tab', String(StatusEnum.incoming))
 	const openActive = () => updateParams('tab', String(StatusEnum.active))
 	const openCompleted = () => updateParams('tab', String(StatusEnum.completed))
 
+	useGetIncomingOrdersQuery()
+	useGetActiveOrdersQuery()
+	useGetCompletedOrdersQuery()
 	const isLoading = useAppSelector(isOrdersLoading)
-	if (isLoading) return <SpinnerIcon className='mt-10 mx-auto' pathClassName='fill-indigo-700' />
+
+	if (isLoading) {
+		return <SpinnerIcon className='mt-10 mx-auto' pathClassName='fill-indigo-700' />
+	}
 
 	return (
 		<div id='sidebar' className={cx(className, 'w-full h-screen overflow-hidden flex flex-col')}>

@@ -1,11 +1,11 @@
 import cx from 'classnames'
 import { CargoType } from '@/entities/order'
 import { Client } from '@/entities/client'
-import { getTime } from '@/shared/utils/getTime'
+import { getTime } from '@/shared/helpers/getTime'
 import { formatPrice } from '../utils'
 
 type PropsBase = {
-	client: Pick<Client, 'ID' | 'name'>
+	client: Client
 	price: number
 	cargo: CargoType
 	className?: string

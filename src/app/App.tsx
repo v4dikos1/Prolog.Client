@@ -1,31 +1,33 @@
-import { StatusEnum } from '@/entities/order'
 import { useEffect, useState } from 'react'
 import { useAuth, hasAuthParams } from 'react-oidc-context'
 import { Outlet } from 'react-router-dom'
+import { NotAuthorized } from '@/shared/ui/NotAuthorized'
+import { Authorization } from '@/shared/ui/Authorizing'
+import { getUser } from '@/shared/helpers/getUser'
 
 export const App = () => {
 	const auth = useAuth()
 	const [hasTriedSignin, setHasTriedSignin] = useState(false)
+	const user = getUser()
 
 	useEffect(() => {
-		if (!hasAuthParams() && !auth.isAuthenticated && !auth.activeNavigator && !auth.isLoading && !hasTriedSignin) {
-			auth.signinRedirect()
-			setHasTriedSignin(true)
+		if (auth.isLoading || auth.activeNavigator || auth.isAuthenticated || hasTriedSignin) {
+			return
 		}
-	}, [auth, hasTriedSignin])
 
-	if (auth.isLoading) {
-		return <div>Signing you in/out...</div>
-	}
+		if (user || hasAuthParams()) {
+			auth.signinSilent()
+			setHasTriedSignin(true)
+			return
+		}
 
-	if (!auth.isAuthenticated) {
-		return <div>Unable to log in</div>
-	}
+		auth.signinRedirect()
+		setHasTriedSignin(true)
+	}, [auth, hasTriedSignin, user])
 
-	const urlSearchParams = new URLSearchParams(window.location.search)
-	const tab = urlSearchParams.get('tab') || String(StatusEnum.incoming)
+	if (auth.isLoading) return <Authorization />
+	if (!auth.isAuthenticated) return <NotAuthorized />
 
-	window.history.replaceState({}, document.title, window.location.pathname + '?tab=' + tab)
 	return (
 		<>
 			<Outlet />

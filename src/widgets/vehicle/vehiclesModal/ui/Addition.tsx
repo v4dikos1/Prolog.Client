@@ -1,5 +1,5 @@
 import { FormEventHandler, useState } from 'react'
-import { useAddVehicleMutation } from '@/app/store'
+import { useAddVehicleMutation } from '@/entities/vehicle'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
 

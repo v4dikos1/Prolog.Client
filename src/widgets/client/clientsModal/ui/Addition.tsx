@@ -1,7 +1,7 @@
 import { FormEventHandler, useState } from 'react'
+import { useAddClientMutation } from '@/entities/client'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
-import { useAddClientMutation } from '@/app/store'
 
 interface Props {
 	back: () => void

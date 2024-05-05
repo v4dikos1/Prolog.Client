@@ -33,6 +33,9 @@ export const ClientsModal = ({ opened, close }: Props) => {
 	}
 
 	const closeAndReset = () => {
+		setTimeout(() => {
+			setModalState('main')
+		}, 500)
 		close()
 	}
 

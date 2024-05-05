@@ -1,6 +1,11 @@
-import { Client } from './model'
-import { ClientsFromAPI } from './apiModel'
-import { transformClientsFromAPI } from './helpers'
-
-export type { Client, ClientsFromAPI }
-export { transformClientsFromAPI }
+export type { ClientsFromAPI } from './apiModel'
+export type { Client } from './model'
+export { transformClientsFromAPI } from './helpers'
+export {
+	useGetClientsQuery,
+	useAddClientMutation,
+	useChangeClientMutation,
+	useDeleteClientsMutation,
+	getClientByID,
+	getClientsAsSelectOptions,
+} from './slice'

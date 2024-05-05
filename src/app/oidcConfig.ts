@@ -1,6 +1,7 @@
 import { WebStorageStateStore } from 'oidc-client-ts'
+import type { UserManagerSettings } from 'oidc-client-ts'
 
-export const oidcConfig = {
+export const oidcConfig: UserManagerSettings = {
 	authority: 'https://identity.krsk-prolog.ru/realms/prolog',
 	client_id: 'Prolog.LocalWebClient',
 	redirect_uri: '/',

@@ -1,5 +1,5 @@
 import { FormEventHandler, useState } from 'react'
-import { useAddProductMutation } from '@/app/store'
+import { useAddProductMutation } from '@/entities/product'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
 

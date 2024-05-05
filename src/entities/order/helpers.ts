@@ -1,4 +1,4 @@
-import { getRandomColor } from '@/shared/utils/getRandomColor'
+import { getRandomColor } from '@/shared/helpers/getRandomColor'
 import { IncomingOrders, ActiveOrders, CompletedOrders, ActiveOrdersGroupByDate } from './model'
 import { ActiveOrdersFromAPI, CompletedOrdersFromAPI, IncomingOrdersFromAPI } from './apiModel'
 import { Order } from './model'

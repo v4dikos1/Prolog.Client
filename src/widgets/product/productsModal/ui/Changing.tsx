@@ -1,5 +1,6 @@
 import { FormEventHandler, useState } from 'react'
-import { getProductByID, useChangeProductMutation, useDeleteProductsMutation, useAppSelector } from '@/app/store'
+import { useAppSelector } from '@/shared/store'
+import { getProductByID, useChangeProductMutation, useDeleteProductsMutation } from '@/entities/product'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
 

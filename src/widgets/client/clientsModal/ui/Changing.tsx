@@ -1,5 +1,6 @@
 import { FormEventHandler, useState } from 'react'
-import { getClientByID, useChangeClientMutation, useDeleteClientsMutation, useAppSelector } from '@/app/store'
+import { useAppSelector } from '@/shared/store'
+import { getClientByID, useChangeClientMutation, useDeleteClientsMutation } from '@/entities/client'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
 

@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom'
-import { useGetActiveOrdersQuery } from '@/app/store'
+import { useGetActiveOrdersQuery } from '@/entities/order'
 import { StatusEnum, filterActiveOrders } from '@/entities/order'
 import { OrderDateGroup } from '../../dateGroup'
 
@@ -9,6 +9,7 @@ interface Props {
 
 export const OrderActiveList = ({ className }: Props) => {
 	const { data: activeOrders } = useGetActiveOrdersQuery()
+
 	const [searchParams] = useSearchParams()
 	const searchStr = (searchParams.get('q') || '').toLowerCase()
 

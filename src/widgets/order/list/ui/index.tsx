@@ -1,18 +1,18 @@
+import { useSearchParams } from 'react-router-dom'
 import cx from 'classnames'
 import { OrderCard } from '@/widgets/order'
-import { OrderType } from '@/entities/order'
-import { useSearchParams } from 'react-router-dom'
+import { Order } from '@/entities/order'
 
 interface Props {
 	className?: string
-	orders: OrderType[]
+	orders: Order[]
 }
 
 export const OrderList = ({ className, orders }: Props) => {
 	const [searchParams] = useSearchParams()
 	const searchStr = searchParams.get('q')?.toLowerCase() || ''
 
-	const filterOrder = (order: OrderType) => {
+	const filterOrder = (order: Order) => {
 		if (searchStr === '') return true
 
 		const includesID = order.visibleID.toLowerCase().includes(searchStr)

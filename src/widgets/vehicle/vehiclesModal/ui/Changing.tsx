@@ -1,5 +1,6 @@
 import { FormEventHandler, useState } from 'react'
-import { getVehicleByID, useChangeVehicleMutation, useDeleteVehiclesMutation, useAppSelector } from '@/app/store'
+import { useAppSelector } from '@/shared/store'
+import { getVehicleByID, useChangeVehicleMutation, useDeleteVehiclesMutation } from '@/entities/vehicle'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
 

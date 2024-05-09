@@ -7,6 +7,7 @@ import {
 	ActiveOrdersGroupByDriver,
 	StatusEnum,
 	activeOrdersGroupByDateIsEmpty,
+	OrdersNotFound,
 } from '@/entities/order/'
 import { OrderDriverGroup } from '../../driverGroup'
 import { OrderList } from '../../list'
@@ -40,7 +41,7 @@ export const OrderDateGroup = ({ className, status, groupByDate }: Props) => {
 	const emptyOrders = groupByDate.orders.length === 0
 	const activeOrdersIsEmpty = status === StatusEnum.active && activeOrdersGroupByDateIsEmpty(groupByDate)
 
-	if (emptyOrders || activeOrdersIsEmpty) return null
+	if (emptyOrders || activeOrdersIsEmpty) return <OrdersNotFound />
 
 	const sumLengths = (prev: number, cur: ActiveOrdersGroupByDriver) => prev + cur.orders.length
 	const count = status === StatusEnum.active ? groupByDate.orders.reduce(sumLengths, 0) : groupByDate.orders.length

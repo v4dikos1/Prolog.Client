@@ -44,7 +44,7 @@ export const Addition = ({ back }: Props) => {
 			onInput={() => setErrorVisible(false)}>
 			{errorVisible && (
 				<p className='text-red-500'>
-					Ошибка: данные введены неверно <br />
+					Ошибка: отсутствует подключение к интернету <br />
 					либо водитель с таким телефоном уже существует.
 				</p>
 			)}

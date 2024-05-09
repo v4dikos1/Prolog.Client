@@ -1,31 +1,15 @@
-import { OrderTabs } from './tabs'
-import { OrderSearchInput } from './searchInput'
-import { OpenOrderCreateModalButton } from './openOrderCreateModalButton'
-import { OpenRunPlanningModalButton } from './runPlanningButton'
-import { OrderCopyIDButton } from './copyIDButton'
-import { OrderPickUpAddress } from './pickUpAddress'
-import { OrderDeliveryAddress } from './deliveryAddress'
-import { DeleteIncomingOrdersButton } from './deleteIncomingOrdersButton'
-import { ChangeDeliveryDateButton } from './changeDeliveryDateButton'
-import { CancelActiveOrdersButton } from './cancelActiveOrdersButton'
-import { DeleteActiveOrdersButton } from './deleteActiveOrdersButton'
-import { DeleteCompletedOrdersButton } from './deleteCompletedOrdersButton'
-import { CreateDuplicateButton } from './createDuplicateButton'
-import { ImportOrdersButton } from './importButton'
-
-export {
-	OrderTabs,
-	OrderSearchInput,
-	OpenOrderCreateModalButton,
-	OpenRunPlanningModalButton,
-	OrderCopyIDButton,
-	OrderPickUpAddress,
-	OrderDeliveryAddress,
-	DeleteIncomingOrdersButton,
-	DeleteActiveOrdersButton,
-	DeleteCompletedOrdersButton,
-	ChangeDeliveryDateButton,
-	CancelActiveOrdersButton,
-	CreateDuplicateButton,
-	ImportOrdersButton,
-}
+export { OrderTabs } from './tabs'
+export { OrderSearchInput } from './searchInput'
+export { OpenOrderCreateModalButton } from './openOrderCreateModalButton'
+export { OpenRunPlanningModalButton } from './runPlanningButton'
+export { OrderCopyIDButton } from './copyIDButton'
+export { OrderPickUpAddress } from './pickUpAddress'
+export { OrderDeliveryAddress } from './deliveryAddress'
+export { DeleteIncomingOrdersButton } from './deleteIncomingOrdersButton'
+export { ChangeDeliveryDateButton } from './changeDeliveryDateButton'
+export { CancelActiveOrdersButton } from './cancelActiveOrdersButton'
+export { DeleteActiveOrdersButton } from './deleteActiveOrdersButton'
+export { DeleteCompletedOrdersButton } from './deleteCompletedOrdersButton'
+export { CreateDuplicateButton } from './createDuplicateButton'
+export { ImportOrdersButton } from './importButton'
+export { AddressInput } from './AddressInput'

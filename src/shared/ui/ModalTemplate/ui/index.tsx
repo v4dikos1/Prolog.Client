@@ -8,6 +8,7 @@ interface Props {
 	headerContent?: React.ReactNode
 	content: React.ReactNode
 	className?: string
+	mainClassName?: string
 	opened: boolean
 	close: () => void
 }
@@ -44,7 +45,15 @@ const onTab = (e: KeyboardEvent, modal: HTMLDivElement | null) => {
 	}
 }
 
-export const ModalTemplate = ({ titleContent, headerContent, content, className, opened, close }: Props) => {
+export const ModalTemplate = ({
+	titleContent,
+	headerContent,
+	content,
+	className,
+	mainClassName,
+	opened,
+	close,
+}: Props) => {
 	const modal = useRef<HTMLDivElement | null>(null)
 
 	const onKeyboard = useCallback(
@@ -79,7 +88,7 @@ export const ModalTemplate = ({ titleContent, headerContent, content, className,
 					<CloseModalButton className='absolute top-6 right-8' clickHandler={close} />
 					{headerContent}
 				</header>
-				<main className='pt-4 pb-8 flex flex-col gap-4'>{content}</main>
+				<main className={cx('grow pt-4 pb-8 flex flex-col gap-4', mainClassName)}>{content}</main>
 			</div>
 		</Backdrop>
 	)

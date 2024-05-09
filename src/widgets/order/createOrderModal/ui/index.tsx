@@ -1,76 +1,56 @@
 import { useState } from 'react'
+import cx from 'classnames'
+
+import { Addition } from '@/widgets/product'
 import { ModalTemplate, ModalTitleButton } from '@/shared/ui/ModalTemplate/'
 import { Step } from '@/shared/ui/Step'
 import { StepOne } from './StepOne'
 import { StepTwo } from './StepTwo'
-import { Addition } from '@/widgets/product'
+import { Form, defaultFromState } from '../types'
 
 interface Props {
 	opened: boolean
 	close: () => void
 }
 
-export interface Form {
-	storageID: string
-	address: string
-	date?: Date
-	pickUpStart: string
-	pickUpEnd: string
-	deliveryStart: string
-	deliveryEnd: string
-	clientID: string
-	price: string
-	productIDs: Set<string>
-}
-
-const defaultFromState: Form = {
-	storageID: '',
-	address: '',
-	pickUpStart: '',
-	pickUpEnd: '',
-	deliveryStart: '',
-	deliveryEnd: '',
-	clientID: '',
-	price: '',
-	productIDs: new Set(),
-}
-
 export const CreateOrderModal = ({ opened, close }: Props) => {
 	const [form, setForm] = useState<Form>(defaultFromState)
 
-	const [currentStep, setCurrentStep] = useState<1 | 2 | 'addition'>(1)
-	const openFirst = () => setCurrentStep(1)
-	const openSecond = () => setCurrentStep(2)
+	const [currentStep, setCurrentStep] = useState<'details' | 'products' | 'addition'>('details')
+	const openDetails = () => setCurrentStep('details')
+	const openProducts = () => setCurrentStep('products')
 	const openAddition = () => setCurrentStep('addition')
 
-	const content = {
-		1: <StepOne form={form} setForm={setForm} next={openSecond} />,
-		2: <StepTwo openAddition={openAddition} form={form} setForm={setForm} prev={openFirst} />,
-		addition: <Addition back={openSecond} />,
+	const title = {
+		details: 'Создать заявку',
+		products: 'Создать заявку',
+		addition: <ModalTitleButton back={openProducts} text='Добавить товар' />,
 	}
 
-	const title = {
-		1: 'Создать заявку',
-		2: 'Создать заявку',
-		addition: <ModalTitleButton back={openSecond} text='Добавить товар' />,
+	const content = {
+		details: <StepOne form={form} setForm={setForm} next={openProducts} />,
+		products: <StepTwo close={close} openAddition={openAddition} form={form} setForm={setForm} prev={openDetails} />,
+		addition: <Addition back={openProducts} />,
 	}
 
 	const closeAndReset = () => {
 		setTimeout(() => {
 			setForm(defaultFromState)
-			setCurrentStep(1)
+			openDetails()
 		}, 500)
 		close()
 	}
 
 	return (
 		<ModalTemplate
+			className={cx({ 'h-[90%] overflow-hidden flex flex-col': currentStep === 'products' })}
+			mainClassName={cx({ 'overflow-hidden': currentStep === 'products' })}
 			titleContent={title[currentStep]}
 			headerContent={
-				currentStep === 'addition' ? null : (
+				currentStep !== 'addition' && (
 					<div className='flex gap-8 w-full mt-3'>
-						<Step className='w-full' active={currentStep === 1} stepNumber={1} stepName='Сведения о заявке' />
-						<Step className='w-full' active={currentStep === 2} stepNumber={2} stepName='Товары' />
+						<Step className='w-full' active={currentStep === 'details'} stepNumber={1} stepName='Сведения о заявке' />
+						<Step className='w-full' active={currentStep === 'products'} stepNumber={2} stepName='Товары' />
 					</div>
 				)
 			}

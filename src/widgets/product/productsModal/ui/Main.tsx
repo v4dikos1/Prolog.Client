@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import { ImportOrdersButton } from '@/features/order'
-import { useGetProductsQuery } from '@/entities/product'
+import { ImportProductsButton } from '@/features/product'
+import { useGetProductsQuery, filterProduct } from '@/entities/product'
 import { SpinnerIcon } from '@/shared/ui/icons/SpinnerIcon'
 import { Button } from '@/shared/ui/Button'
 import { Table } from '@/shared/ui/Table'
 import { InputWithIcon } from '@/shared/ui/InputWithIcon'
 import { SearchIcon } from '@/shared/ui/icons/SearchIcon'
-import { filterProduct } from '../helpers'
 
 interface Props {
 	openAddition: () => void
@@ -32,7 +31,7 @@ export const Main = ({ openAddition, openChanging }: Props) => {
 			/>
 			{filteredProducts.length > 0 ? (
 				<>
-					<Table maxHeight='315px'>
+					<Table>
 						<thead>
 							<tr>
 								<th className='w-[140px]'>Код</th>
@@ -59,8 +58,8 @@ export const Main = ({ openAddition, openChanging }: Props) => {
 							))}
 						</tbody>
 					</Table>
-					<div className='flex justify-between px-8'>
-						<ImportOrdersButton />
+					<div className='flex justify-between px-8 mt-auto'>
+						<ImportProductsButton />
 						<Button clickHandler={openAddition}>Добавить</Button>
 					</div>
 				</>

@@ -24,6 +24,8 @@ export const SelectClient = ({ className, value, changeHandler }: Props) => {
 			changeHandler={changeHandler}
 			defaultOption={defaultOption}
 			options={clientsOptions}
+			required
+			name='client'
 		/>
 	)
 }

@@ -24,6 +24,8 @@ export const SelectStorage = ({ className, value, changeHandler }: Props) => {
 			changeHandler={changeHandler}
 			defaultOption={defaultOption}
 			options={storageOptions}
+			required
+			name='storage'
 		/>
 	)
 }

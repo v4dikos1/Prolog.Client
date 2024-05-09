@@ -17,7 +17,7 @@ export const Main = ({ openAddition, openChanging }: Props) => {
 		<>
 			{drivers.length > 0 ? (
 				<>
-					<Table maxHeight='265px'>
+					<Table maxHeight='320px'>
 						<thead>
 							<tr>
 								<th className='w-1/4'>Имя</th>

@@ -1,6 +1,6 @@
 export type { ProductsFromAPI } from './apiModel'
 export type { Product } from './model'
-export { transformProductsFromAPI } from './helpers'
+export { transformProductsFromAPI, filterProduct } from './helpers'
 export {
 	useGetProductsQuery,
 	useAddProductMutation,

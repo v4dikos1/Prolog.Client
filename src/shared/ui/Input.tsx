@@ -3,19 +3,19 @@ import React from 'react'
 
 export interface Props {
 	className?: string
+	id?: string
 	style?: React.CSSProperties
-	placeholder?: string
 	value?: string
+	placeholder?: string
 	changeHandler?: React.ChangeEventHandler<HTMLInputElement>
 	blurHandler?: React.FocusEventHandler<HTMLInputElement>
 	focusHandler?: React.FocusEventHandler<HTMLInputElement>
 	name?: string
 	type?: React.HTMLInputTypeAttribute
-	autocomplete?: React.HTMLInputAutoCompleteAttribute
 	disabled?: boolean
 	readonly?: boolean
 	required?: boolean
-	id?: string
+	autocomplete?: React.HTMLInputAutoCompleteAttribute
 }
 
 export const Input = ({

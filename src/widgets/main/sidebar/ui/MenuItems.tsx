@@ -3,7 +3,6 @@ import {
 	DeleteIncomingOrdersButton,
 	DeleteActiveOrdersButton,
 	CancelActiveOrdersButton,
-	ChangeDeliveryDateButton,
 	OrderSearchInput,
 	OpenOrderCreateModalButton,
 	OpenRunPlanningModalButton,
@@ -25,8 +24,7 @@ export const IncomingOrdersAndSelectedItem = ({ className, activeTab, selected }
 			className={cx(className, 'flex gap-2 transition-all', {
 				'translate-y-[-130%]': incomingOrdersClosed || !selected,
 			})}>
-			<DeleteIncomingOrdersButton disabled={!selected} />
-			<ChangeDeliveryDateButton disabled={!selected} className='w-full' />
+			<DeleteIncomingOrdersButton disabled={!selected} className='w-full' />
 		</menu>
 	)
 }

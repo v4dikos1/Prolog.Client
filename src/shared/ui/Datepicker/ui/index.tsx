@@ -13,9 +13,10 @@ interface Props {
 	className?: string
 	id: string
 	placeholder: string
+	name: string
 }
 
-export const DatePicker = ({ date, setDate, className, id, placeholder }: Props) => {
+export const DatePicker = ({ date, setDate, className, id, placeholder, name }: Props) => {
 	const [show, setShow] = useState<boolean>(false)
 
 	const handleChange = (newDate: Date) => setDate(newDate)
@@ -60,6 +61,8 @@ export const DatePicker = ({ date, setDate, className, id, placeholder }: Props)
 					value={formatDate(date)}
 					placeholder={placeholder}
 					focusHandler={() => setShow(true)}
+					blurHandler={() => setShow(false)}
+					name={name}
 					readonly
 				/>
 			</Datepicker>

@@ -9,23 +9,23 @@
 	appearance: none;
 }
 
-.checkbox span {
+.checkbox div {
 	border-radius: 4px;
 	@apply w-4 h-4 flex justify-center items-center bg-white border border-gray-300;
 }
 
-.checkbox:hover span {
+.checkbox:hover div {
 	@apply border-gray-400;
 }
 
-.checkbox input:focus-visible + span {
+.checkbox input:focus-visible + div {
 	@apply border-indigo-400;
 }
 
-.checkbox.checkbox-checked span {
+.checkbox.checkbox-checked div {
 	@apply bg-indigo-600 border-indigo-600;
 }
 
-.checkbox.checkbox-checked:hover span {
+.checkbox.checkbox-checked:hover div {
 	@apply bg-indigo-800 border-indigo-800;
 }

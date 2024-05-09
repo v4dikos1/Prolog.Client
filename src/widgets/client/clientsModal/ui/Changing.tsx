@@ -46,7 +46,12 @@ export const Changing = ({ ID, back }: Props) => {
 			method='POST'
 			onSubmit={submitHandler}
 			onInput={() => setErrorVisible(false)}>
-			{errorVisible && <p className='text-red-500'>Ошибка: попробуйте заново</p>}
+			{errorVisible && (
+				<p className='text-red-500'>
+					Ошибка: отсутствует подключение к интернету <br />
+					либо клиент с таким телефоном уже существует.
+				</p>
+			)}
 			<div className='flex gap-4'>
 				<Input
 					className='w-full'

@@ -1,33 +1,39 @@
 import cx from 'classnames'
 import { OrderIncomingList, OrderActiveList, OrderCompletedList } from '@/widgets/order'
-import { StatusEnum } from '@/entities/order'
+import { ActiveOrders, CompletedOrders, IncomingOrders, StatusEnum } from '@/entities/order'
 
 interface Props {
 	className: string
 	activeTab: StatusEnum
+	incomingOrders?: IncomingOrders
+	activeOrders?: ActiveOrders
+	completedOrders?: CompletedOrders
 }
 
-export const Main = ({ className, activeTab }: Props) => {
+export const Main = ({ className, activeTab, incomingOrders, activeOrders, completedOrders }: Props) => {
 	return (
-		<main className={className + ' scrollable py-4 px-5 flex flex-col overflow-auto'}>
-			<OrderIncomingList
+		<main className={className + ' scrollable py-4 pl-5 pr-1 flex flex-col overflow-auto'}>
+			<div
 				className={cx('w-full', {
 					'animate-fadeIn opacity-0': activeTab === StatusEnum.incoming,
 					'animate-fadeOut pointer-events-none hidden': activeTab !== StatusEnum.incoming,
-				})}
-			/>
-			<OrderActiveList
+				})}>
+				<OrderIncomingList orders={incomingOrders} />
+			</div>
+			<div
 				className={cx('w-full', {
 					'animate-fadeIn opacity-0': activeTab === StatusEnum.active,
 					'animate-fadeOut pointer-events-none hidden': activeTab !== StatusEnum.active,
-				})}
-			/>
-			<OrderCompletedList
+				})}>
+				<OrderActiveList orders={activeOrders} />
+			</div>
+			<div
 				className={cx('w-full', {
 					'animate-fadeIn opacity-0': activeTab === StatusEnum.completed,
 					'animate-fadeOut pointer-events-none hidden': activeTab !== StatusEnum.completed,
-				})}
-			/>
+				})}>
+				<OrderCompletedList orders={completedOrders} />
+			</div>
 		</main>
 	)
 }

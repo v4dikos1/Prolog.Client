@@ -24,6 +24,7 @@ export const SelectDriver = ({ className, value, changeHandler }: Props) => {
 			changeHandler={changeHandler}
 			defaultOption={defaultOption}
 			options={driversOptions}
+			required
 		/>
 	)
 }

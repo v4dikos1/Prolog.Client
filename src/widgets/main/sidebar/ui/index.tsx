@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react'
 import cx from 'classnames'
 
-import { useAppSelector } from '@/shared/store'
 import { OrderTabs } from '@/features/order'
 import {
 	StatusEnum,
-	isOrdersLoading,
 	useGetActiveOrdersQuery,
 	useGetCompletedOrdersQuery,
 	useGetIncomingOrdersQuery,
@@ -36,12 +34,11 @@ export const Sidebar = ({ className }: Props) => {
 	const openActive = () => updateParams('tab', String(StatusEnum.active))
 	const openCompleted = () => updateParams('tab', String(StatusEnum.completed))
 
-	useGetIncomingOrdersQuery()
-	useGetActiveOrdersQuery()
-	useGetCompletedOrdersQuery()
-	const isLoading = useAppSelector(isOrdersLoading)
+	const { data: incomingOrders, isLoading: isIncomingOrdersLoading } = useGetIncomingOrdersQuery()
+	const { data: activeOrders, isLoading: isActiveOrdersLoading } = useGetActiveOrdersQuery()
+	const { data: completedOrders, isLoading: isCompletedOrdersLoading } = useGetCompletedOrdersQuery()
 
-	if (isLoading) {
+	if (isIncomingOrdersLoading || isActiveOrdersLoading || isCompletedOrdersLoading) {
 		return <SpinnerIcon className='mt-10 mx-auto' pathClassName='fill-indigo-700' />
 	}
 
@@ -59,7 +56,13 @@ export const Sidebar = ({ className }: Props) => {
 				</nav>
 				<Menu className='mt-1' activeTab={activeTab} />
 			</header>
-			<Main className='grow relative' activeTab={activeTab} />
+			<Main
+				className='grow relative'
+				activeTab={activeTab}
+				incomingOrders={incomingOrders}
+				activeOrders={activeOrders}
+				completedOrders={completedOrders}
+			/>
 		</div>
 	)
 }

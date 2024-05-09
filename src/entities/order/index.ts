@@ -33,3 +33,6 @@ export {
 	isActiveOrderSelected,
 	isCompletedOrderSelected,
 } from './slice'
+
+export { OrdersNotFound } from './NotFound'
+export { SearchNotFound } from './SearchNotFound'

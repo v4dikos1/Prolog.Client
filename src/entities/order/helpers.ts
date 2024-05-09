@@ -191,36 +191,77 @@ export const filterOrder = (order: Order, searchStr = '') => {
 }
 
 export const filterActiveOrders = (activeOrders: ActiveOrders, searchStr = ''): ActiveOrders => {
-	return {
+	const result: ActiveOrders = {
 		count: activeOrders.count,
-		items: activeOrders.items.map((activeOrdersGroupByDate) => ({
-			date: activeOrdersGroupByDate.date,
-			orders: activeOrdersGroupByDate.orders.map((activeOrdersGroupByDriver) => ({
-				driver: activeOrdersGroupByDriver.driver,
-				orders: activeOrdersGroupByDriver.orders.filter((activeOrder) => filterOrder(activeOrder, searchStr)),
-			})),
-		})),
+		items: [],
 	}
+
+	for (let i = 0; i < activeOrders.items.length; i++) {
+		const item = activeOrders.items[i]
+		const newItem: ActiveOrdersGroupByDate = {
+			date: item.date,
+			orders: [],
+		}
+
+		for (let j = 0; j < item.orders.length; j++) {
+			const driverGroup = item.orders[j]
+			const filteredDriverGroup = driverGroup.orders.filter((order) => filterOrder(order, searchStr))
+
+			if (filteredDriverGroup.length > 0) {
+				newItem.orders.push({
+					driver: driverGroup.driver,
+					orders: filteredDriverGroup,
+				})
+			}
+		}
+
+		if (newItem.orders.length > 0) {
+			result.items.push(newItem)
+		}
+	}
+
+	return result
 }
 
 export const filterIncomingOrders = (incomingOrders: IncomingOrders, searchStr = ''): IncomingOrders => {
-	return {
+	const result: IncomingOrders = {
 		count: incomingOrders.count,
-		items: incomingOrders.items.map((incomingOrdersGroupByDate) => ({
-			date: incomingOrdersGroupByDate.date,
-			orders: incomingOrdersGroupByDate.orders.filter((incomingOrder) => filterOrder(incomingOrder, searchStr)),
-		})),
+		items: [],
 	}
+
+	for (let i = 0; i < incomingOrders.items.length; i++) {
+		const item = incomingOrders.items[i]
+		const filteredOrders = item.orders.filter((order) => filterOrder(order, searchStr))
+
+		if (filteredOrders.length > 0) {
+			result.items.push({
+				date: item.date,
+				orders: filteredOrders,
+			})
+		}
+	}
+
+	return result
 }
 
 export const filterCompletedOrders = (completedOrders: CompletedOrders, searchStr = ''): CompletedOrders => {
-	return {
+	const result: CompletedOrders = {
 		count: completedOrders.count,
-		items: completedOrders.items.map((completedOrdersGroupByDate) => ({
-			date: completedOrdersGroupByDate.date,
-			orders: completedOrdersGroupByDate.orders.filter((completedOrder) => filterOrder(completedOrder, searchStr)),
-		})),
+		items: [],
 	}
+	for (let i = 0; i < completedOrders.items.length; i++) {
+		const item = completedOrders.items[i]
+		const filteredOrders = item.orders.filter((order) => filterOrder(order, searchStr))
+
+		if (filteredOrders.length > 0) {
+			result.items.push({
+				date: item.date,
+				orders: filteredOrders,
+			})
+		}
+	}
+
+	return result
 }
 
 export const activeOrdersGroupByDateIsEmpty = (activeOrdersGroupByDate: ActiveOrdersGroupByDate): boolean => {

@@ -20,7 +20,9 @@ export const InputWithIcon = ({
 	placeholder,
 	type,
 	value,
+	required,
 	Icon,
+	name,
 }: Props) => {
 	return (
 		<div className={cx(className, 'relative flex items-center')}>
@@ -34,6 +36,8 @@ export const InputWithIcon = ({
 				value={value}
 				changeHandler={changeHandler}
 				focusHandler={focusHandler}
+				required={required}
+				name={name}
 			/>
 			<Icon className={cx('absolute left-[13px] w-5 h-5 pointer-events-none')} pathClassName={pathClassName} />
 		</div>

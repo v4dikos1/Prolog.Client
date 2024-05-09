@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer components {
+	.scrollable {
+		scrollbar-gutter: stable;
+	}
 	.scrollable::-webkit-scrollbar {
 		width: 16px;
 	}

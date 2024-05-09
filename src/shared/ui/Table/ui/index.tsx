@@ -10,8 +10,8 @@ interface Props {
 
 export const Table = ({ children, className, maxHeight }: Props) => {
 	return (
-		<div className={cx(className, 'w-full scrollable overflow-auto')} style={{ maxHeight }}>
-			<table className={styles.table}>{children}</table>
+		<div className={cx(className, 'w-full scrollable overflow-auto border-b border-gray-200')} style={{ maxHeight }}>
+			<table className={cx(styles.table, 'h-[1px]')}>{children}</table>
 		</div>
 	)
 }

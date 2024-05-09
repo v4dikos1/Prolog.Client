@@ -24,6 +24,7 @@ export const SelectVehicle = ({ className, value, changeHandler }: Props) => {
 			changeHandler={changeHandler}
 			defaultOption={defaultOption}
 			options={vehicleOptions}
+			required
 		/>
 	)
 }

@@ -1,4 +1,4 @@
-import { Driver } from '@/entities/driver'
+import { DriverInOrder } from '@/entities/driver'
 import { Client } from '@/entities/client'
 import { Storage } from '@/entities/storage'
 
@@ -73,7 +73,7 @@ export type CompletedOrders = {
 }
 
 export type ActiveOrdersGroupByDriver = {
-	driver: Driver
+	driver: DriverInOrder
 	orders: ActiveOrder[]
 }
 

@@ -10,29 +10,29 @@ export interface Option {
 
 interface Props {
 	className?: string
-	changeHandler: ChangeEventHandler<HTMLSelectElement>
+	changeHandler?: ChangeEventHandler<HTMLSelectElement>
 	value?: string
 	options: Option[]
 	defaultOption: Option
+	required?: boolean
+	name?: string
 }
 
-export const Select = ({ className, changeHandler, options, defaultOption, value }: Props) => {
+export const Select = ({ className, changeHandler, options, defaultOption, value, name, required = false }: Props) => {
 	const empty = value === ''
+
+	const classNames = cx(
+		styles['select'],
+		'group w-full input text-sm rounded-md py-[9px] px-[13px] bg-white border border-gray-300  outline-none appearance-none hover:border-gray-500 focus:text-gray-800 focus:border-gray-500',
+		{
+			'text-gray-500': empty,
+			'text-gray-800': !empty,
+		},
+	)
+
 	return (
 		<div className={cx(className, 'relative')}>
-			<select
-				onChange={(event) => {
-					changeHandler(event)
-				}}
-				value={value}
-				className={cx(
-					styles['select'],
-					'group w-full input text-sm rounded-md py-[9px] px-[13px] bg-white border border-gray-300  outline-none appearance-none hover:border-gray-500 focus:text-gray-800 focus:border-gray-500',
-					{
-						'text-gray-500': empty,
-						'text-gray-800': !empty,
-					},
-				)}>
+			<select name={name} required={required} value={value} className={classNames} onChange={changeHandler}>
 				<option disabled value={defaultOption.value}>
 					{defaultOption.title}
 				</option>

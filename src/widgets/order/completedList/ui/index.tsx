@@ -1,19 +1,21 @@
 import { useSearchParams } from 'react-router-dom'
-import { StatusEnum, filterCompletedOrders, useGetCompletedOrdersQuery } from '@/entities/order'
+import { CompletedOrders, OrdersNotFound, SearchNotFound, StatusEnum, filterCompletedOrders } from '@/entities/order'
 import { OrderDateGroup } from '../../dateGroup'
 
 interface Props {
 	className?: string
+	orders?: CompletedOrders
 }
 
-export const OrderCompletedList = ({ className }: Props) => {
-	const { data: completedOrders } = useGetCompletedOrdersQuery()
-
+export const OrderCompletedList = ({ className, orders }: Props) => {
 	const [searchParams] = useSearchParams()
 	const searchStr = (searchParams.get('q') || '').toLowerCase()
 
-	if (!completedOrders) return null
-	const filteredCompletedOrders = filterCompletedOrders(completedOrders, searchStr)
+	if (!orders) return <OrdersNotFound />
+
+	const filteredCompletedOrders = filterCompletedOrders(orders, searchStr)
+
+	if (filteredCompletedOrders.items.length === 0) return <SearchNotFound />
 
 	return (
 		<ul className={className}>

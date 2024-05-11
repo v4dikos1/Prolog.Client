@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import cx from 'classnames'
 import { CopyRightIcon } from '@/shared/ui/icons/CopyRightIcon'
-import { CheckIcon } from '@/shared/ui/icons/CheckIcon'
+import { MiniCheckIcon } from '@/shared/ui/icons/MiniCheckIcon'
 import { copyIDtoClipboard } from '../utils'
 import styles from './style.module.css'
 
@@ -33,7 +33,7 @@ export const OrderCopyIDButton = ({ className, ID }: Props) => {
 					'animate-hint-hide': hintHidden === 1,
 					'animate-hint': hintHidden === 2,
 				})}>
-				<CheckIcon className='w-3 h-3' pathClassName='fill-indigo-600' />
+				<MiniCheckIcon className='w-3 h-3' pathClassName='fill-indigo-600' />
 			</span>
 			<button onClick={clickHandler} className={cx(className, styles['order-copy-id-button'])}>
 				{ID}

@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const AddressInput = ({ value, setValue }: Props) => {
-	const debouncedValue = useDebounce(value, 500)
+	const debouncedValue = useDebounce(value, 300)
 	const [trigger, { data: addresses }] = useLazyGetAddressesQuery()
 	const [listOpened, setListOpened] = useState(false)
 

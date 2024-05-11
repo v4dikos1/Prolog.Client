@@ -1,5 +1,4 @@
-import { Map, Sidebar } from '@/widgets/main/'
-import { Settings } from '@/widgets/main/settings/ui'
+import { Map, Sidebar, Settings } from '@/widgets/main'
 
 export const MainPage = () => {
 	return (

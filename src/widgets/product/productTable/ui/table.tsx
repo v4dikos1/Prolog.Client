@@ -2,21 +2,22 @@ import { useState } from 'react'
 import { Product } from '@/entities/product'
 import { Table as TableTemplate } from '@/shared/ui/Table'
 import { Checkbox } from '@/shared/ui/Checkbox'
+import { Counter } from '@/shared/ui/Counter'
 
 interface Props {
 	className?: string
 	products: Product[]
-	selectedProducts: Set<string>
-	setSelectedProducts: (arg: Set<string>) => void
+	selectedProducts: Map<string, number>
+	setSelectedProducts: (arg: Map<string, number>) => void
 }
 
 export const Table = ({ className, products, selectedProducts, setSelectedProducts }: Props) => {
 	const [checkedAll, setCheckedAll] = useState(false)
 
-	const clearSelectedProducts = () => setSelectedProducts(new Set())
+	const clearSelectedProducts = () => setSelectedProducts(new Map())
 	const selectAll = () => {
-		const newSet = new Set(products.map((product) => product.ID))
-		setSelectedProducts(newSet)
+		const newMap = new Map(products.map((product) => [product.ID, 1]))
+		setSelectedProducts(newMap)
 	}
 
 	const toggleCheckbox = () => {
@@ -31,17 +32,21 @@ export const Table = ({ className, products, selectedProducts, setSelectedProduc
 
 	const checkProduct = (ID: string) => {
 		if (selectedProducts.has(ID)) {
-			const newSet = new Set(selectedProducts)
-			newSet.delete(ID)
-			setSelectedProducts(newSet)
+			const newMap = new Map(selectedProducts)
+			newMap.delete(ID)
+			setSelectedProducts(newMap)
 		} else {
-			const newSet = new Set(selectedProducts)
-			newSet.add(ID)
-			setSelectedProducts(newSet)
+			const newMap = new Map(selectedProducts)
+			newMap.set(ID, 1)
+			setSelectedProducts(newMap)
 		}
 	}
 
-	const productsInView = products.map((product) => ({ ...product, selected: false, count: 0 }))
+	const setNewValue = (ID: string, value: string) => {
+		const newMap = new Map(selectedProducts)
+		newMap.set(ID, Number(value))
+		setSelectedProducts(newMap)
+	}
 
 	return (
 		<TableTemplate className={className}>
@@ -52,17 +57,17 @@ export const Table = ({ className, products, selectedProducts, setSelectedProduc
 							Код
 						</Checkbox>
 					</th>
-					<th className='w-[410px]'>Наименование</th>
+					<th className='w-[390px]'>Наименование</th>
 					<th>Вес, КГ</th>
 					<th>
 						Объём, м<sup>3</sup>
 					</th>
 					<th className='w-[140px]'>Цена, ₽</th>
-					<th className='w-[140px]'>Количество</th>
+					<th className='w-[160px]'>Количество</th>
 				</tr>
 			</thead>
 			<tbody>
-				{productsInView.map((product) => (
+				{products.map((product) => (
 					<tr key={product.ID}>
 						<td className='font-medium !pl-0'>
 							<Checkbox
@@ -79,12 +84,18 @@ export const Table = ({ className, products, selectedProducts, setSelectedProduc
 						<td className='text-gray-500'>{product.volume}</td>
 						<td className='text-gray-500'>{product.price}</td>
 						<td className='py-0'>
-							<input
+							<Counter
+								setValue={(newValue) => {
+									setNewValue(product.ID, newValue)
+								}}
+								value={String(selectedProducts.get(product.ID) || 0)}
+							/>
+							{/* <input
 								min={1}
 								placeholder='Кол-во'
 								className='h-full outline-none placeholder:text-gray-400 placeholder:underline'
 								type='number'
-							/>
+							/> */}
 						</td>
 					</tr>
 				))}

@@ -1,5 +1,4 @@
 import cx from 'classnames'
-import { CargoType } from '@/entities/order'
 import { Client } from '@/entities/client'
 import { getTime } from '@/shared/helpers/getTime'
 import { formatPrice } from '../utils'

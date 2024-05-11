@@ -8,7 +8,7 @@ export interface Form {
 	deliveryEnd: string
 	clientID: string
 	price: string
-	productIDs: Set<string>
+	productIDs: Map<string, number>
 }
 
 export const defaultFromState: Form = {
@@ -20,5 +20,5 @@ export const defaultFromState: Form = {
 	deliveryEnd: '',
 	clientID: '',
 	price: '',
-	productIDs: new Set(),
+	productIDs: new Map(),
 }

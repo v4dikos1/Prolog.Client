@@ -1,6 +1,6 @@
 interface Props {
 	className?: string
-	pathClassName: string
+	pathClassName?: string
 }
 
 export const CheckIcon = ({ className, pathClassName }: Props) => {

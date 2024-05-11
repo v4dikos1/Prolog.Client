@@ -10,8 +10,8 @@ import { Table } from './table'
 
 interface Props {
 	openAddition: () => void
-	selectedProducts: Set<string>
-	setSelectedProducts: (arg: Set<string>) => void
+	selectedProducts: Map<string, number>
+	setSelectedProducts: (arg: Map<string, number>) => void
 }
 
 export const ProductTable = ({ openAddition, selectedProducts, setSelectedProducts }: Props) => {

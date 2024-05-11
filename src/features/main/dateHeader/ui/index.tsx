@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import { Badge } from '@/shared/ui/Badge'
-import { formatDate } from '../utils'
+import { formatDate } from '../helpers'
 import { ArrowBottomIcon } from '@/shared/ui/icons/ArrowBottomIcon'
 
 interface Props {

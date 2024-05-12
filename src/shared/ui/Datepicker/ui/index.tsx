@@ -13,7 +13,7 @@ interface Props {
 	className?: string
 	id: string
 	placeholder: string
-	name: string
+	name?: string
 }
 
 export const DatePicker = ({ date, setDate, className, id, placeholder, name }: Props) => {

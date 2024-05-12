@@ -27,7 +27,7 @@ interface AddIncomingOrderProps {
 	deliveryEnd: string
 	clientID: string
 	price: number
-	productIDs: string[]
+	productIDs: { id: string; count: number }[]
 }
 
 const ordersApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Orders'] }).injectEndpoints({

@@ -10,7 +10,7 @@ COPY . .
 
 RUN npm run build
 
-COPY --from=builder /app/dist /usr/share/nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 8000
 

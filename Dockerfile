@@ -1,20 +1,14 @@
-FROM node:latest as builder
+FROM node:18.19.0-alpine3.19 as builder
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY . /app
+RUN apk add git --no-cache
 RUN npm install
-COPY . .
 RUN npm run build
 
-FROM nginx:alpine
+FROM nginx:latest
 
-RUN rm -rf /usr/share/nginx/html/*
-
-COPY --from=builder /app/build /usr/share/nginx/html
-
-COPY nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/proxy.conf /etc/nginx/proxy.conf

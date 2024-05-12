@@ -11,6 +11,7 @@ export type {
 	ActiveOrdersGroupByDriver,
 	CompletedOrders,
 	CompletedOrdersGroupByDate,
+	Cargo,
 } from './model'
 
 export {

@@ -1,5 +1,5 @@
-import { MinusIcon } from './icons/MinusIcon'
-import { PlusIcon } from './icons/PlusIcon'
+import { MinusIcon } from '@/shared/ui/icons/MinusIcon'
+import { PlusIcon } from '@/shared/ui/icons/PlusIcon'
 
 interface Props {
 	value: string
@@ -14,6 +14,8 @@ export const Counter = ({ value, setValue }: Props) => {
 		setValue(newValue)
 	}
 	const increment = () => {
+		if (value === '999') return
+
 		const newValue = String(Number(value) + 1)
 		setValue(newValue)
 	}
@@ -24,12 +26,12 @@ export const Counter = ({ value, setValue }: Props) => {
 				<MinusIcon />
 			</button>
 			<input
-				min={1}
-				max={1000}
+				// min={1}
+				// max={999}
 				value={value}
 				placeholder='Кол-во'
 				className='h-full w-10 text-center outline-none placeholder:text-gray-400 placeholder:underline'
-				type='number'
+				// type='number'
 				onChange={(event) => setValue(event.target.value)}
 			/>
 			<button className='bg-gray-100 rounded-sm p-1 transition-colors hover:bg-gray-200' onClick={increment}>

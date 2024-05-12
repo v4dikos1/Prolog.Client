@@ -3,6 +3,7 @@ import { Product } from '@/entities/product'
 import { Table as TableTemplate } from '@/shared/ui/Table'
 import { Checkbox } from '@/shared/ui/Checkbox'
 import { Counter } from '@/shared/ui/Counter'
+import { deleteAllNonNumberCharacters } from '@/shared/helpers/deleteAllNonNumberCharacters'
 
 interface Props {
 	className?: string
@@ -16,11 +17,14 @@ export const Table = ({ className, products, selectedProducts, setSelectedProduc
 
 	const clearSelectedProducts = () => setSelectedProducts(new Map())
 	const selectAll = () => {
-		const newMap = new Map(products.map((product) => [product.ID, 1]))
+		const newMap = new Map()
+		products.forEach((product) => {
+			newMap.set(product.ID, selectedProducts.get(product.ID) || 1)
+		})
 		setSelectedProducts(newMap)
 	}
 
-	const toggleCheckbox = () => {
+	const toggleAllProduct = () => {
 		if (checkedAll) {
 			clearSelectedProducts()
 			setCheckedAll(false)
@@ -30,11 +34,12 @@ export const Table = ({ className, products, selectedProducts, setSelectedProduc
 		}
 	}
 
-	const checkProduct = (ID: string) => {
+	const toggleProduct = (ID: string) => {
 		if (selectedProducts.has(ID)) {
 			const newMap = new Map(selectedProducts)
 			newMap.delete(ID)
 			setSelectedProducts(newMap)
+			setCheckedAll(false)
 		} else {
 			const newMap = new Map(selectedProducts)
 			newMap.set(ID, 1)
@@ -42,9 +47,24 @@ export const Table = ({ className, products, selectedProducts, setSelectedProduc
 		}
 	}
 
-	const setNewValue = (ID: string, value: string) => {
+	const updateProductCount = (ID: string, value: string) => {
 		const newMap = new Map(selectedProducts)
-		newMap.set(ID, Number(value))
+
+		let formattedValue = value.trim()
+
+		if (formattedValue.length > 3) {
+			formattedValue = formattedValue.slice(formattedValue.length - 3)
+		}
+
+		formattedValue = deleteAllNonNumberCharacters(formattedValue)
+
+		if (formattedValue === '0' || formattedValue === '') {
+			newMap.delete(ID)
+			setCheckedAll(false)
+		} else {
+			newMap.set(ID, Number(formattedValue))
+		}
+
 		setSelectedProducts(newMap)
 	}
 
@@ -53,7 +73,7 @@ export const Table = ({ className, products, selectedProducts, setSelectedProduc
 			<thead>
 				<tr>
 					<th className='cursor-pointer select-none w-[170px] !pl-0'>
-						<Checkbox className='h-full pl-8' checked={checkedAll} changeHandler={toggleCheckbox}>
+						<Checkbox className='h-full pl-8' checked={checkedAll} changeHandler={toggleAllProduct}>
 							Код
 						</Checkbox>
 					</th>
@@ -73,7 +93,7 @@ export const Table = ({ className, products, selectedProducts, setSelectedProduc
 							<Checkbox
 								className='pl-8 h-full'
 								changeHandler={() => {
-									checkProduct(product.ID)
+									toggleProduct(product.ID)
 								}}
 								checked={selectedProducts.has(product.ID)}>
 								{product.code}
@@ -86,16 +106,10 @@ export const Table = ({ className, products, selectedProducts, setSelectedProduc
 						<td className='py-0'>
 							<Counter
 								setValue={(newValue) => {
-									setNewValue(product.ID, newValue)
+									updateProductCount(product.ID, newValue)
 								}}
 								value={String(selectedProducts.get(product.ID) || 0)}
 							/>
-							{/* <input
-								min={1}
-								placeholder='Кол-во'
-								className='h-full outline-none placeholder:text-gray-400 placeholder:underline'
-								type='number'
-							/> */}
 						</td>
 					</tr>
 				))}

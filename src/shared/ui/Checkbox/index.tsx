@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import { MiniCheckIcon } from '../icons/MiniCheckIcon'
+import { MiniCheckIcon } from '@/shared/ui/icons/MiniCheckIcon'
 import styles from './style.module.css'
 
 interface Props {

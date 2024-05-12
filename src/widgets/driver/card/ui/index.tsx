@@ -1,10 +1,10 @@
-import { Driver } from '@/entities/driver'
+import { DriverInOrder } from '@/entities/driver'
 import { ArrowRightIcon } from '@/shared/ui/icons/ArrowRightIcon'
 import { getTime } from '@/shared/helpers/getTime'
 
 interface Props {
 	className?: string
-	driver: Driver
+	driver: DriverInOrder
 }
 
 export const DriverCard = ({ className, driver }: Props) => {

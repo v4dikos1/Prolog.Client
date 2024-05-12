@@ -11,5 +11,7 @@ COPY . .
 RUN npm run build
 
 FROM nginx:alpine
+EXPOSE 80
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY ./docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /usr/app/dist /usr/share/nginx/html

@@ -1,4 +1,4 @@
-version: '3'
+version: '4'
 
 services:
   prolog-client:
@@ -6,6 +6,6 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - '8000:8000'
     restart: always
     image: v4dikos/prolog-client:latest

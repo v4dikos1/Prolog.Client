@@ -11,18 +11,18 @@ interface Props {
 }
 
 export const OrderCopyIDButton = ({ className, ID }: Props) => {
-	const [hintHidden, setHintHidden] = useState(0)
+	const [hintHidden, setHintHidden] = useState<'beforeAnimation' | 'proccess' | 'afterAnimation'>('beforeAnimation')
 
 	const clickHandler = () => {
 		copyIDtoClipboard(ID)
-		setHintHidden(2)
+		setHintHidden('proccess')
 
 		setTimeout(() => {
-			setHintHidden(1)
+			setHintHidden('afterAnimation')
 		}, 1500)
 
 		setTimeout(() => {
-			setHintHidden(0)
+			setHintHidden('beforeAnimation')
 		}, 2000)
 	}
 
@@ -30,8 +30,8 @@ export const OrderCopyIDButton = ({ className, ID }: Props) => {
 		<div className='flex items-center relative'>
 			<span
 				className={cx('absolute top-1 h-5 w-5 flex justify-center items-center right-[2px] bg-white scale-0', {
-					'animate-hint-hide': hintHidden === 1,
-					'animate-hint': hintHidden === 2,
+					'animate-hint-hide': hintHidden === 'beforeAnimation',
+					'animate-hint': hintHidden === 'proccess',
 				})}>
 				<MiniCheckIcon className='w-3 h-3' pathClassName='fill-indigo-600' />
 			</span>
@@ -39,8 +39,8 @@ export const OrderCopyIDButton = ({ className, ID }: Props) => {
 				{ID}
 				<CopyRightIcon
 					className={cx({
-						'animate-hint-hide': hintHidden === 2,
-						'animate-hint': hintHidden === 1,
+						'animate-hint-hide': hintHidden === 'proccess',
+						'animate-hint': hintHidden === 'afterAnimation',
 					})}
 				/>
 			</button>

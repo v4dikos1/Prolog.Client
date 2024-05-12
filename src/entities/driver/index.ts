@@ -1,5 +1,5 @@
 export type { Driver, DriverInOrder } from './model'
-export type { DriversFromAPI } from './apiModel'
+export type { DriversFromAPI, DriverInOrderFromAPI } from './apiModel'
 export { transformDriversFromAPI } from './helpers'
 export {
 	useGetDriversQuery,

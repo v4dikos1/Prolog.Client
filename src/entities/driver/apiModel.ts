@@ -10,4 +10,17 @@ export type DriverFromAPI = {
 	salary: number
 }
 
+export type DriverInOrderFromAPI = {
+	driverId: string
+	name: string
+	phoneNumber: string
+	licencePlate: string
+	transportId: string
+	startDate: string
+	endDate: string
+	totalOrdersCount: number
+	ordersCompletedCount: number
+	distance: number
+}
+
 export type DriversFromAPI = API_Response<DriverFromAPI>

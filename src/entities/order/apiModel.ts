@@ -1,4 +1,4 @@
-import { DriverInOrder } from '@/entities/driver'
+import { DriverInOrderFromAPI } from '@/entities/driver'
 import { API_Response } from '@/shared/types'
 
 type OrderFromAPI = {
@@ -36,7 +36,7 @@ export type ActiveOrdersFromAPI = API_Response<{
 	orderCount: number
 	orderDate: string
 	ordersGroupedByDriver: {
-		driver: DriverInOrder
+		driver: DriverInOrderFromAPI
 		orders: OrderFromAPI[]
 	}[]
 }>
@@ -45,7 +45,7 @@ export type CompletedOrdersFromAPI = API_Response<{
 	orderCount: number
 	orderDate: string
 	ordersGroupedByDriver: {
-		driver: DriverInOrder
+		driver: DriverInOrderFromAPI
 		orders: OrderFromAPI[]
 	}[]
 }>

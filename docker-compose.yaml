@@ -8,6 +8,6 @@ services:
     ports:
       - '8000:8000'
     volumes:
-      - /usr/share/nginx/html
+      - ./src:/usr/share/nginx/html
     restart: always
     image: v4dikos/prolog-client:latest

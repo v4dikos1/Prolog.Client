@@ -8,6 +8,10 @@ RUN npm install
 
 COPY . .
 
+RUN npm run build
+
+COPY --from=builder /app/dist /usr/share/nginx
+
 EXPOSE 8000
 
-CMD ["npm", "run", "preview"]
+CMD ["nginx", "-g", "daemon off;"]

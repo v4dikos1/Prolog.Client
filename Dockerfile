@@ -1,11 +1,15 @@
 FROM node:latest as builder
+
 WORKDIR /app
-COPY . /app
-RUN apk add git --no-cache
+
+COPY package*.json ./
+
 RUN npm install
+
+COPY . .
+
 RUN npm run build
 
-FROM nginx:latest
+FROM nginx:alpine
+
 COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
-COPY nginx/proxy.conf /etc/nginx/proxy.conf

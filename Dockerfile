@@ -1,6 +1,5 @@
-FROM node:18.19.0-alpine3.19 as builder
+FROM node:latest as builder
 WORKDIR /app
-ENV NODE_ENV=development
 COPY . /app
 RUN apk add git --no-cache
 RUN npm install

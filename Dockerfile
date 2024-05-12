@@ -14,4 +14,4 @@ FROM nginx:alpine
 EXPOSE 80
 
 COPY ./docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /usr/app/dist /usr/share/nginx/html
+COPY --from=builder /usr/app/dist /usr/share/nginx/html

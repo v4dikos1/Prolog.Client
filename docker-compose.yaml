@@ -1,13 +1,21 @@
-version: '5'
-
+version: '3'
 services:
   prolog-client:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '8000:8000'
-    volumes:
-      - .:/usr/share/nginx/html
+      - "8000:80"
     restart: always
     image: v4dikos/prolog-client:latest
+    container_name: prolog-client-app
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - prolog-client
+    container_name: internal-nginx

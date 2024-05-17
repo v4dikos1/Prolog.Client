@@ -56,7 +56,7 @@ export const OrderCard = ({ className, order }: Props) => {
 			<Header
 				toggleSelect={toggleSelect}
 				selected={order.selected}
-				deliveryAddress={order.address}
+				deliveryAddress={order.client.address}
 				pickUpAddress={order.storage.name}
 				orderID={order.visibleID}
 				driver={order.status === StatusEnum.completed ? order.driver : undefined}

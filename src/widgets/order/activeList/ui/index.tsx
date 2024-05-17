@@ -12,7 +12,8 @@ export const OrderActiveList = ({ className, orders }: Props) => {
 	const [searchParams] = useSearchParams()
 	const searchStr = (searchParams.get('q') || '').toLowerCase()
 
-	if (!orders) return <OrdersNotFound />
+	if (!orders || orders.items.length === 0) return <OrdersNotFound />
+
 	const filteredActiveOrders = filterActiveOrders(orders, searchStr)
 
 	if (filteredActiveOrders.items.length === 0) return <SearchNotFound />

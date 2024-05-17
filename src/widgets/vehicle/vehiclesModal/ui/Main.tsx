@@ -11,7 +11,15 @@ interface Props {
 export const Main = ({ openAddition, openChanging }: Props) => {
 	const { data: vehicles, isLoading, isFetching } = useGetVehiclesQuery()
 	if (isLoading || isFetching) return <SpinnerIcon className='mt-10 mx-auto' pathClassName='fill-indigo-600' />
-	if (!vehicles) return <p className='text-center my-5'>Транспортные средства не найдены.</p>
+
+	const VehiclesNotFound = () => (
+		<div className='flex flex-col items-center gap-12 mt-8'>
+			<h3 className='text-xl font-semibold'>Транспортных средств нет.</h3>
+			<Button clickHandler={openAddition}>Добавить ТС</Button>
+		</div>
+	)
+
+	if (!vehicles) return <VehiclesNotFound />
 
 	return (
 		<>
@@ -49,10 +57,7 @@ export const Main = ({ openAddition, openChanging }: Props) => {
 					</Button>
 				</>
 			) : (
-				<div className='flex flex-col items-center gap-12 mt-8'>
-					<h3 className='text-xl font-semibold'>Транспортных средств нет.</h3>
-					<Button clickHandler={openAddition}>Добавить ТС</Button>
-				</div>
+				<VehiclesNotFound />
 			)}
 		</>
 	)

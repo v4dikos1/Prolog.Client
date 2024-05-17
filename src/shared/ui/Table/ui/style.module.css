@@ -1,4 +1,5 @@
 .table {
+	border-collapse: collapse;
 	@apply w-full;
 }
 
@@ -6,16 +7,16 @@
 	@apply border-y border-gray-200 bg-gray-50;
 }
 
-.table tr {
-	@apply h-12;
-}
-
 .table thead tr {
-	@apply py-5 text-xs uppercase text-gray-500;
+	@apply text-xs uppercase text-gray-500;
 }
 
 .table thead th {
-	@apply pl-8 font-medium text-left;
+	@apply py-5 pl-8 font-medium text-left;
+}
+
+.table tbody {
+	@apply border-b border-gray-200;
 }
 
 .table tbody tr {
@@ -23,5 +24,5 @@
 }
 
 .table td {
-	@apply pl-8;
+	@apply py-4 px-8;
 }

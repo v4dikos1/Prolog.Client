@@ -34,7 +34,11 @@ export const Sidebar = ({ className }: Props) => {
 	const openActive = () => updateParams('tab', String(StatusEnum.active))
 	const openCompleted = () => updateParams('tab', String(StatusEnum.completed))
 
-	const { data: incomingOrders, isLoading: isIncomingOrdersLoading } = useGetIncomingOrdersQuery()
+	const {
+		data: incomingOrders,
+		isLoading: isIncomingOrdersLoading,
+		isFetching: isIncomingOrdersFetching,
+	} = useGetIncomingOrdersQuery()
 	const { data: activeOrders, isLoading: isActiveOrdersLoading } = useGetActiveOrdersQuery()
 	const { data: completedOrders, isLoading: isCompletedOrdersLoading } = useGetCompletedOrdersQuery()
 
@@ -62,6 +66,7 @@ export const Sidebar = ({ className }: Props) => {
 				incomingOrders={incomingOrders}
 				activeOrders={activeOrders}
 				completedOrders={completedOrders}
+				isIncomingOrdersFetching={isIncomingOrdersFetching}
 			/>
 		</div>
 	)

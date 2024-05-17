@@ -4,6 +4,7 @@ import { ActiveOrdersFromAPI, CompletedOrdersFromAPI, IncomingOrdersFromAPI } fr
 import { Order } from './model'
 
 export const transformOrdersFromAPIToIncoming = (ordersFromAPI: IncomingOrdersFromAPI): IncomingOrders => {
+	console.log(ordersFromAPI)
 	const incomingOrders: IncomingOrders = {
 		count: ordersFromAPI.totalItems,
 		items: ordersFromAPI.items.map((item) => ({
@@ -14,15 +15,17 @@ export const transformOrdersFromAPIToIncoming = (ordersFromAPI: IncomingOrdersFr
 						ID: order.id,
 						visibleID: order.visibleId,
 						price: order.price,
-						address: order.address,
 						storage: {
-							ID: order.storageId,
-							name: order.storageName,
+							ID: order.storage.storageId,
+							name: order.storage.storageName,
+							coordinates: order.storage.storageCoordinates,
 						},
 						client: {
-							ID: order.clientId,
-							name: order.clientName,
-							phone: order.clientPhone,
+							ID: order.client.clientId,
+							name: order.client.clientName,
+							phone: order.client.clientPhone,
+							address: order.client.address,
+							coordinates: order.client.coordinates,
 						},
 						cargo: {
 							volume: order.volume,
@@ -67,15 +70,17 @@ export const transformOrdersFromAPIToActive = (ordersFromAPI: ActiveOrdersFromAP
 					ID: order.id,
 					visibleID: order.visibleId,
 					price: order.price,
-					address: order.address,
 					storage: {
-						ID: order.storageId,
-						name: order.storageName,
+						ID: order.storage.storageId,
+						name: order.storage.storageName,
+						coordinates: order.storage.storageCoordinates,
 					},
 					client: {
-						ID: order.clientId,
-						name: order.clientName,
-						phone: order.clientPhone,
+						ID: order.client.clientId,
+						name: order.client.clientName,
+						phone: order.client.clientPhone,
+						address: order.client.address,
+						coordinates: order.client.coordinates,
 					},
 					cargo: {
 						volume: order.volume,
@@ -105,15 +110,17 @@ export const transformOrdersFromAPIToCompleted = (ordersFromAPI: CompletedOrders
 						ID: order.id,
 						visibleID: order.visibleId,
 						price: order.price,
-						address: order.address,
 						storage: {
-							ID: order.storageId,
-							name: order.storageName,
+							ID: order.storage.storageId,
+							name: order.storage.storageName,
+							coordinates: order.storage.storageCoordinates,
 						},
 						client: {
-							ID: order.clientId,
-							name: order.clientName,
-							phone: order.clientPhone,
+							ID: order.client.clientId,
+							name: order.client.clientName,
+							phone: order.client.clientPhone,
+							address: order.client.address,
+							coordinates: order.client.coordinates,
 						},
 						cargo: {
 							volume: order.volume,
@@ -181,7 +188,7 @@ export const filterOrder = (order: Order, searchStr = '') => {
 	if (searchStr === '') return true
 
 	const includesID = order.visibleID.toLowerCase().includes(searchStr)
-	const includesAddress = order.address.toLowerCase().includes(searchStr)
+	const includesAddress = order.client.address.toLowerCase().includes(searchStr)
 	const includesStorage = order.storage.name.toLowerCase().includes(searchStr)
 	const includesClient = order.client.name.toLowerCase().includes(searchStr)
 
@@ -249,6 +256,7 @@ export const filterCompletedOrders = (completedOrders: CompletedOrders, searchSt
 		count: completedOrders.count,
 		items: [],
 	}
+
 	for (let i = 0; i < completedOrders.items.length; i++) {
 		const item = completedOrders.items[i]
 		const filteredOrders = item.orders.filter((order) => filterOrder(order, searchStr))
@@ -268,4 +276,8 @@ export const activeOrdersGroupByDateIsEmpty = (activeOrdersGroupByDate: ActiveOr
 	return activeOrdersGroupByDate.orders.every(
 		(activeOrdersGroupByDriver) => activeOrdersGroupByDriver.orders.length === 0,
 	)
+}
+
+export const getSelectedOrdersIDs = (orders: Order[]): number[] => {
+	return orders.filter((order) => order.selected).map((order) => order.ID)
 }

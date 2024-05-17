@@ -12,13 +12,18 @@ interface Props {
 }
 
 export const ProductsModal = ({ opened, close, state = 'main' }: Props) => {
+	const [search, setSearch] = useState('')
 	const [modalState, setModalState] = useState<'main' | 'addition' | 'changing'>(state)
 	const [changingProductID, setChangingProductID] = useState<null | string>(null)
 
 	const openMain = () => setModalState('main')
-	const openAddition = () => setModalState('addition')
+	const openAddition = () => {
+		setModalState('addition')
+		setSearch('')
+	}
 	const openChanging = (id: string) => {
 		setChangingProductID(id)
+		setSearch('')
 		setModalState('changing')
 	}
 
@@ -29,7 +34,7 @@ export const ProductsModal = ({ opened, close, state = 'main' }: Props) => {
 	}
 
 	const content = {
-		main: <Main openAddition={openAddition} openChanging={openChanging} />,
+		main: <Main search={search} setSearch={setSearch} openAddition={openAddition} openChanging={openChanging} />,
 		addition: <Addition back={openMain} />,
 		changing: <Changing back={openMain} ID={changingProductID} />,
 	}
@@ -37,6 +42,7 @@ export const ProductsModal = ({ opened, close, state = 'main' }: Props) => {
 	const closeAndReset = () => {
 		setTimeout(() => {
 			setModalState('main')
+			setSearch('')
 		}, 500)
 		close()
 	}

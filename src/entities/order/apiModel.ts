@@ -2,25 +2,31 @@ import { DriverInOrderFromAPI } from '@/entities/driver'
 import { API_Response } from '@/shared/types'
 
 type OrderFromAPI = {
-	address: string
-	amount: number
-	clientId: string
-	clientName: string
-	clientPhone: string
-	dateDelivered: null
-	datePickedUp: null
-	deliveryEndDate: string
-	deliveryStartDate: string
 	id: number
-	pickUpEndDate: string
-	pickUpStartDate: string
-	price: number
-	status: null
-	storageId: string
-	storageName: string
 	visibleId: string
+	client: {
+		clientId: string
+		clientName: string
+		clientPhone: string
+		address: string
+		coordinates: string
+	}
+	storage: {
+		storageId: string
+		storageName: string
+		storageCoordinates: string
+	}
+	price: number
 	volume: number
 	weight: number
+	amount: number
+	pickUpStartDate: string
+	pickUpEndDate: string
+	datePickedUp: null
+	deliveryStartDate: string
+	deliveryEndDate: string
+	dateDelivered: null
+	status: null
 }
 
 export type IncomingOrdersFromAPI = API_Response<{

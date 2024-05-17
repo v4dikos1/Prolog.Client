@@ -17,7 +17,7 @@ export const useSave = () => {
 			deliveryEnd: getApiFormatDateString(date, form.deliveryEnd),
 			clientID: form.clientID,
 			price: Number(form.price),
-			productIDs: Array.from(form.productIDs).map(([ID, count]) => ({ id: ID, count })),
+			productIDs: Array.from(form.productIDs).map(([ID, count]) => ({ productId: ID, count })),
 		})
 	}
 

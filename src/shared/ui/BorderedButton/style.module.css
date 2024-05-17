@@ -2,14 +2,6 @@
 	padding: 9px 15px;
 }
 
-.borderedButton path {
-	@apply stroke-gray-600;
-}
-
 .borderedButton:hover {
 	@apply border-gray-500;
-}
-
-.borderedButton:hover path {
-	@apply stroke-gray-700;
 }

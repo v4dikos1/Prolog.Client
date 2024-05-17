@@ -1,5 +1,5 @@
 export type { ClientsFromAPI } from './apiModel'
-export type { Client } from './model'
+export type { Client, ClientInOrder } from './model'
 export { transformClientsFromAPI } from './helpers'
 export {
 	useGetClientsQuery,

@@ -1,5 +1,6 @@
 import { FormEventHandler, useState } from 'react'
 import { useAppSelector } from '@/shared/store'
+import { AddressInput } from '@/features/address'
 import { getStorageByID, useChangeStorageMutation, useDeleteStoragesMutation } from '@/entities/storage'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
@@ -55,13 +56,7 @@ export const Changing = ({ ID, back }: Props) => {
 					changeHandler={(event) => setName(event.target.value)}
 					required={true}
 				/>
-				<Input
-					className='w-full'
-					placeholder='Адрес'
-					value={address}
-					changeHandler={(event) => setAddress(event.target.value)}
-					required={true}
-				/>
+				<AddressInput placeholder='Адрес' value={address} setValue={setAddress} />
 			</div>
 			<div className='flex justify-between'>
 				<Button clickHandler={deleteHandler} category='secondary' loading={isDeleting}>

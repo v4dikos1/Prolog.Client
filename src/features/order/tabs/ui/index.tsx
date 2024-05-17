@@ -18,21 +18,21 @@ export const OrderTabs = ({ className, activeTab, openIncoming, openActive, open
 
 	return (
 		<menu className={cx(className, 'flex gap-1 justify-between')}>
-			{incomingCount && incomingCount > 0 && (
+			{incomingCount !== undefined && (
 				<li className='animate-fadeIn'>
 					<Tab clickHandler={openIncoming} active={activeTab === StatusEnum.incoming}>
 						Входящие ({incomingCount})
 					</Tab>
 				</li>
 			)}
-			{activeCount && activeCount > 0 && (
+			{activeCount !== undefined && (
 				<li className='animate-fadeIn'>
 					<Tab clickHandler={openActive} active={activeTab === StatusEnum.active}>
 						Активные ({activeCount})
 					</Tab>
 				</li>
 			)}
-			{completedCount && completedCount > 0 && (
+			{completedCount !== undefined && (
 				<li className='animate-fadeIn'>
 					<Tab clickHandler={openCompleted} active={activeTab === StatusEnum.completed}>
 						Выполненные ({completedCount})

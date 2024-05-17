@@ -3,3 +3,8 @@ export type Client = {
 	name: string
 	phone: string
 }
+
+export type ClientInOrder = Client & {
+	address: string
+	coordinates: string
+}

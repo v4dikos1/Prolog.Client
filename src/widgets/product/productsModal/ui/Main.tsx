@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { ImportProductsButton } from '@/features/product'
 import { useGetProductsQuery, filterProduct } from '@/entities/product'
 import { SpinnerIcon } from '@/shared/ui/icons/SpinnerIcon'
@@ -10,13 +9,22 @@ import { SearchIcon } from '@/shared/ui/icons/SearchIcon'
 interface Props {
 	openAddition: () => void
 	openChanging: (id: string) => void
+	search: string
+	setSearch: (value: string) => void
 }
 
-export const Main = ({ openAddition, openChanging }: Props) => {
-	const [search, setSearch] = useState('')
+export const Main = ({ openAddition, openChanging, search, setSearch }: Props) => {
 	const { data: products, isLoading, isFetching } = useGetProductsQuery()
 	if (isLoading || isFetching) return <SpinnerIcon className='mt-10 mx-auto' pathClassName='fill-indigo-600' />
-	if (!products) return <p className='text-center my-5'>Клиенты не найдены.</p>
+
+	const ProductsNotFound = () => (
+		<div className='flex flex-col items-center gap-12 mt-8'>
+			<h3 className='text-xl font-semibold'>Товаров нет.</h3>
+			<Button clickHandler={openAddition}>Добавить товар</Button>
+		</div>
+	)
+
+	if (!products) return <ProductsNotFound />
 
 	const filteredProducts = products.filter((product) => filterProduct(search, product))
 
@@ -64,10 +72,7 @@ export const Main = ({ openAddition, openChanging }: Props) => {
 					</div>
 				</>
 			) : (
-				<div className='flex flex-col items-center gap-12 mt-8'>
-					<h3 className='text-xl font-semibold'>Товаров нет.</h3>
-					<Button clickHandler={openAddition}>Добавить товар</Button>
-				</div>
+				<ProductsNotFound />
 			)}
 		</>
 	)

@@ -8,9 +8,17 @@ interface Props {
 	incomingOrders?: IncomingOrders
 	activeOrders?: ActiveOrders
 	completedOrders?: CompletedOrders
+	isIncomingOrdersFetching: boolean
 }
 
-export const Main = ({ className, activeTab, incomingOrders, activeOrders, completedOrders }: Props) => {
+export const Main = ({
+	className,
+	activeTab,
+	incomingOrders,
+	activeOrders,
+	completedOrders,
+	isIncomingOrdersFetching,
+}: Props) => {
 	return (
 		<main className={className + ' scrollable py-4 pl-5 pr-1 flex flex-col overflow-auto'}>
 			<div
@@ -18,7 +26,7 @@ export const Main = ({ className, activeTab, incomingOrders, activeOrders, compl
 					'animate-fadeIn opacity-0': activeTab === StatusEnum.incoming,
 					'animate-fadeOut pointer-events-none hidden': activeTab !== StatusEnum.incoming,
 				})}>
-				<OrderIncomingList orders={incomingOrders} />
+				<OrderIncomingList isIncomingOrdersFetching={isIncomingOrdersFetching} orders={incomingOrders} />
 			</div>
 			<div
 				className={cx('w-full', {

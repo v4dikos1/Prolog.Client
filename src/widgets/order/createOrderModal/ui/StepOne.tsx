@@ -1,7 +1,8 @@
 import { FormEvent, FormEventHandler } from 'react'
+import { AddressInput } from '@/features/address'
 import { SelectStorage } from '@/features/storage'
 import { SelectClient } from '@/features/client'
-import { AddressInput, ImportOrdersButton } from '@/features/order'
+import { ImportOrdersButton } from '@/features/order'
 import { Button } from '@/shared/ui/Button'
 import { Input } from '@/shared/ui/Input'
 import { DatePicker } from '@/shared/ui/Datepicker'
@@ -35,7 +36,11 @@ export const StepOne = ({ next, form, setForm }: Props) => {
 						changeHandler={(event) => setForm({ ...form, storageID: event.target.value })}
 						value={form.storageID}
 					/>
-					<AddressInput value={form.address} setValue={(address) => setForm({ ...form, address })} />
+					<AddressInput
+						placeholder='Адрес доставки'
+						value={form.address}
+						setValue={(address) => setForm({ ...form, address })}
+					/>
 				</div>
 				<div className='flex gap-4'>
 					<DatePicker

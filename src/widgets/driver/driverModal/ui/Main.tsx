@@ -11,7 +11,15 @@ interface Props {
 export const Main = ({ openAddition, openChanging }: Props) => {
 	const { data: drivers, isLoading, isFetching } = useGetDriversQuery()
 	if (isLoading || isFetching) return <SpinnerIcon className='mt-10 mx-auto' pathClassName='fill-indigo-600' />
-	if (!drivers) return <p className='text-center my-5'>Клиенты не найдены.</p>
+
+	const DriversNotFound = () => (
+		<div className='flex flex-col items-center gap-12 mt-8'>
+			<h3 className='text-xl font-semibold'>Водителей нет.</h3>
+			<Button clickHandler={openAddition}>Добавить водителя</Button>
+		</div>
+	)
+
+	if (!drivers) return <DriversNotFound />
 
 	return (
 		<>
@@ -47,10 +55,7 @@ export const Main = ({ openAddition, openChanging }: Props) => {
 					</Button>
 				</>
 			) : (
-				<div className='flex flex-col items-center gap-12 mt-8'>
-					<h3 className='text-xl font-semibold'>Водителей нет.</h3>
-					<Button clickHandler={openAddition}>Добавить водителя</Button>
-				</div>
+				<DriversNotFound />
 			)}
 		</>
 	)

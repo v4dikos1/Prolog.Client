@@ -7,9 +7,10 @@ import { Input } from '@/shared/ui/Input'
 interface Props {
 	value: string
 	setValue: (value: string) => void
+	placeholder: string
 }
 
-export const AddressInput = ({ value, setValue }: Props) => {
+export const AddressInput = ({ placeholder, value, setValue }: Props) => {
 	const debouncedValue = useDebounce(value, 300)
 	const [trigger, { data: addresses }] = useLazyGetAddressesQuery()
 	const [listOpened, setListOpened] = useState(false)
@@ -32,7 +33,7 @@ export const AddressInput = ({ value, setValue }: Props) => {
 				blurHandler={() => setListOpened(false)}
 				value={value}
 				className='w-full'
-				placeholder='Адрес доставки'
+				placeholder={placeholder}
 				name='address'
 				required
 				autocomplete='off'

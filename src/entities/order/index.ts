@@ -26,13 +26,15 @@ export {
 	useGetActiveOrdersQuery,
 	useGetCompletedOrdersQuery,
 	useToggleOrderMutation,
+	useAddIncomingOrderMutation,
+	useDeleteOrdersMutation,
 	getIncomingOrdersCount,
 	getActiveOrdersCount,
 	getCompletedOrdersCount,
-	isOrdersLoading,
 	isIncomingOrderSelected,
 	isActiveOrderSelected,
 	isCompletedOrderSelected,
+	getAllSelectedOrdersIDs,
 } from './slice'
 
 export { OrdersNotFound } from './NotFound'

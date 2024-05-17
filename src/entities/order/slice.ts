@@ -9,6 +9,7 @@ import {
 	transformOrdersFromAPIToActive,
 	transformOrdersFromAPIToCompleted,
 	transformOrdersFromAPIToIncoming,
+	getSelectedOrdersIDs,
 } from './helpers'
 
 const ROUTES = {
@@ -27,7 +28,7 @@ interface AddIncomingOrderProps {
 	deliveryEnd: string
 	clientID: string
 	price: number
-	productIDs: { id: string; count: number }[]
+	productIDs: { productId: string; count: number }[]
 }
 
 const ordersApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Orders'] }).injectEndpoints({
@@ -36,6 +37,10 @@ const ordersApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Orders'] }).injectE
 			query: () => ({
 				url: ROUTES.incomingOrders,
 			}),
+			providesTags: [
+				{ type: 'Orders', id: 'ALL' },
+				{ type: 'Orders', id: 'INCOMING' },
+			],
 			transformResponse: (response: IncomingOrdersFromAPI) => {
 				return transformOrdersFromAPIToIncoming(response)
 			},
@@ -44,6 +49,10 @@ const ordersApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Orders'] }).injectE
 			query: () => ({
 				url: ROUTES.activeOrders,
 			}),
+			providesTags: [
+				{ type: 'Orders', id: 'ALL' },
+				{ type: 'Orders', id: 'ACTIVE' },
+			],
 			transformResponse: (response: ActiveOrdersFromAPI) => {
 				return transformOrdersFromAPIToActive(response)
 			},
@@ -96,9 +105,20 @@ const ordersApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Orders'] }).injectE
 					deliveryDateTo: props.deliveryEnd,
 					customerId: props.clientID,
 					price: props.price,
-					productIds: props.productIDs,
+					products: props.productIDs,
 				},
 			}),
+			invalidatesTags: [{ type: 'Orders', id: 'INCOMING' }],
+		}),
+		deleteOrders: builder.mutation<void, number[]>({
+			query: (ids) => {
+				const queryParams = ids.map((id) => 'OrderIds=' + id).join('&')
+				return {
+					url: `${ROUTES.orders}?${queryParams}`,
+					method: 'DELETE',
+				}
+			},
+			invalidatesTags: [{ type: 'Orders', id: 'ALL' }],
 		}),
 	}),
 })
@@ -109,6 +129,7 @@ export const {
 	useGetCompletedOrdersQuery,
 	useToggleOrderMutation,
 	useAddIncomingOrderMutation,
+	useDeleteOrdersMutation,
 } = ordersApi
 
 export const getIncomingOrdersCount = createSelector(
@@ -124,19 +145,6 @@ export const getActiveOrdersCount = createSelector(
 export const getCompletedOrdersCount = createSelector(
 	ordersApi.endpoints.getCompletedOrders.select(),
 	(completedOrders) => completedOrders.data?.count,
-)
-
-export const isOrdersLoading = createSelector(
-	[
-		ordersApi.endpoints.getIncomingOrders.select(),
-		ordersApi.endpoints.getActiveOrders.select(),
-		ordersApi.endpoints.getCompletedOrders.select(),
-	],
-	(iO, aO, cO) => {
-		const unInitialized = iO.isUninitialized || aO.isUninitialized || cO.isUninitialized
-		const loading = iO.isLoading || aO.isLoading || cO.isLoading
-		return unInitialized || loading
-	},
 )
 
 export const getIncomingOrders = createSelector(ordersApi.endpoints.getIncomingOrders.select(), (orders) => orders.data)
@@ -162,4 +170,21 @@ export const isActiveOrderSelected = createSelector(ordersApi.endpoints.getActiv
 export const isCompletedOrderSelected = createSelector(
 	ordersApi.endpoints.getCompletedOrders.select(),
 	(completedOrders) => completedOrders.data?.items.some((item) => item.orders.some((order) => order.selected)),
+)
+
+export const getAllSelectedOrdersIDs = createSelector(
+	[
+		ordersApi.endpoints.getIncomingOrders.select(),
+		ordersApi.endpoints.getActiveOrders.select(),
+		ordersApi.endpoints.getCompletedOrders.select(),
+	],
+	(iO, aO, cO) => {
+		const selectedIncoming = (iO.data?.items || []).map((item) => getSelectedOrdersIDs(item.orders)).flat()
+		const selectedActive = (aO.data?.items || [])
+			.map((item) => item.orders.map((item) => getSelectedOrdersIDs(item.orders)).flat())
+			.flat()
+		const selectedCompleted = (cO.data?.items || []).map((item) => getSelectedOrdersIDs(item.orders)).flat()
+
+		return [...selectedIncoming, ...selectedActive, ...selectedCompleted]
+	},
 )

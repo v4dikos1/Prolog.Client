@@ -11,7 +11,7 @@ export const OrderCompletedList = ({ className, orders }: Props) => {
 	const [searchParams] = useSearchParams()
 	const searchStr = (searchParams.get('q') || '').toLowerCase()
 
-	if (!orders) return <OrdersNotFound />
+	if (!orders || orders.items.length === 0) return <OrdersNotFound />
 
 	const filteredCompletedOrders = filterCompletedOrders(orders, searchStr)
 

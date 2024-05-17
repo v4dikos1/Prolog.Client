@@ -11,13 +11,21 @@ interface Props {
 export const Main = ({ openAddition, openChanging }: Props) => {
 	const { data: storages, isLoading, isFetching } = useGetStoragesQuery()
 	if (isLoading || isFetching) return <SpinnerIcon className='mt-10 mx-auto' pathClassName='fill-indigo-600' />
-	if (!storages) return <p className='text-center my-5'>Склады не найдены.</p>
+
+	const StoragesNotFound = () => (
+		<div className='flex flex-col items-center gap-12 mt-8'>
+			<h3 className='text-xl font-semibold'>Складов нет.</h3>
+			<Button clickHandler={openAddition}>Добавить склад</Button>
+		</div>
+	)
+
+	if (!storages) return <StoragesNotFound />
 
 	return (
 		<>
 			{storages.length > 0 ? (
 				<>
-					<Table maxHeight='265px'>
+					<Table maxHeight='320px'>
 						<thead>
 							<tr>
 								<th className='w-1/2'>Название</th>
@@ -41,10 +49,7 @@ export const Main = ({ openAddition, openChanging }: Props) => {
 					</Button>
 				</>
 			) : (
-				<div className='flex flex-col items-center gap-12 mt-8'>
-					<h3 className='text-xl font-semibold'>Складов нет.</h3>
-					<Button clickHandler={openAddition}>Добавить склад</Button>
-				</div>
+				<StoragesNotFound />
 			)}
 		</>
 	)

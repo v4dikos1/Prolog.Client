@@ -1,4 +1,5 @@
 import { FormEventHandler, useState } from 'react'
+import { AddressInput } from '@/features/address'
 import { useAddStorageMutation } from '@/entities/storage'
 import { Input } from '@/shared/ui/Input'
 import { Button } from '@/shared/ui/Button'
@@ -41,13 +42,7 @@ export const Addition = ({ back }: Props) => {
 					changeHandler={(event) => setName(event.target.value)}
 					required={true}
 				/>
-				<Input
-					className='w-full'
-					placeholder='Адрес'
-					value={address}
-					changeHandler={(event) => setAddress(event.target.value)}
-					required={true}
-				/>
+				<AddressInput placeholder='Адрес' value={address} setValue={setAddress} />
 			</div>
 			<div className='self-end flex gap-3'>
 				<Button clickHandler={back} category='secondary'>

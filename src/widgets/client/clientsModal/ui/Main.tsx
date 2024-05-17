@@ -10,8 +10,17 @@ interface Props {
 
 export const Main = ({ openAddition, openChanging }: Props) => {
 	const { data: clients, isLoading, isFetching } = useGetClientsQuery()
+
 	if (isLoading || isFetching) return <SpinnerIcon className='mt-10 mx-auto' pathClassName='fill-indigo-600' />
-	if (!clients) return <p className='text-center my-5'>Клиенты не найдены.</p>
+
+	const ClientsNotFound = () => (
+		<div className='flex flex-col items-center gap-12 mt-8'>
+			<h3 className='text-xl font-semibold'>Клиентов нет.</h3>
+			<Button clickHandler={openAddition}>Добавить клиента</Button>
+		</div>
+	)
+
+	if (!clients) return <ClientsNotFound />
 
 	return (
 		<>
@@ -41,10 +50,7 @@ export const Main = ({ openAddition, openChanging }: Props) => {
 					</Button>
 				</>
 			) : (
-				<div className='flex flex-col items-center gap-12 mt-8'>
-					<h3 className='text-xl font-semibold'>Клиентов нет.</h3>
-					<Button clickHandler={openAddition}>Добавить клиента</Button>
-				</div>
+				<ClientsNotFound />
 			)}
 		</>
 	)

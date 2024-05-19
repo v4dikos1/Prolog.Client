@@ -3,7 +3,7 @@ import { getUser } from '@/shared/helpers/getUser'
 
 const BASE_URL = 'https://krsk-prolog.ru/api/admin/'
 
-type Method = 'POST' | 'GET' | 'PUT' | 'DELETE'
+type Method = 'POST' | 'GET' | 'PUT' | 'DELETE' | 'PATCH'
 
 type QueryType<B> = {
 	url: string
@@ -20,7 +20,7 @@ const handleGetAndPost = async (response: Response) => {
 	}
 }
 
-const handlePutAndDelete = async (response: Response) => {
+const handlePutDeleteAndPatch = async (response: Response) => {
 	if (response.status !== 200) {
 		const data = await response.json()
 		throw new Error(data.Message)
@@ -32,10 +32,11 @@ const handlePutAndDelete = async (response: Response) => {
 }
 
 const responseHandlers = {
-	PUT: handlePutAndDelete,
-	DELETE: handlePutAndDelete,
+	PUT: handlePutDeleteAndPatch,
+	DELETE: handlePutDeleteAndPatch,
 	GET: handleGetAndPost,
 	POST: handleGetAndPost,
+	PATCH: handlePutDeleteAndPatch,
 }
 
 export const apiBaseQuery = <B>(): BaseQueryFn<QueryType<B>, unknown, unknown> => {

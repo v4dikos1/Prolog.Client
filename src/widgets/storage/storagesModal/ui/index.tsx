@@ -41,6 +41,7 @@ export const StoragesModal = ({ opened, close }: Props) => {
 
 	return (
 		<ModalTemplate
+			excludeBackdropClosing={true}
 			titleContent={titleContent[modalState]}
 			content={content[modalState]}
 			opened={opened}

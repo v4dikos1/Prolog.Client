@@ -11,6 +11,7 @@ interface Props {
 	mainClassName?: string
 	opened: boolean
 	close: () => void
+	excludeBackdropClosing?: boolean
 }
 
 export const MODAL_CLOSING_TIME = 500
@@ -20,7 +21,6 @@ const TAB = 'Tab'
 
 const onTab = (e: KeyboardEvent, modal: HTMLDivElement | null) => {
 	if (!modal) return
-
 	const focusables = modal.querySelectorAll(FOCUSALBE_SELECTOR) as NodeListOf<HTMLElement>
 
 	if (modal && focusables && !modal.contains(document.activeElement)) {
@@ -53,6 +53,7 @@ export const ModalTemplate = ({
 	mainClassName,
 	opened,
 	close,
+	excludeBackdropClosing = false,
 }: Props) => {
 	const modal = useRef<HTMLDivElement | null>(null)
 
@@ -64,6 +65,10 @@ export const ModalTemplate = ({
 		[close],
 	)
 
+	const backdropCloseHandler = () => {
+		if (!excludeBackdropClosing) close()
+	}
+
 	useEffect(() => {
 		if (opened) {
 			window.addEventListener('keydown', onKeyboard)
@@ -74,7 +79,7 @@ export const ModalTemplate = ({
 	}, [opened, onKeyboard])
 
 	return (
-		<Backdrop opened={opened} close={close}>
+		<Backdrop opened={opened} close={backdropCloseHandler}>
 			<div
 				role='dialog'
 				ref={modal}

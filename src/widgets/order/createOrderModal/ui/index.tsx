@@ -43,6 +43,7 @@ export const CreateOrderModal = ({ opened, close }: Props) => {
 
 	return (
 		<ModalTemplate
+			excludeBackdropClosing={true}
 			className={cx({ 'h-[90%] overflow-hidden flex flex-col': currentStep === 'products' })}
 			mainClassName={cx({ 'overflow-hidden': currentStep === 'products' })}
 			titleContent={title[currentStep]}

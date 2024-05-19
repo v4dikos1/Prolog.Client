@@ -72,6 +72,10 @@ const ordersApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Orders'] }).injectE
 			query: () => ({
 				url: ROUTES.completedOrders,
 			}),
+			providesTags: [
+				{ type: 'Orders', id: 'ALL' },
+				{ type: 'Orders', id: 'COMPLETED' },
+			],
 			transformResponse: (response: CompletedOrdersFromAPI) => {
 				return transformOrdersFromAPIToCompleted(response)
 			},
@@ -146,6 +150,19 @@ const ordersApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Orders'] }).injectE
 				{ type: 'Orders', id: 'ACTIVE' },
 			],
 		}),
+		cancelActiveOrders: builder.mutation<void, number[]>({
+			query: (ids) => {
+				const queryParams = ids.map((id) => 'OrderIds=' + id).join('&')
+				return {
+					url: `${ROUTES.orders}?${queryParams}`,
+					method: 'PATCH',
+				}
+			},
+			invalidatesTags: [
+				{ type: 'Orders', id: 'ACTIVE' },
+				{ type: 'Orders', id: 'INCOMING' },
+			],
+		}),
 	}),
 })
 
@@ -157,6 +174,7 @@ export const {
 	useAddIncomingOrderMutation,
 	useDeleteOrdersMutation,
 	useRunPlanningMutation,
+	useCancelActiveOrdersMutation,
 } = ordersApi
 
 export const getIncomingOrdersCount = createSelector(
@@ -197,23 +215,6 @@ export const isActiveOrderSelected = createSelector(ordersApi.endpoints.getActiv
 export const isCompletedOrderSelected = createSelector(
 	ordersApi.endpoints.getCompletedOrders.select(),
 	(completedOrders) => completedOrders.data?.items.some((item) => item.orders.some((order) => order.selected)),
-)
-
-export const getAllSelectedOrdersIDs = createSelector(
-	[
-		ordersApi.endpoints.getIncomingOrders.select(),
-		ordersApi.endpoints.getActiveOrders.select(),
-		ordersApi.endpoints.getCompletedOrders.select(),
-	],
-	(iO, aO, cO) => {
-		const selectedIncoming = (iO.data?.items || []).map((item) => getSelectedOrdersIDs(item.orders)).flat()
-		const selectedActive = (aO.data?.items || [])
-			.map((item) => item.orders.map((item) => getSelectedOrdersIDs(item.orders)).flat())
-			.flat()
-		const selectedCompleted = (cO.data?.items || []).map((item) => getSelectedOrdersIDs(item.orders)).flat()
-
-		return [...selectedIncoming, ...selectedActive, ...selectedCompleted]
-	},
 )
 
 export const getAllStoragesFromIncoming = createSelector(
@@ -359,3 +360,35 @@ export const getCompletedPins = createSelector(ordersApi.endpoints.getCompletedO
 
 	return Array.from(pins.values())
 })
+
+export const getlIncomingSelectedOrderIDs = createSelector(
+	ordersApi.endpoints.getIncomingOrders.select(),
+	(incomingOrders) => {
+		const orders = incomingOrders.data?.items || []
+		const selectedIncoming = orders.map((item) => getSelectedOrdersIDs(item.orders)).flat()
+
+		return selectedIncoming
+	},
+)
+
+export const getlActiveSelectedOrderIDs = createSelector(
+	ordersApi.endpoints.getActiveOrders.select(),
+	(activeOrders) => {
+		const orders = activeOrders.data?.items || []
+		const selectedCompleted = orders
+			.map((dateGroup) => dateGroup.orders.map((driverGroup) => getSelectedOrdersIDs(driverGroup.orders)).flat())
+			.flat()
+
+		return selectedCompleted
+	},
+)
+
+export const getlCompletedSelectedOrderIDs = createSelector(
+	ordersApi.endpoints.getCompletedOrders.select(),
+	(completedOrders) => {
+		const orders = completedOrders.data?.items || []
+		const selectedCompleted = orders.map((item) => getSelectedOrdersIDs(item.orders)).flat()
+
+		return selectedCompleted
+	},
+)

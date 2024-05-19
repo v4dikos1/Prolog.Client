@@ -34,7 +34,6 @@ export {
 	isIncomingOrderSelected,
 	isActiveOrderSelected,
 	isCompletedOrderSelected,
-	getAllSelectedOrdersIDs,
 	useRunPlanningMutation,
 	getAllStoragesFromIncoming,
 	getIncomingPins,
@@ -42,6 +41,10 @@ export {
 	getActivePins,
 	getAllStoragesFromCompleted,
 	getCompletedPins,
+	getlIncomingSelectedOrderIDs,
+	getlActiveSelectedOrderIDs,
+	getlCompletedSelectedOrderIDs,
+	useCancelActiveOrdersMutation,
 } from './slice'
 
 export { OrdersNotFound } from './NotFound'

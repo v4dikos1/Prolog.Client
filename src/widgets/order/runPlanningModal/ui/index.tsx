@@ -35,6 +35,7 @@ export const RunPlanningModal = ({ opened, close }: Props) => {
 
 	return (
 		<ModalTemplate
+			excludeBackdropClosing={true}
 			titleContent='Запуск планирования'
 			headerContent={
 				<div className='flex gap-8 w-full mt-3'>

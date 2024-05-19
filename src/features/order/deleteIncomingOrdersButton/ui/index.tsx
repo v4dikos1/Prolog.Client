@@ -1,4 +1,4 @@
-import { useDeleteOrdersMutation, getAllSelectedOrdersIDs } from '@/entities/order'
+import { useDeleteOrdersMutation, getlIncomingSelectedOrderIDs } from '@/entities/order'
 import { useAppSelector } from '@/shared/store'
 import { ButtonWithTrashIcon } from '@/shared/ui/ButtonWithTrashIcon'
 
@@ -9,7 +9,7 @@ interface Props {
 
 export const DeleteIncomingOrdersButton = ({ disabled, className }: Props) => {
 	const [deleteOrders, { isLoading }] = useDeleteOrdersMutation()
-	const ids = useAppSelector(getAllSelectedOrdersIDs)
+	const ids = useAppSelector(getlIncomingSelectedOrderIDs)
 
 	const clickHandler = () => {
 		deleteOrders(ids)

@@ -17,6 +17,7 @@ const ROUTES = {
 	incomingOrders: 'orders?Status=0',
 	activeOrders: 'orders?Status=1',
 	completedOrders: 'orders?Status=2',
+	planning: 'orders/planning',
 }
 
 interface AddIncomingOrderProps {
@@ -29,6 +30,16 @@ interface AddIncomingOrderProps {
 	clientID: string
 	price: number
 	productIDs: { productId: string; count: number }[]
+}
+
+interface RunPlanningProps {
+	startDate: string
+	endDate: string
+	binds: {
+		driverId: string
+		transportId: string
+		storageId: string
+	}[]
 }
 
 const ordersApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Orders'] }).injectEndpoints({
@@ -120,6 +131,21 @@ const ordersApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Orders'] }).injectE
 			},
 			invalidatesTags: [{ type: 'Orders', id: 'ALL' }],
 		}),
+		runPlanning: builder.mutation<void, RunPlanningProps>({
+			query: (props) => ({
+				url: ROUTES.planning,
+				method: 'POST',
+				body: {
+					startDate: props.startDate,
+					endDate: props.endDate,
+					binds: props.binds,
+				},
+			}),
+			invalidatesTags: [
+				{ type: 'Orders', id: 'INCOMING' },
+				{ type: 'Orders', id: 'ACTIVE' },
+			],
+		}),
 	}),
 })
 
@@ -130,6 +156,7 @@ export const {
 	useToggleOrderMutation,
 	useAddIncomingOrderMutation,
 	useDeleteOrdersMutation,
+	useRunPlanningMutation,
 } = ordersApi
 
 export const getIncomingOrdersCount = createSelector(
@@ -188,3 +215,147 @@ export const getAllSelectedOrdersIDs = createSelector(
 		return [...selectedIncoming, ...selectedActive, ...selectedCompleted]
 	},
 )
+
+export const getAllStoragesFromIncoming = createSelector(
+	ordersApi.endpoints.getIncomingOrders.select(),
+	(incomingOrders) => {
+		if (incomingOrders.data === undefined) return []
+
+		const storages = new Map<string, { ID: string; latitude: number; longitude: number }>()
+
+		incomingOrders.data.items.forEach((item) => {
+			item.orders.forEach((order) => {
+				const [latitude, longitude] = order.storage.coordinates.split(' ').map((value) => Number(value))
+				const storage = {
+					ID: order.storage.ID,
+					latitude,
+					longitude,
+				}
+
+				if (!storages.has(storage.ID)) {
+					storages.set(storage.ID, storage)
+				}
+			})
+		})
+
+		return Array.from(storages.values())
+	},
+)
+
+export const getIncomingPins = createSelector(ordersApi.endpoints.getIncomingOrders.select(), (incomingOrders) => {
+	if (incomingOrders.data === undefined) return []
+
+	const pins = new Map<number, { ID: number; latitude: number; longitude: number }>()
+
+	incomingOrders.data.items.forEach((item) => {
+		item.orders.forEach((order) => {
+			const [latitude, longitude] = order.client.coordinates.split(' ').map((value) => Number(value))
+			const pin = {
+				ID: order.ID,
+				latitude,
+				longitude,
+			}
+
+			pins.set(order.ID, pin)
+		})
+	})
+
+	return Array.from(pins.values())
+})
+
+export const getAllStoragesFromActive = createSelector(ordersApi.endpoints.getActiveOrders.select(), (activeOrders) => {
+	if (activeOrders.data === undefined) return []
+
+	const storages = new Map<string, { ID: string; latitude: number; longitude: number }>()
+
+	activeOrders.data.items.forEach((item) => {
+		item.orders.forEach((driverGroup) => {
+			driverGroup.orders.forEach((order) => {
+				const [latitude, longitude] = order.storage.coordinates.split(' ').map((value) => Number(value))
+				const storage = {
+					ID: order.storage.ID,
+					latitude,
+					longitude,
+				}
+
+				if (!storages.has(storage.ID)) {
+					storages.set(storage.ID, storage)
+				}
+			})
+		})
+	})
+
+	return Array.from(storages.values())
+})
+
+export const getActivePins = createSelector(ordersApi.endpoints.getActiveOrders.select(), (activeOrders) => {
+	if (activeOrders.data === undefined) return []
+
+	const pins = new Map<number, { ID: number; latitude: number; longitude: number; color: string }>()
+
+	activeOrders.data.items.forEach((item) => {
+		item.orders.forEach((driverGroup) => {
+			driverGroup.orders.forEach((order) => {
+				const [latitude, longitude] = order.client.coordinates.split(' ').map((value) => Number(value))
+				const pin = {
+					ID: order.ID,
+					latitude,
+					longitude,
+					color: driverGroup.driver.color,
+				}
+
+				pins.set(order.ID, pin)
+			})
+		})
+	})
+
+	return Array.from(pins.values())
+})
+
+export const getAllStoragesFromCompleted = createSelector(
+	ordersApi.endpoints.getCompletedOrders.select(),
+	(completedOrders) => {
+		if (completedOrders.data === undefined) return []
+
+		const storages = new Map<string, { ID: string; latitude: number; longitude: number }>()
+
+		completedOrders.data.items.forEach((item) => {
+			item.orders.forEach((order) => {
+				const [latitude, longitude] = order.storage.coordinates.split(' ').map((value) => Number(value))
+				const storage = {
+					ID: order.storage.ID,
+					latitude,
+					longitude,
+				}
+
+				if (!storages.has(storage.ID)) {
+					storages.set(storage.ID, storage)
+				}
+			})
+		})
+
+		return Array.from(storages.values())
+	},
+)
+
+export const getCompletedPins = createSelector(ordersApi.endpoints.getCompletedOrders.select(), (completedOrders) => {
+	if (completedOrders.data === undefined) return []
+
+	const pins = new Map<number, { ID: number; latitude: number; longitude: number; completed: boolean }>()
+
+	completedOrders.data.items.forEach((item) => {
+		item.orders.forEach((order) => {
+			const [latitude, longitude] = order.client.coordinates.split(' ').map((value) => Number(value))
+			const pin = {
+				ID: order.ID,
+				latitude,
+				longitude,
+				completed: order.completed,
+			}
+
+			pins.set(order.ID, pin)
+		})
+	})
+
+	return Array.from(pins.values())
+})

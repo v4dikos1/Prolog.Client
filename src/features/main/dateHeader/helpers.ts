@@ -1,3 +1,5 @@
+import { isToday } from '@/shared/helpers/isToday'
+
 export const formatDate = (str: string) => {
 	const date = new Date(str)
 	const formatter = new Intl.DateTimeFormat('ru-RU', {
@@ -12,9 +14,4 @@ export const formatDate = (str: string) => {
 	}
 
 	return formattedDate
-}
-
-const isToday = (date: Date) => {
-	const formatter = new Intl.DateTimeFormat()
-	return formatter.format(date) === formatter.format(new Date())
 }

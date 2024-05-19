@@ -4,7 +4,6 @@ import { ActiveOrdersFromAPI, CompletedOrdersFromAPI, IncomingOrdersFromAPI } fr
 import { Order } from './model'
 
 export const transformOrdersFromAPIToIncoming = (ordersFromAPI: IncomingOrdersFromAPI): IncomingOrders => {
-	console.log(ordersFromAPI)
 	const incomingOrders: IncomingOrders = {
 		count: ordersFromAPI.totalItems,
 		items: ordersFromAPI.items.map((item) => ({

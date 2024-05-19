@@ -1,4 +1,4 @@
-import { useAddIncomingOrderMutation } from '@/entities/order/slice'
+import { useAddIncomingOrderMutation } from '@/entities/order'
 import { getApiFormatDateString } from '@/shared/helpers/getApiFormatDateString'
 import { Form } from './types'
 

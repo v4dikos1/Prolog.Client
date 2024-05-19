@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { DateHeader } from '@/features/main'
 import {
 	IncomingOrdersGroupByDate,
@@ -9,6 +9,7 @@ import {
 	activeOrdersGroupByDateIsEmpty,
 	OrdersNotFound,
 } from '@/entities/order/'
+import { isToday } from '@/shared/helpers/isToday'
 import { OrderDriverGroup } from '../../driverGroup'
 import { OrderList } from '../../list'
 
@@ -35,6 +36,13 @@ type Props = IncomingProps | ActiveProps | CompletedProps
 
 export const OrderDateGroup = ({ className, status, groupByDate }: Props) => {
 	const [opened, setOpened] = useState(false)
+
+	useLayoutEffect(() => {
+		if (isToday(new Date(groupByDate.date))) {
+			setOpened(true)
+		}
+	}, [setOpened, groupByDate.date])
+
 	const open = () => setOpened(true)
 	const close = () => setOpened(false)
 

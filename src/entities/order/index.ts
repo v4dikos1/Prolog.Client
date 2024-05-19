@@ -35,6 +35,13 @@ export {
 	isActiveOrderSelected,
 	isCompletedOrderSelected,
 	getAllSelectedOrdersIDs,
+	useRunPlanningMutation,
+	getAllStoragesFromIncoming,
+	getIncomingPins,
+	getAllStoragesFromActive,
+	getActivePins,
+	getAllStoragesFromCompleted,
+	getCompletedPins,
 } from './slice'
 
 export { OrdersNotFound } from './NotFound'

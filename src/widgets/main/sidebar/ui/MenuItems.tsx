@@ -7,7 +7,6 @@ import {
 	OpenOrderCreateModalButton,
 	OpenRunPlanningModalButton,
 	DeleteCompletedOrdersButton,
-	CreateDuplicateButton,
 } from '@/features/order'
 import { StatusEnum } from '@/entities/order'
 
@@ -49,8 +48,7 @@ export const CompletedOrdersAndSelectedItem = ({ className, activeTab, selected 
 			className={cx(className, 'flex gap-2 transition-all', {
 				'translate-y-[-130%]': completedOrdersClosed || !selected,
 			})}>
-			<DeleteCompletedOrdersButton disabled={!selected} />
-			<CreateDuplicateButton disabled={!selected} className='w-full' />
+			<DeleteCompletedOrdersButton className='w-full' disabled={!selected} />
 		</menu>
 	)
 }

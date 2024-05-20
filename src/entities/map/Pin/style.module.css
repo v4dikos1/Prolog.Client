@@ -1,0 +1,20 @@
+.pin {
+	@apply relative flex items-center;
+}
+
+.circle {
+	@apply w-9 h-9 rounded-full relative z-10 border-2 border-white shadow-lg bg-gray-500 text-sm font-semibold text-white flex justify-center items-center transition-colors;
+}
+
+.hint {
+	opacity: 0;
+	pointer-events: none;
+	white-space: nowrap;
+
+	@apply rounded-l-3xl rounded-r-xl py-4 pl-6 pr-3 absolute left-[18px] z-0 flex flex-col transition-opacity bg-white text-gray-900 shadow-xl;
+}
+
+.pin:hover .hint {
+	pointer-events: all;
+	opacity: 1;
+}

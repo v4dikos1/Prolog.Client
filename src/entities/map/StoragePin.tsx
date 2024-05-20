@@ -1,9 +1,17 @@
-import { Pin, Props } from './Pin'
+import { Pin, Props as PinProps } from './Pin'
 import { StorageIcon } from '@/shared/ui/icons/StorageIcon'
 
-export const StoragePin = ({ longitude, latitude }: Props) => {
+type Props = PinProps & {
+	address: string
+}
+
+export const StoragePin = ({ longitude, latitude, address }: Props) => {
 	return (
-		<Pin className='bg-gray-900' longitude={longitude} latitude={latitude}>
+		<Pin
+			className='bg-gray-900'
+			longitude={longitude}
+			latitude={latitude}
+			hint={<span className='text-sm font-semibold'>{address}</span>}>
 			<StorageIcon />
 		</Pin>
 	)

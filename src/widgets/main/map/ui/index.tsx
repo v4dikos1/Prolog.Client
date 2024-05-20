@@ -2,7 +2,7 @@ import Mapbox from 'react-map-gl'
 
 import 'mapbox-gl/dist/mapbox-gl.css'
 import cx from 'classnames'
-import { ActiveOrderPin, IncomingOrderPin, StoragePin, CompletedOrderPin } from '@/entities/map'
+import { ActiveOrderPin, IncomingOrderPin, StoragePin, CompletedOrderPin, labels } from '@/entities/map'
 import { useAppSelector } from '@/shared/store'
 import {
 	getAllStoragesFromIncoming,
@@ -35,28 +35,42 @@ export const Map = ({ className }: Props) => {
 	const completedPins = useAppSelector(getCompletedPins)
 
 	return (
-		<section id='map' className={cx(className, 'h-full')}>
+		<section className={cx(className, 'h-full')}>
 			<Mapbox
+				id='map'
 				mapboxAccessToken={ACCESS_TOKEN}
 				initialViewState={{
 					longitude: 92.87017,
 					latitude: 56.009,
 					zoom: 11,
 				}}
-				mapStyle='mapbox://styles/mapbox/streets-v9'>
-				{/* <ActiveOrderPin color='rgb(37, 99, 235)' number={2} latitude={56.014} longitude={92.86017} />
-				<ActiveOrderPin color='rgb(37, 99, 235)' number={1} latitude={56.017} longitude={92.85117} />
-				<ActiveOrderPin color='rgb(217, 119, 6)' number={1} latitude={56.02} longitude={92.87117} />
-				<ActiveOrderPin color='rgb(217, 119, 6)' number={2} latitude={56.032} longitude={92.89217} />
-				<CompletedOrderPin completed={false} latitude={56.012} longitude={92.90217} />
-				<CompletedOrderPin completed={true} latitude={56.001} longitude={92.86217} /> */}
+				mapStyle='mapbox://styles/mapbox/streets-v9'
+				onLoad={(event) => {
+					labels.forEach((label) => {
+						event.target.setLayoutProperty(label, 'text-field', ['get', 'name_ru'])
+					})
+					event.target.getStyle().layers.forEach((layer) => {
+						if (layer.id.includes('label')) event.target.setLayoutProperty(layer.id, 'text-field', ['get', 'name_ru'])
+					})
+				}}>
 				{activeTab === StatusEnum.incoming && (
 					<>
 						{storagesFromIncoming.map((storage) => (
-							<StoragePin key={storage.ID} latitude={storage.latitude} longitude={storage.longitude} />
+							<StoragePin
+								key={storage.ID}
+								latitude={storage.latitude}
+								longitude={storage.longitude}
+								address={storage.name}
+							/>
 						))}
 						{incomingPins.map((order) => (
-							<IncomingOrderPin key={order.ID} latitude={order.latitude} longitude={order.longitude} />
+							<IncomingOrderPin
+								key={order.ID}
+								latitude={order.latitude}
+								longitude={order.longitude}
+								client={order.client}
+								time={order.time}
+							/>
 						))}
 					</>
 				)}
@@ -64,7 +78,12 @@ export const Map = ({ className }: Props) => {
 				{activeTab === StatusEnum.active && (
 					<>
 						{storagesFromActive.map((storage) => (
-							<StoragePin key={storage.ID} latitude={storage.latitude} longitude={storage.longitude} />
+							<StoragePin
+								key={storage.ID}
+								latitude={storage.latitude}
+								longitude={storage.longitude}
+								address={storage.name}
+							/>
 						))}
 						{activePins.map((order) => (
 							<ActiveOrderPin
@@ -80,7 +99,12 @@ export const Map = ({ className }: Props) => {
 				{activeTab === StatusEnum.completed && (
 					<>
 						{storagesFromCompleted.map((storage) => (
-							<StoragePin key={storage.ID} latitude={storage.latitude} longitude={storage.longitude} />
+							<StoragePin
+								key={storage.ID}
+								latitude={storage.latitude}
+								longitude={storage.longitude}
+								address={storage.name}
+							/>
 						))}
 						{completedPins.map((order) => (
 							<CompletedOrderPin

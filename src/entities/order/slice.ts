@@ -11,6 +11,7 @@ import {
 	transformOrdersFromAPIToIncoming,
 	getSelectedOrdersIDs,
 } from './helpers'
+import { getTime } from '@/shared/helpers/getTime'
 
 const ROUTES = {
 	orders: 'orders',
@@ -222,7 +223,7 @@ export const getAllStoragesFromIncoming = createSelector(
 	(incomingOrders) => {
 		if (incomingOrders.data === undefined) return []
 
-		const storages = new Map<string, { ID: string; latitude: number; longitude: number }>()
+		const storages = new Map<string, { ID: string; latitude: number; longitude: number; name: string }>()
 
 		incomingOrders.data.items.forEach((item) => {
 			item.orders.forEach((order) => {
@@ -231,6 +232,7 @@ export const getAllStoragesFromIncoming = createSelector(
 					ID: order.storage.ID,
 					latitude,
 					longitude,
+					name: order.storage.name,
 				}
 
 				if (!storages.has(storage.ID)) {
@@ -246,7 +248,7 @@ export const getAllStoragesFromIncoming = createSelector(
 export const getIncomingPins = createSelector(ordersApi.endpoints.getIncomingOrders.select(), (incomingOrders) => {
 	if (incomingOrders.data === undefined) return []
 
-	const pins = new Map<number, { ID: number; latitude: number; longitude: number }>()
+	const pins = new Map<number, { ID: number; latitude: number; longitude: number; client: string; time: string }>()
 
 	incomingOrders.data.items.forEach((item) => {
 		item.orders.forEach((order) => {
@@ -255,6 +257,8 @@ export const getIncomingPins = createSelector(ordersApi.endpoints.getIncomingOrd
 				ID: order.ID,
 				latitude,
 				longitude,
+				client: order.client.name,
+				time: `${getTime(order.deliveryStart)} – ${getTime(order.deliveryEnd)}`,
 			}
 
 			pins.set(order.ID, pin)
@@ -267,7 +271,7 @@ export const getIncomingPins = createSelector(ordersApi.endpoints.getIncomingOrd
 export const getAllStoragesFromActive = createSelector(ordersApi.endpoints.getActiveOrders.select(), (activeOrders) => {
 	if (activeOrders.data === undefined) return []
 
-	const storages = new Map<string, { ID: string; latitude: number; longitude: number }>()
+	const storages = new Map<string, { ID: string; latitude: number; longitude: number; name: string }>()
 
 	activeOrders.data.items.forEach((item) => {
 		item.orders.forEach((driverGroup) => {
@@ -277,6 +281,7 @@ export const getAllStoragesFromActive = createSelector(ordersApi.endpoints.getAc
 					ID: order.storage.ID,
 					latitude,
 					longitude,
+					name: order.storage.name,
 				}
 
 				if (!storages.has(storage.ID)) {
@@ -318,7 +323,7 @@ export const getAllStoragesFromCompleted = createSelector(
 	(completedOrders) => {
 		if (completedOrders.data === undefined) return []
 
-		const storages = new Map<string, { ID: string; latitude: number; longitude: number }>()
+		const storages = new Map<string, { ID: string; latitude: number; longitude: number; name: string }>()
 
 		completedOrders.data.items.forEach((item) => {
 			item.orders.forEach((order) => {
@@ -327,6 +332,7 @@ export const getAllStoragesFromCompleted = createSelector(
 					ID: order.storage.ID,
 					latitude,
 					longitude,
+					name: order.storage.name,
 				}
 
 				if (!storages.has(storage.ID)) {

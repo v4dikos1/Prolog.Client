@@ -8,12 +8,15 @@ import { router } from '@/app/router.tsx'
 import { oidcConfig } from '@/app/oidcConfig'
 import { store } from '@/shared/store'
 import './index.css'
+import { MapProvider } from 'react-map-gl'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
 		<AuthProvider {...oidcConfig}>
 			<StoreProvider store={store}>
-				<RouterProvider router={router} />
+				<MapProvider>
+					<RouterProvider router={router} />
+				</MapProvider>
 			</StoreProvider>
 		</AuthProvider>
 	</React.StrictMode>,

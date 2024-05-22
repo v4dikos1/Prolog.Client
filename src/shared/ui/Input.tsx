@@ -8,6 +8,7 @@ export interface Props {
 	value?: string
 	placeholder?: string
 	changeHandler?: React.ChangeEventHandler<HTMLInputElement>
+	clickHandler?: React.MouseEventHandler<HTMLInputElement>
 	blurHandler?: React.FocusEventHandler<HTMLInputElement>
 	focusHandler?: React.FocusEventHandler<HTMLInputElement>
 	name?: string
@@ -28,6 +29,7 @@ export const Input = ({
 	changeHandler,
 	focusHandler,
 	blurHandler,
+	clickHandler,
 	name,
 	type = 'text',
 	autocomplete,
@@ -37,6 +39,7 @@ export const Input = ({
 		<input
 			readOnly={readonly}
 			placeholder={placeholder}
+			onClick={clickHandler}
 			onChange={changeHandler}
 			onFocus={focusHandler}
 			onBlur={blurHandler}

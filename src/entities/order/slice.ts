@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit/react'
 import { apiSlice } from '@/shared/store'
-import { ActiveOrdersFromAPI, CompletedOrdersFromAPI, IncomingOrdersFromAPI } from './apiModel'
+import { ActiveOrdersFromAPI, CompletedOrdersFromAPI, IncomingOrdersFromAPI, Route } from './apiModel'
 import { ActiveOrders, CompletedOrders, IncomingOrders, StatusEnum } from './model'
 import {
 	toggleOrderInActiveOrders,
@@ -134,7 +134,11 @@ const ordersApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Orders'] }).injectE
 					method: 'DELETE',
 				}
 			},
-			invalidatesTags: [{ type: 'Orders', id: 'ALL' }],
+			invalidatesTags: [
+				{ type: 'Orders', id: 'INCOMING' },
+				{ type: 'Orders', id: 'ACTIVE' },
+				{ type: 'Orders', id: 'COMPLETED' },
+			],
 		}),
 		runPlanning: builder.mutation<void, RunPlanningProps>({
 			query: (props) => ({
@@ -143,7 +147,8 @@ const ordersApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Orders'] }).injectE
 				body: {
 					startDate: props.startDate,
 					endDate: props.endDate,
-					binds: props.binds,
+					storageId: props.binds[0].storageId,
+					binds: props.binds.map((bind) => ({ driverId: bind.driverId, transportId: bind.transportId })),
 				},
 			}),
 			invalidatesTags: [
@@ -297,7 +302,17 @@ export const getAllStoragesFromActive = createSelector(ordersApi.endpoints.getAc
 export const getActivePins = createSelector(ordersApi.endpoints.getActiveOrders.select(), (activeOrders) => {
 	if (activeOrders.data === undefined) return []
 
-	const pins = new Map<number, { ID: number; latitude: number; longitude: number; color: string }>()
+	type ActivePin = {
+		ID: number
+		latitude: number
+		longitude: number
+		color: string
+		client: string
+		deliveryStart: string
+		deliveryEnd: string
+	}
+
+	const pins = new Map<number, ActivePin>()
 
 	activeOrders.data.items.forEach((item) => {
 		item.orders.forEach((driverGroup) => {
@@ -308,6 +323,9 @@ export const getActivePins = createSelector(ordersApi.endpoints.getActiveOrders.
 					latitude,
 					longitude,
 					color: driverGroup.driver.color,
+					client: order.client.name,
+					deliveryStart: order.deliveryStart,
+					deliveryEnd: order.deliveryEnd,
 				}
 
 				pins.set(order.ID, pin)
@@ -348,7 +366,16 @@ export const getAllStoragesFromCompleted = createSelector(
 export const getCompletedPins = createSelector(ordersApi.endpoints.getCompletedOrders.select(), (completedOrders) => {
 	if (completedOrders.data === undefined) return []
 
-	const pins = new Map<number, { ID: number; latitude: number; longitude: number; completed: boolean }>()
+	type CompletedPin = {
+		ID: number
+		latitude: number
+		longitude: number
+		completed: boolean
+		client: string
+		end: string
+	}
+
+	const pins = new Map<number, CompletedPin>()
 
 	completedOrders.data.items.forEach((item) => {
 		item.orders.forEach((order) => {
@@ -358,6 +385,8 @@ export const getCompletedPins = createSelector(ordersApi.endpoints.getCompletedO
 				latitude,
 				longitude,
 				completed: order.completed,
+				client: order.client.name,
+				end: order.end,
 			}
 
 			pins.set(order.ID, pin)
@@ -398,3 +427,22 @@ export const getlCompletedSelectedOrderIDs = createSelector(
 		return selectedCompleted
 	},
 )
+
+export const getActiveRoutes = createSelector(ordersApi.endpoints.getActiveOrders.select(), (activeOrders) => {
+	if (activeOrders.data === undefined) return []
+
+	type RouteWithColor = Route & {
+		color: string
+	}
+
+	const routes: RouteWithColor[][] = []
+
+	activeOrders.data.items.forEach((groupByDate) => {
+		groupByDate.orders.forEach((groupByDriver) => {
+			const newRouteGroup = groupByDriver.routes.map((route) => ({ ...route, color: groupByDriver.driver.color }))
+			routes.push(newRouteGroup)
+		})
+	})
+
+	return routes
+})

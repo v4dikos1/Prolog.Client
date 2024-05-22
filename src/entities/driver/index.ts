@@ -8,4 +8,5 @@ export {
 	useDeleteDriversMutation,
 	getDriversAsSelectOptions,
 	getDriverByID,
+	getDriversCount,
 } from './slice'

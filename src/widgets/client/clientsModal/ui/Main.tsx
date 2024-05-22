@@ -29,8 +29,8 @@ export const Main = ({ openAddition, openChanging }: Props) => {
 					<Table className='h-[265px]'>
 						<thead>
 							<tr>
-								<th className='w-1/2'>Название</th>
-								<th className='w-1/2'>Номер телефона</th>
+								<th className='w-1/2 min-w-[300px]'>Название</th>
+								<th className='w-1/2 min-w-[200px]'>Номер телефона</th>
 							</tr>
 						</thead>
 						<tbody>

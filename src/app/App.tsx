@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 import { NotAuthorized } from '@/shared/ui/NotAuthorized'
 import { Authorization } from '@/shared/ui/Authorizing'
 import { getUser } from '@/shared/helpers/getUser'
+import { removeTokenParams } from '@/shared/helpers/removeTokenParams'
 
 export const App = () => {
 	const auth = useAuth()
@@ -11,7 +12,18 @@ export const App = () => {
 	const user = getUser()
 
 	useEffect(() => {
-		if (auth.isLoading || auth.activeNavigator || auth.isAuthenticated || hasTriedSignin) {
+		if (auth.isAuthenticated) {
+			removeTokenParams()
+			return
+		}
+
+		if (auth.isLoading || auth.activeNavigator || hasTriedSignin) {
+			return
+		}
+
+		if (user && !auth.error) {
+			auth.signinRedirect()
+			setHasTriedSignin(true)
 			return
 		}
 

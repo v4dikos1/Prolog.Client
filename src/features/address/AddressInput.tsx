@@ -20,17 +20,41 @@ export const AddressInput = ({ placeholder, value, setValue }: Props) => {
 		setListOpened(false)
 	}
 
+	const inputClickHandler = () => {
+		setListOpened(true)
+	}
+
+	useEffect(() => {
+		const windowMouseDown = (event: MouseEvent) => {
+			if (
+				event.target &&
+				'closest' in event.target &&
+				typeof event.target.closest === 'function' &&
+				!event.target.closest('.addressInput')
+			) {
+				setListOpened(false)
+			}
+		}
+		if (listOpened) {
+			window.addEventListener('mousedown', windowMouseDown)
+		}
+
+		return () => {
+			window.removeEventListener('mousedown', windowMouseDown)
+		}
+	}, [listOpened])
+
 	useEffect(() => {
 		if (debouncedValue === '') return
 		trigger(debouncedValue)
 	}, [trigger, debouncedValue])
 
 	return (
-		<div className='w-full relative'>
+		<div className='w-full relative addressInput'>
 			<Input
 				changeHandler={(event) => setValue(event.target.value)}
 				focusHandler={() => setListOpened(true)}
-				blurHandler={() => setListOpened(false)}
+				clickHandler={inputClickHandler}
 				value={value}
 				className='w-full'
 				placeholder={placeholder}
@@ -69,7 +93,7 @@ interface AddressItemProps {
 export const AddressItem = ({ address, clickHandler }: AddressItemProps) => {
 	return (
 		<button
-			onMouseDown={clickHandler}
+			onClick={clickHandler}
 			type='button'
 			className='w-full p-3 border-b border-gray-200 text-sm text-left group-last:border-none hover:bg-indigo-50'>
 			{address}

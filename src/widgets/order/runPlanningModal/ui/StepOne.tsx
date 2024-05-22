@@ -28,7 +28,7 @@ export const StepOne = ({ next, form, setForm }: Props) => {
 				Система автоматически включит в маршрутизацию <br /> заявки с выбранной датой доставки
 			</p>
 			<form method='POST' className='flex flex-col gap-4' onSubmit={submitHandler}>
-				<div className='flex gap-4'>
+				<div className='flex gap-4 flex-col md:flex-row'>
 					<DatePicker
 						placeholder='Дата доставки'
 						date={form.date}

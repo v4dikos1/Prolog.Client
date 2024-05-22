@@ -1,5 +1,10 @@
 .pin {
+	transition: transform 0.4s cubic-bezier(0.4, 0, 0, 1);
 	@apply relative flex items-center;
+}
+
+.pin:hover {
+	transform: scale(1.1);
 }
 
 .circle {

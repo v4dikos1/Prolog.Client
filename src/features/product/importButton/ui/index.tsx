@@ -7,7 +7,7 @@ export const ImportProductsButton = () => {
 
 	return (
 		<Button category='secondary' clickHandler={importProducts}>
-			Импорт продуктов из XLSX/CSV
+			Импорт товаров из XLSX/CSV
 		</Button>
 	)
 }

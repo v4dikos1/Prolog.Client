@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import cx from 'classnames'
 import { ModalTemplate, ModalTitleButton } from '@/shared/ui/ModalTemplate/'
 import { Main } from './Main'
 import { Addition } from './Addition'
@@ -41,7 +42,8 @@ export const StoragesModal = ({ opened, close }: Props) => {
 
 	return (
 		<ModalTemplate
-			excludeBackdropClosing={true}
+			className={cx({ 'flex flex-col': modalState === 'main' })}
+			mainClassName={cx({ 'grow overflow-hidden': modalState === 'main' })}
 			titleContent={titleContent[modalState]}
 			content={content[modalState]}
 			opened={opened}

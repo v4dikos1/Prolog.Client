@@ -19,7 +19,7 @@ export const Button = ({ className, clickHandler }: Props) => {
 			)}>
 			Prolog
 			<SettingsIcon
-				className='mt-1 transition-transform group-hover:scale-110'
+				className='transition-transform group-hover:scale-110'
 				pathClassName='transition-colors stroke-gray-500 group-hover:stroke-indigo-600'
 			/>
 		</button>

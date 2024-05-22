@@ -42,13 +42,13 @@ export const Main = ({ openAddition, openChanging, search, setSearch }: Props) =
 					<Table>
 						<thead>
 							<tr>
-								<th className='w-[140px]'>Код</th>
-								<th className='w-1/2'>Наименование</th>
-								<th className='px-8'>Вес, кг</th>
-								<th className='px-8'>
+								<th className='w-[140px] min-w-[140px]'>Код</th>
+								<th className='w-1/2 min-w-[300px]'>Наименование</th>
+								<th className='px-8 min-w-[120px]'>Вес, кг</th>
+								<th className='px-8 min-w-[150px]'>
 									Объем, м<sup>3</sup>
 								</th>
-								<th className='w-[140px]'>Цена, ₽</th>
+								<th className='w-[140px] min-w-[140px]'>Цена, ₽</th>
 							</tr>
 						</thead>
 						<tbody>

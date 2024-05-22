@@ -1,6 +1,7 @@
 import { DriverInOrder } from '@/entities/driver'
 import { ClientInOrder } from '@/entities/client'
 import { StorageInOrder } from '@/entities/storage'
+import { Route } from './apiModel'
 
 export enum StatusEnum {
 	'incoming',
@@ -74,6 +75,7 @@ export type CompletedOrders = {
 export type ActiveOrdersGroupByDriver = {
 	driver: DriverInOrder
 	orders: ActiveOrder[]
+	routes: Route[]
 }
 
 export type ActiveOrdersGroupByDate = {

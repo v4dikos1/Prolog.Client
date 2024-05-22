@@ -1,6 +1,14 @@
 import { DriverInOrderFromAPI } from '@/entities/driver'
 import { API_Response } from '@/shared/types'
 
+export type Route = {
+	id: string
+	index: number
+	latitude: string
+	longitude: string
+	stopType: number
+}
+
 type OrderFromAPI = {
 	id: number
 	visibleId: string
@@ -44,6 +52,7 @@ export type ActiveOrdersFromAPI = API_Response<{
 	ordersGroupedByDriver: {
 		driver: DriverInOrderFromAPI
 		orders: OrderFromAPI[]
+		routes: Route[]
 	}[]
 }>
 

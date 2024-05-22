@@ -28,10 +28,10 @@ export const Main = ({ openAddition, openChanging }: Props) => {
 					<Table maxHeight='320px'>
 						<thead>
 							<tr>
-								<th className='w-1/4'>Имя</th>
-								<th className='w-1/4'>Контактный телефон</th>
-								<th className='w-1/4'>Телеграм для отправки заявок</th>
-								<th className='w-1/4'>Зарплата</th>
+								<th className='w-1/4 min-w-[200px]'>Имя</th>
+								<th className='w-1/4 min-w-[200px]'>Контактный телефон</th>
+								<th className='w-1/4 min-w-[300px]'>Телеграм для отправки заявок</th>
+								<th className='w-1/4 min-w-[200px]'>Зарплата</th>
 							</tr>
 						</thead>
 						<tbody>

@@ -4,6 +4,7 @@ import { ActiveOrdersFromAPI, CompletedOrdersFromAPI, IncomingOrdersFromAPI } fr
 import { Order } from './model'
 
 export const transformOrdersFromAPIToIncoming = (ordersFromAPI: IncomingOrdersFromAPI): IncomingOrders => {
+	console.log('IncomingOrders:', ordersFromAPI)
 	const incomingOrders: IncomingOrders = {
 		count: ordersFromAPI.totalItems,
 		items: ordersFromAPI.items.map((item) => ({
@@ -47,6 +48,7 @@ export const transformOrdersFromAPIToIncoming = (ordersFromAPI: IncomingOrdersFr
 }
 
 export const transformOrdersFromAPIToActive = (ordersFromAPI: ActiveOrdersFromAPI): ActiveOrders => {
+	console.log('ActiveOrders:', ordersFromAPI)
 	const activeOrders: ActiveOrders = {
 		count: ordersFromAPI.totalItems,
 		items: ordersFromAPI.items.map((item) => ({
@@ -91,6 +93,7 @@ export const transformOrdersFromAPIToActive = (ordersFromAPI: ActiveOrdersFromAP
 					deliveryStart: order.deliveryStartDate,
 					deliveryEnd: order.deliveryEndDate,
 				})),
+				routes: groupByDriver.routes,
 			})),
 		})),
 	}
@@ -99,6 +102,7 @@ export const transformOrdersFromAPIToActive = (ordersFromAPI: ActiveOrdersFromAP
 }
 
 export const transformOrdersFromAPIToCompleted = (ordersFromAPI: CompletedOrdersFromAPI): CompletedOrders => {
+	console.log('CompletedOrders:', ordersFromAPI)
 	const completedOrders: CompletedOrders = {
 		count: ordersFromAPI.totalItems,
 		items: ordersFromAPI.items.map((item) => ({
@@ -217,6 +221,7 @@ export const filterActiveOrders = (activeOrders: ActiveOrders, searchStr = ''): 
 				newItem.orders.push({
 					driver: driverGroup.driver,
 					orders: filteredDriverGroup,
+					routes: driverGroup.routes,
 				})
 			}
 		}

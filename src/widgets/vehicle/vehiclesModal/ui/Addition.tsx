@@ -55,7 +55,7 @@ export const Addition = ({ back }: Props) => {
 					либо есть проблемы с соединением.
 				</p>
 			)}
-			<div className='flex gap-4'>
+			<div className='flex gap-4 flex-col md:flex-row '>
 				<Input
 					className='w-full'
 					placeholder='Марка'
@@ -71,7 +71,7 @@ export const Addition = ({ back }: Props) => {
 					required={true}
 				/>
 			</div>
-			<div className='flex gap-4'>
+			<div className='flex gap-4 flex-col md:flex-row '>
 				<Input
 					className='w-full'
 					placeholder='Объём, м3'

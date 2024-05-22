@@ -80,3 +80,5 @@ export const getDriverByID = createSelector([selectDrivers(), (_, ID) => ID], (d
 export const getDriversAsSelectOptions = createSelector(selectDrivers(), (drivers) =>
 	drivers.data?.map((driver) => ({ value: driver.ID, title: `${driver.surname} ${driver.name} ${driver.patronymic}` })),
 )
+
+export const getDriversCount = createSelector(selectDrivers(), (drivers) => drivers.data?.length || 0)

@@ -1,5 +1,2 @@
-import { Sidebar } from './sidebar'
-import { Map } from './map'
+export { Sidebar } from './sidebar'
 export { Settings } from './settings'
-
-export { Sidebar, Map }

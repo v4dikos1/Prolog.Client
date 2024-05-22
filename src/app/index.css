@@ -25,6 +25,41 @@
 	}
 }
 
+@layer base {
+	@font-face {
+		font-family: 'Inter';
+		font-style: normal;
+		font-weight: 400;
+		font-display: swap;
+		src: url(/Inter.ttf) format('TrueType');
+		font-variation-settings: 'wght' 400;
+	}
+	@font-face {
+		font-family: 'Inter';
+		font-style: normal;
+		font-weight: 500;
+		font-display: swap;
+		src: url(/Inter.ttf) format('TrueType');
+		font-variation-settings: 'wght' 500;
+	}
+	@font-face {
+		font-family: 'Inter';
+		font-style: normal;
+		font-weight: 600;
+		font-display: swap;
+		src: url(/Inter.ttf) format('TrueType');
+		font-variation-settings: 'wght' 600;
+	}
+	@font-face {
+		font-family: 'Inter';
+		font-style: normal;
+		font-weight: 700;
+		font-display: swap;
+		src: url(/Inter.ttf) format('TrueType');
+		font-variation-settings: 'wght' 700;
+	}
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
 	-webkit-appearance: none;

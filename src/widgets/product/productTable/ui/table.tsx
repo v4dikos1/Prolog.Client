@@ -72,18 +72,18 @@ export const Table = ({ className, products, selectedProducts, setSelectedProduc
 		<TableTemplate className={className}>
 			<thead>
 				<tr>
-					<th className='cursor-pointer select-none w-[170px] !pl-0'>
+					<th className='cursor-pointer select-none min-w-[170px] !pl-0'>
 						<Checkbox className='h-full pl-8' checked={checkedAll} changeHandler={toggleAllProduct}>
 							Код
 						</Checkbox>
 					</th>
-					<th className='w-[390px]'>Наименование</th>
+					<th className='min-w-[390px]'>Наименование</th>
 					<th>Вес, КГ</th>
 					<th>
 						Объём, м<sup>3</sup>
 					</th>
-					<th className='w-[140px]'>Цена, ₽</th>
-					<th className='w-[160px]'>Количество</th>
+					<th className='min-w-[140px]'>Цена, ₽</th>
+					<th className='min-w-[160px]'>Количество</th>
 				</tr>
 			</thead>
 			<tbody>

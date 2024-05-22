@@ -1,13 +1,13 @@
 export const getRandomColor = () => {
-	const r = Math.floor(Math.random() * 256)
-	const g = Math.floor(Math.random() * 256)
-	const b = Math.floor(Math.random() * 256)
+	const config = {
+		h: [0, 360],
+		s: [60, 90],
+		l: [25, 45],
+	}
 
-	const hexR = r.toString(16).padStart(2, '0')
-	const hexG = g.toString(16).padStart(2, '0')
-	const hexB = b.toString(16).padStart(2, '0')
+	const h = config.h[0] + Math.floor(Math.random() * (config.h[1] - config.h[0] + 1))
+	const s = config.s[0] + Math.floor(Math.random() * (config.s[1] - config.s[0] + 1))
+	const l = config.l[0] + Math.floor(Math.random() * (config.l[1] - config.l[0] + 1))
 
-	const hexColor = `#${hexR}${hexG}${hexB}`
-
-	return hexColor
+	return `hsl(${h}, ${s}%, ${l}%)`
 }

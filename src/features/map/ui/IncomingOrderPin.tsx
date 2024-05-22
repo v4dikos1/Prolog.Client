@@ -1,4 +1,4 @@
-import { Pin, Props as PinProps } from './Pin'
+import { Pin, Props as PinProps } from '@/entities/map'
 
 type Props = PinProps & {
 	client: string

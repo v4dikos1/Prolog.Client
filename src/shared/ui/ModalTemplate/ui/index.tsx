@@ -83,8 +83,7 @@ export const ModalTemplate = ({
 			<div
 				role='dialog'
 				ref={modal}
-				onClick={(e) => e.stopPropagation()}
-				className={cx('w-[1116px] bg-white rounded-lg shadow', className, {
+				className={cx('w-[1116px] max-w-[calc(100%_-_32px)] bg-white rounded-lg shadow max-h-[90%]', className, {
 					'visible': opened,
 					'invisible delay-300': !opened,
 				})}>

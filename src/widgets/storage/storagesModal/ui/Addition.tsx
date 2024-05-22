@@ -34,7 +34,7 @@ export const Addition = ({ back }: Props) => {
 			onSubmit={submitHandler}
 			onInput={() => setErrorVisible(false)}>
 			{errorVisible && <p className='text-red-500'>Ошибка: данные введены неверно</p>}
-			<div className='flex gap-4'>
+			<div className='flex gap-4 flex-col md:flex-row'>
 				<Input
 					className='w-full'
 					placeholder='Название склада'

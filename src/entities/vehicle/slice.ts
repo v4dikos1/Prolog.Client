@@ -79,3 +79,5 @@ export const getVehicleByID = createSelector([selectVehicles(), (_, ID) => ID], 
 export const getVehiclesAsSelectOptions = createSelector(selectVehicles(), (vehicles) =>
 	vehicles.data?.map((vehicle) => ({ value: vehicle.ID, title: vehicle.brand })),
 )
+
+export const getVehiclesCount = createSelector(selectVehicles(), (vehicles) => vehicles.data?.length || 0)

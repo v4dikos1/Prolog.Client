@@ -15,7 +15,7 @@ interface Props {
 
 export const CreateOrderModal = ({ opened, close }: Props) => {
 	const [form, setForm] = useState<Form>(defaultFromState)
-
+	const [datepickerOpened, setDatepickerOpened] = useState(false)
 	const [currentStep, setCurrentStep] = useState<'details' | 'products' | 'addition'>('details')
 	const openDetails = () => setCurrentStep('details')
 	const openProducts = () => setCurrentStep('products')
@@ -28,7 +28,7 @@ export const CreateOrderModal = ({ opened, close }: Props) => {
 	}
 
 	const content = {
-		details: <StepOne form={form} setForm={setForm} next={openProducts} />,
+		details: <StepOne setDatepickerOpened={setDatepickerOpened} form={form} setForm={setForm} next={openProducts} />,
 		products: <StepTwo close={close} openAddition={openAddition} form={form} setForm={setForm} prev={openDetails} />,
 		addition: <Addition back={openProducts} />,
 	}
@@ -43,9 +43,12 @@ export const CreateOrderModal = ({ opened, close }: Props) => {
 
 	return (
 		<ModalTemplate
-			excludeBackdropClosing={true}
-			className={cx({ 'h-[90%] overflow-hidden flex flex-col': currentStep === 'products' })}
-			mainClassName={cx({ 'overflow-hidden': currentStep === 'products' })}
+			excludeBackdropClosing={datepickerOpened}
+			className={cx('max-h-none', {
+				'md:overflow-hidden md:!max-h-[90%] flex flex-col': currentStep === 'products',
+				'lg:!max-[90%]': currentStep === 'details',
+			})}
+			mainClassName={cx({ 'overflow-hidden ': currentStep === 'products' })}
 			titleContent={title[currentStep]}
 			headerContent={
 				currentStep !== 'addition' && (

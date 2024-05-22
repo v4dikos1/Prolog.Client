@@ -30,9 +30,9 @@ export const StepTwo = ({ prev, form, setForm, openAddition, close }: Props) => 
 				setSelectedProducts={(newProductIDs) => setForm({ ...form, productIDs: newProductIDs })}
 				openAddition={openAddition}
 			/>
-			<div className='flex justify-between px-8 mt-auto'>
+			<div className='flex justify-between px-8 mt-auto flex-col md:flex-row gap-4'>
 				<ImportOrdersButton />
-				<div className='flex gap-3'>
+				<div className='flex gap-3 self-end'>
 					<Button category='secondary' clickHandler={() => prev()}>
 						Назад
 					</Button>

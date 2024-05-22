@@ -41,6 +41,8 @@ export const VehiclesModal = ({ opened, close }: Props) => {
 
 	return (
 		<ModalTemplate
+			className='flex flex-col'
+			mainClassName='grow overflow-hidden'
 			titleContent={titleContent[modalState]}
 			content={content[modalState]}
 			opened={opened}

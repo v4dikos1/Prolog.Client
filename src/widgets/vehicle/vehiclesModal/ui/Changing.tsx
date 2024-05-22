@@ -61,7 +61,7 @@ export const Changing = ({ ID, back }: Props) => {
 			onSubmit={submitHandler}
 			onInput={() => setErrorVisible(false)}>
 			{errorVisible && <p className='text-red-500'>Ошибка: попробуйте заново</p>}
-			<div className='flex gap-4'>
+			<div className='flex gap-4 flex-col md:flex-row '>
 				<Input
 					className='w-full'
 					placeholder='Марка'
@@ -77,7 +77,7 @@ export const Changing = ({ ID, back }: Props) => {
 					required={true}
 				/>
 			</div>
-			<div className='flex gap-4'>
+			<div className='flex gap-4 flex-col md:flex-row '>
 				<Input
 					className='w-full'
 					placeholder='Объём, м3'

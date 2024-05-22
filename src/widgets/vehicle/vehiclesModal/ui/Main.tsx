@@ -25,16 +25,16 @@ export const Main = ({ openAddition, openChanging }: Props) => {
 		<>
 			{vehicles.length > 0 ? (
 				<>
-					<Table maxHeight='265px'>
+					<Table maxHeight='320px'>
 						<thead>
 							<tr>
-								<th className='w-[30%]'>Марка</th>
-								<th className='w-[15%]'>Госномер</th>
-								<th className='w-[15%]'>
+								<th className='w-[30%] min-w-[200px]'>Марка</th>
+								<th className='w-[15%] min-w-[100px]'>Госномер</th>
+								<th className='w-[15%] min-w-[150px]'>
 									Объём, м<sup>3</sup>
 								</th>
-								<th className='w-[20%] px-8'>Грузоподъёмность, кг</th>
-								<th className='w-[20%] px-8'>Средний расход, 100 км</th>
+								<th className='w-[20%] min-w-[250px] px-8'>Грузоподъёмность, кг</th>
+								<th className='w-[20%] min-w-[250px] px-8'>Средний расход, 100 км</th>
 							</tr>
 						</thead>
 						<tbody>

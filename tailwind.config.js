@@ -1,8 +1,12 @@
-/** @type {import('tailwindcss').Config} */
+import defaultTheme from 'tailwindcss/defaultTheme'
+
 export default {
 	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', './node_modules/tailwind-datepicker-react/dist/**/*.js'],
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: ['"Inter"', ...defaultTheme.fontFamily.sans],
+			},
 			animation: {
 				'spin-fast': 'spin 0.75s linear infinite',
 				'arrow-right': 'arrow-right 1s ease forwards',

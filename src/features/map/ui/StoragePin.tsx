@@ -1,4 +1,4 @@
-import { Pin, Props as PinProps } from './Pin'
+import { Pin, Props as PinProps } from '@/entities/map/ui/Pin'
 import { StorageIcon } from '@/shared/ui/icons/StorageIcon'
 
 type Props = PinProps & {
@@ -11,8 +11,8 @@ export const StoragePin = ({ longitude, latitude, address }: Props) => {
 			className='bg-gray-900'
 			longitude={longitude}
 			latitude={latitude}
-			hint={<span className='text-sm font-semibold'>{address}</span>}>
-			<StorageIcon />
-		</Pin>
+			hint={<span className='text-sm font-semibold'>{address}</span>}
+			children={<StorageIcon />}
+		/>
 	)
 }

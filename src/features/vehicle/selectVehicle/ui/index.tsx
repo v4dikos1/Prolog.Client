@@ -8,14 +8,19 @@ interface Props {
 	className?: string
 	value: string
 	changeHandler: ChangeEventHandler<HTMLSelectElement>
+	excludedValues: string[]
 }
 
-export const SelectVehicle = ({ className, value, changeHandler }: Props) => {
+export const SelectVehicle = ({ className, value, changeHandler, excludedValues }: Props) => {
 	const vehicleOptions = useAppSelector(getVehiclesAsSelectOptions) || []
 	const defaultOption: Option = {
 		value: '',
 		title: 'Выберите машину',
 	}
+
+	const filteredVehiclerOptions = vehicleOptions.filter(
+		(optionGroup) => optionGroup.value === value || !excludedValues.includes(optionGroup.value),
+	)
 
 	return (
 		<Select
@@ -23,7 +28,7 @@ export const SelectVehicle = ({ className, value, changeHandler }: Props) => {
 			value={value}
 			changeHandler={changeHandler}
 			defaultOption={defaultOption}
-			options={vehicleOptions}
+			options={filteredVehiclerOptions}
 			required
 		/>
 	)

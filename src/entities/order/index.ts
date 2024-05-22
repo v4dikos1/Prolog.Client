@@ -45,6 +45,7 @@ export {
 	getlActiveSelectedOrderIDs,
 	getlCompletedSelectedOrderIDs,
 	useCancelActiveOrdersMutation,
+	getActiveRoutes,
 } from './slice'
 
 export { OrdersNotFound } from './NotFound'

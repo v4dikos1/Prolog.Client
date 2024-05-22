@@ -15,10 +15,6 @@
 	@apply py-5 pl-8 font-medium text-left;
 }
 
-.table tbody {
-	@apply border-b border-gray-200;
-}
-
 .table tbody tr {
 	@apply text-sm text-gray-900 even:bg-gray-50;
 }

@@ -59,7 +59,7 @@ export const Changing = ({ ID, back }: Props) => {
 					либо водитель с таким телефоном уже существует
 				</p>
 			)}
-			<div className='flex gap-4'>
+			<div className='flex flex-col gap-4 md:flex-row'>
 				<Input
 					className='w-full'
 					placeholder='ФИО Водителя'

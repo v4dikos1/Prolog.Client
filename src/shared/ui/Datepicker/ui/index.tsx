@@ -14,9 +14,10 @@ interface Props {
 	id: string
 	placeholder: string
 	name?: string
+	setDatepickerOpened?: (value: boolean) => void
 }
 
-export const DatePicker = ({ date, setDate, className, id, placeholder, name }: Props) => {
+export const DatePicker = ({ date, setDate, className, id, placeholder, name, setDatepickerOpened }: Props) => {
 	const [show, setShow] = useState<boolean>(false)
 
 	const handleChange = (newDate: Date) => setDate(newDate)
@@ -37,15 +38,23 @@ export const DatePicker = ({ date, setDate, className, id, placeholder, name }: 
 		}
 
 		if (show) {
-			document.addEventListener('mousedown', handleMouseDown)
+			window.addEventListener('click', handleMouseDown)
 			document.addEventListener('mouseup', handleMouseUp)
 		}
 
 		return () => {
-			document.removeEventListener('mousedown', handleMouseDown)
+			window.removeEventListener('click', handleMouseDown)
 			document.removeEventListener('mouseup', handleMouseUp)
 		}
 	}, [show, id, setDate])
+
+	useEffect(() => {
+		if (show) {
+			setDatepickerOpened?.(true)
+		} else {
+			setDatepickerOpened?.(false)
+		}
+	}, [show, setDatepickerOpened])
 
 	return (
 		<div id={id} className={className}>
@@ -61,7 +70,8 @@ export const DatePicker = ({ date, setDate, className, id, placeholder, name }: 
 					value={formatDate(date)}
 					placeholder={placeholder}
 					focusHandler={() => setShow(true)}
-					blurHandler={() => setShow(false)}
+					clickHandler={() => setShow(true)}
+					// blurHandler={() => setShow(false)}
 					name={name}
 					readonly
 				/>

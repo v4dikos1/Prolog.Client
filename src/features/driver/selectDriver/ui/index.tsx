@@ -8,14 +8,19 @@ interface Props {
 	className?: string
 	value: string
 	changeHandler: ChangeEventHandler<HTMLSelectElement>
+	excludedValues?: string[]
 }
 
-export const SelectDriver = ({ className, value, changeHandler }: Props) => {
+export const SelectDriver = ({ className, value, changeHandler, excludedValues = [] }: Props) => {
 	const driversOptions = useAppSelector(getDriversAsSelectOptions) || []
 	const defaultOption: Option = {
 		value: '',
 		title: 'Выберите водителя',
 	}
+
+	const filteredDriverOptions = driversOptions.filter(
+		(optionGroup) => optionGroup.value === value || !excludedValues.includes(optionGroup.value),
+	)
 
 	return (
 		<Select
@@ -23,7 +28,7 @@ export const SelectDriver = ({ className, value, changeHandler }: Props) => {
 			value={value}
 			changeHandler={changeHandler}
 			defaultOption={defaultOption}
-			options={driversOptions}
+			options={filteredDriverOptions}
 			required
 		/>
 	)

@@ -41,7 +41,7 @@ export const Addition = ({ back }: Props) => {
 					либо клиент с таким телефоном уже существует.
 				</p>
 			)}
-			<div className='flex gap-4'>
+			<div className='flex gap-4 flex-col md:flex-row'>
 				<Input
 					className='w-full'
 					placeholder='Название клиента'

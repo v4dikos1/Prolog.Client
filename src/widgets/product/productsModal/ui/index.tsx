@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import cx from 'classnames'
 import { ModalTemplate, ModalTitleButton } from '@/shared/ui/ModalTemplate/'
 import { Main } from './Main'
 import { Addition } from './Addition'
@@ -49,8 +48,8 @@ export const ProductsModal = ({ opened, close, state = 'main' }: Props) => {
 
 	return (
 		<ModalTemplate
-			className={cx({ 'h-[90%] overflow-hidden flex flex-col': modalState === 'main' })}
-			mainClassName={cx({ 'overflow-hidden': modalState === 'main' })}
+			className='overflow-hidden flex flex-col'
+			mainClassName='overflow-hidden'
 			titleContent={titleContent[modalState]}
 			content={content[modalState]}
 			opened={opened}

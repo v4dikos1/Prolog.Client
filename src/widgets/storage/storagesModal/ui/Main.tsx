@@ -28,8 +28,8 @@ export const Main = ({ openAddition, openChanging }: Props) => {
 					<Table maxHeight='320px'>
 						<thead>
 							<tr>
-								<th className='w-1/2'>Название</th>
-								<th className='w-1/2'>Адрес</th>
+								<th className='w-1/2 min-w-[400px]'>Название</th>
+								<th className='w-1/2 min-w-[500px]'>Адрес</th>
 							</tr>
 						</thead>
 						<tbody>

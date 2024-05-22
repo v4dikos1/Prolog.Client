@@ -61,13 +61,17 @@ export const OrderDateGroup = ({ className, status, groupByDate }: Props) => {
 				{status === StatusEnum.incoming || status === StatusEnum.completed ? (
 					<OrderList className='w-full' orders={groupByDate.orders} />
 				) : (
-					groupByDate.orders.map((activeOrdersGroupByDriver) => (
-						<OrderDriverGroup
-							className='w-full'
-							key={activeOrdersGroupByDriver.driver.ID}
-							activeOrdersGroupByDriver={activeOrdersGroupByDriver}
-						/>
-					))
+					<ul className='flex flex-col gap-6'>
+						{groupByDate.orders.map((activeOrdersGroupByDriver) => (
+							<li key={activeOrdersGroupByDriver.driver.ID}>
+								<OrderDriverGroup
+									className='w-full'
+									key={activeOrdersGroupByDriver.driver.ID}
+									activeOrdersGroupByDriver={activeOrdersGroupByDriver}
+								/>
+							</li>
+						))}
+					</ul>
 				)}
 			</div>
 		</div>

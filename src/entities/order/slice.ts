@@ -147,8 +147,7 @@ const ordersApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Orders'] }).injectE
 				body: {
 					startDate: props.startDate,
 					endDate: props.endDate,
-					storageId: props.binds[0].storageId,
-					binds: props.binds.map((bind) => ({ driverId: bind.driverId, transportId: bind.transportId })),
+					binds: props.binds,
 				},
 			}),
 			invalidatesTags: [

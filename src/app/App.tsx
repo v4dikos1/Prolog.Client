@@ -12,6 +12,7 @@ export const App = () => {
 	const user = getUser()
 
 	useEffect(() => {
+		console.log('Authenticated:', auth.isAuthenticated)
 		if (auth.isAuthenticated) {
 			removeTokenParams()
 			return

@@ -41,6 +41,7 @@ const responseHandlers = {
 
 export const apiBaseQuery = <B>(): BaseQueryFn<QueryType<B>, unknown, unknown> => {
 	return async <B>({ url, method = 'GET', body }: QueryType<B>) => {
+		console.log('baseQuery with url:', url)
 		const user = getUser()
 		const token = user?.access_token
 

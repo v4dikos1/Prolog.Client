@@ -10,7 +10,7 @@ export const useSave = () => {
 
 		return runPlanning({
 			startDate: getApiFormatDateString(date, form.start),
-			endDate: getApiFormatDateString(date, form.start),
+			endDate: getApiFormatDateString(date, form.end),
 			binds: form.binds.map((bind) => ({
 				driverId: bind.driverID,
 				transportId: bind.vehicleID,

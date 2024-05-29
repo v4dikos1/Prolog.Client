@@ -15,10 +15,10 @@ interface Props {
 	prev: () => void
 	form: Form
 	setForm: (form: Form) => void
-	close: () => void
+	onSuccess: () => void
 }
 
-export const StepTwo = ({ prev, form, setForm, close }: Props) => {
+export const StepTwo = ({ prev, form, setForm, onSuccess }: Props) => {
 	const { save, isLoading } = useSave()
 	const [error, setError] = useState(false)
 	const driversCount = useAppSelector(getDriversCount)
@@ -26,13 +26,12 @@ export const StepTwo = ({ prev, form, setForm, close }: Props) => {
 	const disabled = form.binds.length >= driversCount || form.binds.length >= vehiclesCount
 
 	const handleResponse = (response: unknown) => {
-		console.log(response)
 		if (response && typeof response === 'object' && 'error' in response) {
 			setError(true)
 			return
 		}
 
-		close()
+		onSuccess()
 	}
 
 	const saveHandler = (event: FormEvent) => {

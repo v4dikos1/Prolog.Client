@@ -6,13 +6,11 @@ import { ACCESS_TOKEN } from '@/entities/map'
 import { StatusEnum } from '@/entities/order'
 import { Pins } from './Pins'
 import { translateMapIntoRussian } from '../helpers/translateMapIntoRussian'
-import { useDrawActiveRoutes } from '../hooks/useDrawActiveRoutes'
+import { ActiveRoutes } from './ActiveRoutes'
 
 export const Map = () => {
 	const [searchParams] = useSearchParams()
 	const activeTab = (Number(searchParams.get('tab')) as StatusEnum) || StatusEnum.incoming
-
-	useDrawActiveRoutes(activeTab === StatusEnum.active)
 
 	return (
 		<Mapbox
@@ -26,6 +24,7 @@ export const Map = () => {
 			mapStyle='mapbox://styles/mapbox/streets-v9'
 			onLoad={translateMapIntoRussian}>
 			<Pins activeTab={activeTab} />
+			{activeTab === StatusEnum.active && <ActiveRoutes />}
 		</Mapbox>
 	)
 }

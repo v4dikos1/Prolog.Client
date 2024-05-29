@@ -18,9 +18,7 @@ export const Addition = ({ back }: Props) => {
 
 	const submitHandler: FormEventHandler<HTMLFormElement> = (event) => {
 		event.preventDefault()
-		console.log('Addition form is submitted')
 		addStorage({ name, address }).then((response: Response) => {
-			console.log('Response after addition:', response)
 			if (!('error' in response)) {
 				back()
 			} else {

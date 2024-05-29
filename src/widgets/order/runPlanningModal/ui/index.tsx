@@ -14,16 +14,22 @@ interface Props {
 export const RunPlanningModal = ({ opened, close }: Props) => {
 	const [form, setForm] = useState<Form>(defaultFromState)
 
-	const [currentStep, setCurrentStep] = useState<1 | 2>(1)
+	const [currentStep, setCurrentStep] = useState<1 | 2 | 'success'>(1)
 	const openFirst = () => setCurrentStep(1)
 	const openSecond = () => setCurrentStep(2)
+	const onSuccess = () => setCurrentStep('success')
 
-	const content =
-		currentStep === 1 ? (
-			<StepOne form={form} setForm={setForm} next={openSecond} />
-		) : (
-			<StepTwo close={close} form={form} setForm={setForm} prev={openFirst} />
-		)
+	const content = {
+		1: <StepOne form={form} setForm={setForm} next={openSecond} />,
+		2: <StepTwo onSuccess={onSuccess} form={form} setForm={setForm} prev={openFirst} />,
+		success: null,
+	}
+
+	const title = {
+		1: 'Запуск планирования',
+		2: 'Запуск планирования',
+		success: 'Планирование запущено',
+	}
 
 	const closeAndReset = () => {
 		setTimeout(() => {
@@ -36,16 +42,25 @@ export const RunPlanningModal = ({ opened, close }: Props) => {
 
 	return (
 		<ModalTemplate
-			className={cx('max-h-none', { 'overflow-hidden flex flex-col': currentStep === 2 })}
+			className={cx('max-h-none', {
+				'overflow-hidden flex flex-col': currentStep === 2,
+				'overflow-hidden rounded-lg': currentStep === 'success',
+			})}
 			mainClassName={currentStep === 2 ? 'overflow-auto scrollable' : ''}
-			titleContent='Запуск планирования'
+			titleContent={title[currentStep]}
 			headerContent={
-				<div className='flex gap-8 w-full mt-3'>
-					<Step className='w-full' active={currentStep === 1} stepNumber={1} stepName='Параметры' />
-					<Step className='w-full' active={currentStep === 2} stepNumber={2} stepName='Водители и транспорт' />
-				</div>
+				currentStep === 'success' ? (
+					<p className='mt-1 text-gray-500 text-sm mb-2'>
+						Ожидайте уведомление, когда заявки перейдут в статус «Активные»
+					</p>
+				) : (
+					<div className='flex gap-8 w-full mt-3'>
+						<Step className='w-full' active={currentStep === 1} stepNumber={1} stepName='Параметры' />
+						<Step className='w-full' active={currentStep === 2} stepNumber={2} stepName='Водители и транспорт' />
+					</div>
+				)
 			}
-			content={<div className='px-8 flex flex-col gap-4'>{content}</div>}
+			content={content[currentStep] && <div className='px-8 flex flex-col gap-4'>{content[currentStep]}</div>}
 			opened={opened}
 			close={closeAndReset}
 		/>

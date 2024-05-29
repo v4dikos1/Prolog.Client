@@ -92,7 +92,7 @@ export const ModalTemplate = ({
 					<CloseModalButton className='absolute top-6 right-8' clickHandler={close} />
 					{headerContent}
 				</header>
-				<main className={cx('grow pt-4 pb-8 flex flex-col gap-4', mainClassName)}>{content}</main>
+				{content && <main className={cx('grow pt-4 pb-8 flex flex-col gap-4', mainClassName)}>{content}</main>}
 			</div>
 		</Backdrop>
 	)

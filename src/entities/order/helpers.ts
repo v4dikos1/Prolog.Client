@@ -47,7 +47,6 @@ export const transformOrdersFromAPIToIncoming = (ordersFromAPI: IncomingOrdersFr
 }
 
 export const transformOrdersFromAPIToActive = (ordersFromAPI: ActiveOrdersFromAPI): ActiveOrders => {
-	console.log(ordersFromAPI)
 	const activeOrders: ActiveOrders = {
 		count: ordersFromAPI.totalItems,
 		items: ordersFromAPI.items.map((item) => ({

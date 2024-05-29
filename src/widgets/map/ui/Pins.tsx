@@ -28,68 +28,31 @@ export const Pins = ({ activeTab }: Props) => {
 		<>
 			{activeTab === StatusEnum.incoming && (
 				<>
-					{storagesFromIncoming.map((storage) => (
-						<StoragePin
-							key={storage.ID}
-							latitude={storage.latitude}
-							longitude={storage.longitude}
-							address={storage.name}
-						/>
+					{storagesFromIncoming.map((pin) => (
+						<StoragePin key={pin.storageID} {...pin} />
 					))}
-					{incomingPins.map((order) => (
-						<IncomingOrderPin
-							key={order.ID}
-							latitude={order.latitude}
-							longitude={order.longitude}
-							client={order.client}
-							time={order.time}
-						/>
+					{incomingPins.map((pin) => (
+						<IncomingOrderPin key={pin.orderID} {...pin} />
 					))}
 				</>
 			)}
 			{activeTab === StatusEnum.active && (
 				<>
-					{storagesFromActive.map((storage) => (
-						<StoragePin
-							key={storage.ID}
-							latitude={storage.latitude}
-							longitude={storage.longitude}
-							address={storage.name}
-						/>
+					{storagesFromActive.map((pin) => (
+						<StoragePin key={pin.storageID} {...pin} />
 					))}
-					{activePins.map((order) => (
-						<ActiveOrderPin
-							number={order.ID}
-							color={order.color}
-							key={order.ID}
-							latitude={order.latitude}
-							longitude={order.longitude}
-							client={order.client}
-							deliveryStart={order.deliveryStart}
-							deliveryEnd={order.deliveryEnd}
-						/>
+					{activePins.map((pin) => (
+						<ActiveOrderPin {...pin} key={pin.orderID} />
 					))}
 				</>
 			)}
 			{activeTab === StatusEnum.completed && (
 				<>
-					{storagesFromCompleted.map((storage) => (
-						<StoragePin
-							key={storage.ID}
-							latitude={storage.latitude}
-							longitude={storage.longitude}
-							address={storage.name}
-						/>
+					{storagesFromCompleted.map((pin) => (
+						<StoragePin key={pin.storageID} {...pin} />
 					))}
-					{completedPins.map((order) => (
-						<CompletedOrderPin
-							key={order.ID}
-							latitude={order.latitude}
-							longitude={order.longitude}
-							completed={order.completed}
-							client={order.client}
-							end={order.end}
-						/>
+					{completedPins.map((pin) => (
+						<CompletedOrderPin key={pin.orderID} {...pin} />
 					))}
 				</>
 			)}

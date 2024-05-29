@@ -22,8 +22,8 @@ export const addRouteLayerToMap = (map: mapboxgl.Map, route: any, id: string, co
 		},
 		paint: {
 			'line-color': color,
-			'line-width': 5,
-			'line-opacity': 0.75,
+			'line-width': 10,
+			'line-opacity': 0.6,
 		},
 	})
 }

@@ -1,14 +1,12 @@
 import { useState } from 'react'
 import cx from 'classnames'
 import { Button } from '@/shared/ui/Button'
-import { auth } from '../api'
 
 export const SignInPage = () => {
 	const [loading, setLoading] = useState(false)
 	const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		setLoading(true)
-		auth()
 	}
 
 	return (

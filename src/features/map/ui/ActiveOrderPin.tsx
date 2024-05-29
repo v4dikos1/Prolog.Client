@@ -1,24 +1,23 @@
-import { Pin, Props as PinProps } from '@/entities/map'
+import { Pin, ActiveOrderPin as ActiveOrderPinProps } from '@/entities/map'
 import { getTime } from '@/shared/helpers/getTime'
 
-type Props = PinProps & {
-	color: string
-	number: number
-	client: string
-	deliveryStart: string
-	deliveryEnd: string
-}
-
-export const ActiveOrderPin = ({ longitude, latitude, color, number, client, deliveryStart, deliveryEnd }: Props) => {
+export const ActiveOrderPin = ({
+	coordinates,
+	clientName,
+	color,
+	index,
+	deliveryStart,
+	deliveryEnd,
+}: ActiveOrderPinProps) => {
 	return (
 		<Pin
-			longitude={longitude}
-			latitude={latitude}
+			longitude={coordinates.longitude}
+			latitude={coordinates.latitude}
 			color={color}
-			children={number}
+			children={index}
 			hint={
 				<>
-					<span className='block text-sm font-semibold'>{client}</span>
+					<span className='block text-sm font-semibold'>{clientName}</span>
 					<span className='block text-xs text-gray-500'>
 						Окно доставки: {getTime(deliveryStart)} – {getTime(deliveryEnd)}
 					</span>

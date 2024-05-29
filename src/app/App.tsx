@@ -11,8 +11,13 @@ export const App = () => {
 	const [hasTriedSignin, setHasTriedSignin] = useState(false)
 	const user = getUser()
 
+	auth.events.addUserLoaded(() => {
+		setTimeout(() => {
+			removeTokenParams()
+		}, 1000)
+	})
+
 	useEffect(() => {
-		console.log('Authenticated:', auth.isAuthenticated)
 		if (auth.isAuthenticated) {
 			removeTokenParams()
 			return

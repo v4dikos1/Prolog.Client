@@ -1,38 +1,31 @@
 import { useMap } from 'react-map-gl'
-import { Coordinates } from '../types'
+import { Route } from '../types'
 import { getRoute } from '../api'
 import { addRouteLayerToMap } from '../helpers/addRouteLayerToMap'
 import { changeRouteLayer } from '../helpers/changeRouteLayer'
-
-interface DrawProps {
-	start: Coordinates
-	end: Coordinates
-	id: string
-	color: string
-}
 
 export const useDrawRoute = () => {
 	const { map: mapRef } = useMap()
 	const map = mapRef ? mapRef.getMap() : null
 
-	async function draw({ start, end, id, color }: DrawProps) {
+	async function draw({ ID, from, to, color }: Route) {
 		if (!map) return
 
-		const route = await getRoute(start, end)
+		const route = await getRoute(from, to)
 
-		if (map.getSource(id)) {
-			changeRouteLayer(map, route, id)
+		if (map.getSource(ID)) {
+			changeRouteLayer(map, route, ID)
 		} else {
-			addRouteLayerToMap(map, route, id, color)
+			addRouteLayerToMap(map, route, ID, color)
 		}
 	}
 
-	function clear(id: string) {
+	function clear(ID: string) {
 		if (!map) return
 
-		if (map.getSource(id)) {
-			map.removeLayer(id)
-			map.removeSource(id)
+		if (map.getSource(ID)) {
+			map.removeLayer(ID)
+			map.removeSource(ID)
 		}
 	}
 

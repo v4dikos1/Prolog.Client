@@ -26,6 +26,7 @@ export const StepTwo = ({ prev, form, setForm, close }: Props) => {
 	const disabled = form.binds.length >= driversCount || form.binds.length >= vehiclesCount
 
 	const handleResponse = (response: unknown) => {
+		console.log(response)
 		if (response && typeof response === 'object' && 'error' in response) {
 			setError(true)
 			return

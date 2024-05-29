@@ -27,12 +27,6 @@ export const CreateOrderModal = ({ opened, close }: Props) => {
 		addition: <ModalTitleButton back={openProducts} text='Добавить товар' />,
 	}
 
-	const content = {
-		details: <StepOne setDatepickerOpened={setDatepickerOpened} form={form} setForm={setForm} next={openProducts} />,
-		products: <StepTwo close={close} openAddition={openAddition} form={form} setForm={setForm} prev={openDetails} />,
-		addition: <Addition back={openProducts} />,
-	}
-
 	const closeAndReset = () => {
 		setTimeout(() => {
 			setForm(defaultFromState)
@@ -41,11 +35,19 @@ export const CreateOrderModal = ({ opened, close }: Props) => {
 		close()
 	}
 
+	const content = {
+		details: <StepOne setDatepickerOpened={setDatepickerOpened} form={form} setForm={setForm} next={openProducts} />,
+		products: (
+			<StepTwo close={closeAndReset} openAddition={openAddition} form={form} setForm={setForm} prev={openDetails} />
+		),
+		addition: <Addition back={openProducts} />,
+	}
+
 	return (
 		<ModalTemplate
 			excludeBackdropClosing={datepickerOpened}
 			className={cx('max-h-none', {
-				'md:overflow-hidden md:!max-h-[90%] flex flex-col': currentStep === 'products',
+				'md:overflow-hidden md:!max-h-[90%] flex flex-col md:h-[90%]': currentStep === 'products',
 				'lg:!max-[90%]': currentStep === 'details',
 			})}
 			mainClassName={cx({ 'overflow-hidden ': currentStep === 'products' })}

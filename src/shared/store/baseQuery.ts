@@ -12,8 +12,16 @@ type QueryType<B> = {
 }
 
 const handleGetAndPost = async (response: Response) => {
+	if (response.url.includes('/planning') && response.status === 200) {
+		return {
+			data: 'Success',
+		}
+	}
+
 	const data = await response.json()
-	if (response.status !== 200) throw new Error(data.Message)
+	if (response.status !== 200) {
+		throw new Error(data.Message)
+	}
 
 	return {
 		data,
@@ -41,7 +49,6 @@ const responseHandlers = {
 
 export const apiBaseQuery = <B>(): BaseQueryFn<QueryType<B>, unknown, unknown> => {
 	return async <B>({ url, method = 'GET', body }: QueryType<B>) => {
-		console.log('baseQuery with url:', url)
 		const user = getUser()
 		const token = user?.access_token
 

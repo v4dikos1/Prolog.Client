@@ -1,20 +1,18 @@
-import { Pin, Props as PinProps } from '@/entities/map'
+import { IncomingOrderPin as IncomingOrderPinProps, Pin } from '@/entities/map'
+import { getTime } from '@/shared/helpers/getTime'
 
-type Props = PinProps & {
-	client: string
-	time: string
-}
-
-export const IncomingOrderPin = ({ longitude, latitude, client, time }: Props) => {
+export const IncomingOrderPin = ({ clientName, coordinates, deliveryStart, deliveryEnd }: IncomingOrderPinProps) => {
 	return (
 		<Pin
 			className='group-hover:bg-indigo-600'
-			longitude={longitude}
-			latitude={latitude}
+			longitude={coordinates.longitude}
+			latitude={coordinates.latitude}
 			hint={
 				<>
-					<span className='block text-sm font-semibold'>{client}</span>
-					<span className='block text-xs text-gray-500'>{time}</span>
+					<span className='block text-sm font-semibold'>{clientName}</span>
+					<span className='block text-xs text-gray-500'>
+						{getTime(deliveryStart)} - {getTime(deliveryEnd)}
+					</span>
 				</>
 			}
 		/>

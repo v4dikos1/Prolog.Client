@@ -1,27 +1,21 @@
-import { Pin, Props as PinProps } from '@/entities/map'
+import { CompletedOrderPin as CompletedOrderPinProps, Pin } from '@/entities/map'
 import { MiniCrossIcon } from '@/shared/ui/icons/MiniCrossIcon'
 import { CheckIcon } from '@/shared/ui/icons/CheckIcon'
 import { getTime } from '@/shared/helpers/getTime'
 
-type Props = PinProps & {
-	completed: boolean
-	client: string
-	end: string
-}
-
-export const CompletedOrderPin = ({ longitude, latitude, completed, client, end }: Props) => {
+export const CompletedOrderPin = ({ completed, coordinates, clientName, endTime }: CompletedOrderPinProps) => {
 	return (
 		<Pin
 			className={completed ? 'bg-green-600' : 'bg-red-600'}
-			longitude={longitude}
-			latitude={latitude}
+			longitude={coordinates.longitude}
+			latitude={coordinates.latitude}
 			hint={
 				<>
-					<span className='block text-sm font-semibold'>{client}</span>
+					<span className='block text-sm font-semibold'>{clientName}</span>
 					{completed ? (
-						<span className='text-green-600'>Доставлен в {getTime(end)}</span>
+						<span className='text-green-600'>Доставлен в {getTime(endTime)}</span>
 					) : (
-						<span className='text-orange-600'>Отменён в {getTime(end)}</span>
+						<span className='text-orange-600'>Отменён в {getTime(endTime)}</span>
 					)}
 				</>
 			}

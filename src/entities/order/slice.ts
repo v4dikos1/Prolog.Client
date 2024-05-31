@@ -11,6 +11,9 @@ import {
 	transformOrdersFromAPIToCompleted,
 	transformOrdersFromAPIToIncoming,
 	getSelectedOrdersIDs,
+	filterIncomingOrders,
+	filterActiveOrders,
+	filterCompletedOrders,
 } from './helpers'
 
 const ROUTES = {
@@ -182,6 +185,8 @@ export const {
 	useCancelActiveOrdersMutation,
 } = ordersApi
 
+// Tab
+
 export const getIncomingOrdersCount = createSelector(
 	ordersApi.endpoints.getIncomingOrders.select(),
 	(incomingOrders) => incomingOrders.data?.count,
@@ -197,14 +202,7 @@ export const getCompletedOrdersCount = createSelector(
 	(completedOrders) => completedOrders.data?.count,
 )
 
-export const getIncomingOrders = createSelector(ordersApi.endpoints.getIncomingOrders.select(), (orders) => orders.data)
-
-export const getActiveOrders = createSelector(ordersApi.endpoints.getActiveOrders.select(), (orders) => orders.data)
-
-export const getCompletedOrders = createSelector(
-	ordersApi.endpoints.getCompletedOrders.select(),
-	(orders) => orders.data,
-)
+// Select
 
 export const isIncomingOrderSelected = createSelector(
 	ordersApi.endpoints.getIncomingOrders.select(),
@@ -222,41 +220,70 @@ export const isCompletedOrderSelected = createSelector(
 	(completedOrders) => completedOrders.data?.items.some((item) => item.orders.some((order) => order.selected)),
 )
 
-export const getAllStoragesFromIncoming = createSelector(
-	ordersApi.endpoints.getIncomingOrders.select(),
-	(incomingOrders) => {
-		if (incomingOrders.data === undefined) return []
+// Filter
 
-		const storages = new Map<string, StoragePin>()
+export const getFilteredIncomingOrders = createSelector(
+	[ordersApi.endpoints.getIncomingOrders.select(), (_, searchStr: string) => searchStr],
+	(incomingOrders, searchStr) => {
+		if (!incomingOrders.data) return
 
-		incomingOrders.data.items.forEach((item) => {
-			item.orders.forEach((order) => {
-				const [latitude, longitude] = order.storage.coordinates.split(' ').map((value) => Number(value))
-				const storage = {
-					storageID: order.storage.ID,
-					coordinates: {
-						longitude,
-						latitude,
-					},
-					storageName: order.storage.name,
-				}
-
-				if (!storages.has(order.storage.ID)) {
-					storages.set(order.storage.ID, storage)
-				}
-			})
-		})
-
-		return Array.from(storages.values())
+		const filteredIncomingOrders = filterIncomingOrders(incomingOrders.data, searchStr)
+		return filteredIncomingOrders
 	},
 )
 
-export const getIncomingPins = createSelector(ordersApi.endpoints.getIncomingOrders.select(), (incomingOrders) => {
-	if (incomingOrders.data === undefined) return []
+export const getFilteredActiveOrders = createSelector(
+	[ordersApi.endpoints.getActiveOrders.select(), (_, searchStr: string) => searchStr],
+	(activeOrders, searchStr) => {
+		if (!activeOrders.data) return
+
+		return filterActiveOrders(activeOrders.data, searchStr)
+	},
+)
+
+export const getFilteredCompletedOrders = createSelector(
+	[ordersApi.endpoints.getCompletedOrders.select(), (_, searchStr: string) => searchStr],
+	(completedOrders, searchStr) => {
+		if (!completedOrders.data) return
+
+		return filterCompletedOrders(completedOrders.data, searchStr)
+	},
+)
+
+// Map
+
+export const getAllStoragesFromIncoming = createSelector(getFilteredIncomingOrders, (incomingOrders) => {
+	if (incomingOrders === undefined) return []
+
+	const storages = new Map<string, StoragePin>()
+
+	incomingOrders.items.forEach((item) => {
+		item.orders.forEach((order) => {
+			const [latitude, longitude] = order.storage.coordinates.split(' ').map((value) => Number(value))
+			const storage = {
+				storageID: order.storage.ID,
+				coordinates: {
+					longitude,
+					latitude,
+				},
+				storageName: order.storage.name,
+			}
+
+			if (!storages.has(order.storage.ID)) {
+				storages.set(order.storage.ID, storage)
+			}
+		})
+	})
+
+	return Array.from(storages.values())
+})
+
+export const getIncomingPins = createSelector(getFilteredIncomingOrders, (incomingOrders) => {
+	if (incomingOrders === undefined) return []
 
 	const pins = new Map<number, IncomingOrderPin>()
 
-	incomingOrders.data.items.forEach((item) => {
+	incomingOrders.items.forEach((item) => {
 		item.orders.forEach((order) => {
 			const [latitude, longitude] = order.client.coordinates.split(' ').map((value) => Number(value))
 			const pin = {
@@ -274,12 +301,12 @@ export const getIncomingPins = createSelector(ordersApi.endpoints.getIncomingOrd
 	return Array.from(pins.values())
 })
 
-export const getAllStoragesFromActive = createSelector(ordersApi.endpoints.getActiveOrders.select(), (activeOrders) => {
-	if (activeOrders.data === undefined) return []
+export const getAllStoragesFromActive = createSelector(getFilteredActiveOrders, (activeOrders) => {
+	if (activeOrders === undefined) return []
 
 	const storages = new Map<string, StoragePin>()
 
-	activeOrders.data.items.forEach((item) => {
+	activeOrders.items.forEach((item) => {
 		item.orders.forEach((driverGroup) => {
 			driverGroup.orders.forEach((order) => {
 				const [latitude, longitude] = order.storage.coordinates.split(' ').map((value) => Number(value))
@@ -302,12 +329,12 @@ export const getAllStoragesFromActive = createSelector(ordersApi.endpoints.getAc
 	return Array.from(storages.values())
 })
 
-export const getActivePins = createSelector(ordersApi.endpoints.getActiveOrders.select(), (activeOrders) => {
-	if (activeOrders.data === undefined) return []
+export const getActivePins = createSelector(getFilteredActiveOrders, (activeOrders) => {
+	if (activeOrders === undefined) return []
 
 	const pins = new Map<number, ActiveOrderPin>()
 
-	activeOrders.data.items.forEach((item) => {
+	activeOrders.items.forEach((item) => {
 		item.orders.forEach((driverGroup) => {
 			driverGroup.orders.forEach((order) => {
 				const index = driverGroup.routes.find((route) => route.id === String(order.ID))?.index || 1
@@ -334,41 +361,38 @@ export const getActivePins = createSelector(ordersApi.endpoints.getActiveOrders.
 	return Array.from(pins.values())
 })
 
-export const getAllStoragesFromCompleted = createSelector(
-	ordersApi.endpoints.getCompletedOrders.select(),
-	(completedOrders) => {
-		if (completedOrders.data === undefined) return []
+export const getAllStoragesFromCompleted = createSelector(getFilteredCompletedOrders, (completedOrders) => {
+	if (completedOrders === undefined) return []
 
-		const storages = new Map<string, StoragePin>()
+	const storages = new Map<string, StoragePin>()
 
-		completedOrders.data.items.forEach((item) => {
-			item.orders.forEach((order) => {
-				const [latitude, longitude] = order.storage.coordinates.split(' ').map((value) => Number(value))
-				const storage = {
-					storageID: order.storage.ID,
-					coordinates: {
-						longitude,
-						latitude,
-					},
-					storageName: order.storage.name,
-				}
+	completedOrders.items.forEach((item) => {
+		item.orders.forEach((order) => {
+			const [latitude, longitude] = order.storage.coordinates.split(' ').map((value) => Number(value))
+			const storage = {
+				storageID: order.storage.ID,
+				coordinates: {
+					longitude,
+					latitude,
+				},
+				storageName: order.storage.name,
+			}
 
-				if (!storages.has(order.storage.ID)) {
-					storages.set(order.storage.ID, storage)
-				}
-			})
+			if (!storages.has(order.storage.ID)) {
+				storages.set(order.storage.ID, storage)
+			}
 		})
+	})
 
-		return Array.from(storages.values())
-	},
-)
+	return Array.from(storages.values())
+})
 
-export const getCompletedPins = createSelector(ordersApi.endpoints.getCompletedOrders.select(), (completedOrders) => {
-	if (completedOrders.data === undefined) return []
+export const getCompletedPins = createSelector(getFilteredCompletedOrders, (completedOrders) => {
+	if (completedOrders === undefined) return []
 
 	const pins = new Map<number, CompletedOrderPin>()
 
-	completedOrders.data.items.forEach((item) => {
+	completedOrders.items.forEach((item) => {
 		item.orders.forEach((order) => {
 			const [latitude, longitude] = order.client.coordinates.split(' ').map((value) => Number(value))
 			const pin = {
@@ -385,6 +409,39 @@ export const getCompletedPins = createSelector(ordersApi.endpoints.getCompletedO
 
 	return Array.from(pins.values())
 })
+
+export const getActiveRoutes = createSelector(getFilteredActiveOrders, (activeOrders) => {
+	if (activeOrders === undefined) return []
+
+	const routes: Route[] = []
+
+	activeOrders.items.forEach((groupByDate) => {
+		groupByDate.orders.forEach((groupByDriver) => {
+			const sortedRoutes = [...groupByDriver.routes].sort((routeA, routeB) => routeA.index - routeB.index)
+			for (let i = 0; i < sortedRoutes.length - 1; i++) {
+				const point1 = sortedRoutes[i]
+				const point2 = sortedRoutes[i + 1]
+
+				routes.push({
+					ID: point1.id + '_' + point2.id + '_' + groupByDriver.driver.ID,
+					from: {
+						latitude: Number(point1.latitude),
+						longitude: Number(point1.longitude),
+					},
+					to: {
+						latitude: Number(point2.latitude),
+						longitude: Number(point2.longitude),
+					},
+					color: groupByDriver.driver.color,
+				})
+			}
+		})
+	})
+
+	return routes
+})
+
+// SelectedIDs
 
 export const getlIncomingSelectedOrderIDs = createSelector(
 	ordersApi.endpoints.getIncomingOrders.select(),
@@ -417,34 +474,3 @@ export const getlCompletedSelectedOrderIDs = createSelector(
 		return selectedCompleted
 	},
 )
-
-export const getActiveRoutes = createSelector(ordersApi.endpoints.getActiveOrders.select(), (activeOrders) => {
-	if (activeOrders.data === undefined) return []
-
-	const routes: Route[] = []
-
-	activeOrders.data.items.forEach((groupByDate) => {
-		groupByDate.orders.forEach((groupByDriver) => {
-			const sortedRoutes = [...groupByDriver.routes].sort((routeA, routeB) => routeA.index - routeB.index)
-			for (let i = 0; i < sortedRoutes.length - 1; i++) {
-				const point1 = sortedRoutes[i]
-				const point2 = sortedRoutes[i + 1]
-
-				routes.push({
-					ID: point1.id + '_' + point2.id + '_' + groupByDriver.driver.ID,
-					from: {
-						latitude: Number(point1.latitude),
-						longitude: Number(point1.longitude),
-					},
-					to: {
-						latitude: Number(point2.latitude),
-						longitude: Number(point2.longitude),
-					},
-					color: groupByDriver.driver.color,
-				})
-			}
-		})
-	})
-
-	return routes
-})

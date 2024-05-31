@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom'
 import { ActiveOrderPin, IncomingOrderPin, StoragePin, CompletedOrderPin } from '@/features/map'
 import {
 	getAllStoragesFromIncoming,
@@ -15,14 +16,17 @@ interface Props {
 }
 
 export const Pins = ({ activeTab }: Props) => {
-	const storagesFromIncoming = useAppSelector(getAllStoragesFromIncoming)
-	const incomingPins = useAppSelector(getIncomingPins)
+	const [searchParams] = useSearchParams()
+	const searchStr = (searchParams.get('q') || '').toLowerCase()
 
-	const storagesFromActive = useAppSelector(getAllStoragesFromActive)
-	const activePins = useAppSelector(getActivePins)
+	const storagesFromIncoming = useAppSelector((state) => getAllStoragesFromIncoming(state, searchStr))
+	const incomingPins = useAppSelector((state) => getIncomingPins(state, searchStr))
 
-	const storagesFromCompleted = useAppSelector(getAllStoragesFromCompleted)
-	const completedPins = useAppSelector(getCompletedPins)
+	const storagesFromActive = useAppSelector((state) => getAllStoragesFromActive(state, searchStr))
+	const activePins = useAppSelector((state) => getActivePins(state, searchStr))
+
+	const storagesFromCompleted = useAppSelector((state) => getAllStoragesFromCompleted(state, searchStr))
+	const completedPins = useAppSelector((state) => getCompletedPins(state, searchStr))
 
 	return (
 		<>

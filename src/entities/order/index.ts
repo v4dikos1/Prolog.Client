@@ -14,12 +14,7 @@ export type {
 	Cargo,
 } from './model'
 
-export {
-	filterActiveOrders,
-	filterIncomingOrders,
-	filterCompletedOrders,
-	activeOrdersGroupByDateIsEmpty,
-} from './helpers'
+export { activeOrdersGroupByDateIsEmpty } from './helpers'
 
 export {
 	useGetIncomingOrdersQuery,
@@ -28,13 +23,14 @@ export {
 	useToggleOrderMutation,
 	useAddIncomingOrderMutation,
 	useDeleteOrdersMutation,
+	useRunPlanningMutation,
+	useCancelActiveOrdersMutation,
 	getIncomingOrdersCount,
 	getActiveOrdersCount,
 	getCompletedOrdersCount,
 	isIncomingOrderSelected,
 	isActiveOrderSelected,
 	isCompletedOrderSelected,
-	useRunPlanningMutation,
 	getAllStoragesFromIncoming,
 	getIncomingPins,
 	getAllStoragesFromActive,
@@ -44,8 +40,10 @@ export {
 	getlIncomingSelectedOrderIDs,
 	getlActiveSelectedOrderIDs,
 	getlCompletedSelectedOrderIDs,
-	useCancelActiveOrdersMutation,
 	getActiveRoutes,
+	getFilteredIncomingOrders,
+	getFilteredActiveOrders,
+	getFilteredCompletedOrders,
 } from './slice'
 
 export { OrdersNotFound } from './NotFound'

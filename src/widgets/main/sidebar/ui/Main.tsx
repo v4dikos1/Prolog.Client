@@ -9,6 +9,8 @@ interface Props {
 	activeOrders?: ActiveOrders
 	completedOrders?: CompletedOrders
 	isIncomingOrdersFetching: boolean
+	isActiveOrdersFetching: boolean
+	isCompletedOrdersFetching: boolean
 }
 
 export const Main = ({
@@ -18,6 +20,8 @@ export const Main = ({
 	activeOrders,
 	completedOrders,
 	isIncomingOrdersFetching,
+	isActiveOrdersFetching,
+	isCompletedOrdersFetching,
 }: Props) => {
 	return (
 		<main className={className + ' scrollable py-4 pl-5 pr-1 flex flex-col overflow-auto'}>
@@ -33,14 +37,14 @@ export const Main = ({
 					'animate-fadeIn opacity-0': activeTab === StatusEnum.active,
 					'animate-fadeOut pointer-events-none hidden': activeTab !== StatusEnum.active,
 				})}>
-				<OrderActiveList orders={activeOrders} />
+				<OrderActiveList orders={activeOrders} isACtiveOrdersFetching={isActiveOrdersFetching} />
 			</div>
 			<div
 				className={cx('w-full', {
 					'animate-fadeIn opacity-0': activeTab === StatusEnum.completed,
 					'animate-fadeOut pointer-events-none hidden': activeTab !== StatusEnum.completed,
 				})}>
-				<OrderCompletedList orders={completedOrders} />
+				<OrderCompletedList orders={completedOrders} isCompletedOrdersFetching={isCompletedOrdersFetching} />
 			</div>
 		</main>
 	)

@@ -213,7 +213,6 @@ export const filterActiveOrders = (activeOrders: ActiveOrders, searchStr = ''): 
 		for (let j = 0; j < item.orders.length; j++) {
 			const driverGroup = item.orders[j]
 			const filteredDriverGroup = driverGroup.orders.filter((order) => filterOrder(order, searchStr))
-
 			if (filteredDriverGroup.length > 0) {
 				newItem.orders.push({
 					driver: driverGroup.driver,

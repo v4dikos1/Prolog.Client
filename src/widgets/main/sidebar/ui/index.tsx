@@ -7,8 +7,12 @@ import {
 	useGetActiveOrdersQuery,
 	useGetCompletedOrdersQuery,
 	useGetIncomingOrdersQuery,
+	getFilteredIncomingOrders,
+	getFilteredActiveOrders,
+	getFilteredCompletedOrders,
 } from '@/entities/order'
 import { SpinnerIcon } from '@/shared/ui/icons/SpinnerIcon'
+import { useAppSelector } from '@/shared/store'
 import { useUpdateSearchParams } from '@/shared/hooks/useSearchParams'
 import { Main } from './Main'
 import { Menu } from './Menu'
@@ -20,6 +24,7 @@ interface Props {
 export const Sidebar = ({ className }: Props) => {
 	const [searchParams, updateParams] = useUpdateSearchParams('tab', String(StatusEnum.incoming))
 	const [activeTab, setActiveTab] = useState(StatusEnum.incoming)
+	const searchStr = (searchParams.get('q') || '').toLowerCase()
 
 	useEffect(() => {
 		const tabFromURL = Number(searchParams.get('tab'))
@@ -34,13 +39,13 @@ export const Sidebar = ({ className }: Props) => {
 	const openActive = () => updateParams('tab', String(StatusEnum.active))
 	const openCompleted = () => updateParams('tab', String(StatusEnum.completed))
 
-	const {
-		data: incomingOrders,
-		isLoading: isIncomingOrdersLoading,
-		isFetching: isIncomingOrdersFetching,
-	} = useGetIncomingOrdersQuery()
-	const { data: activeOrders, isLoading: isActiveOrdersLoading } = useGetActiveOrdersQuery()
-	const { data: completedOrders, isLoading: isCompletedOrdersLoading } = useGetCompletedOrdersQuery()
+	const { isLoading: isIncomingOrdersLoading, isFetching: isIncomingOrdersFetching } = useGetIncomingOrdersQuery()
+	const { isLoading: isActiveOrdersLoading, isFetching: isActiveOrdersFetching } = useGetActiveOrdersQuery()
+	const { isLoading: isCompletedOrdersLoading, isFetching: isCompletedOrdersFetching } = useGetCompletedOrdersQuery()
+
+	const incomingOrders = useAppSelector((state) => getFilteredIncomingOrders(state, searchStr))
+	const activeOrders = useAppSelector((state) => getFilteredActiveOrders(state, searchStr))
+	const completedOrders = useAppSelector((state) => getFilteredCompletedOrders(state, searchStr))
 
 	if (isIncomingOrdersLoading || isActiveOrdersLoading || isCompletedOrdersLoading) {
 		return <SpinnerIcon className='mt-10 mx-auto' pathClassName='fill-indigo-700' />
@@ -67,6 +72,8 @@ export const Sidebar = ({ className }: Props) => {
 				activeOrders={activeOrders}
 				completedOrders={completedOrders}
 				isIncomingOrdersFetching={isIncomingOrdersFetching}
+				isActiveOrdersFetching={isActiveOrdersFetching}
+				isCompletedOrdersFetching={isCompletedOrdersFetching}
 			/>
 		</div>
 	)

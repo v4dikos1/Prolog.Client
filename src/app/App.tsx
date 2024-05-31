@@ -14,7 +14,7 @@ export const App = () => {
 	auth.events.addUserLoaded(() => {
 		setTimeout(() => {
 			removeTokenParams()
-		}, 1000)
+		}, 2000)
 	})
 
 	useEffect(() => {
